@@ -235,10 +235,14 @@ wp-config.php : 600</code></pre></div>
   <script>
     document.querySelectorAll('button.copy').forEach(function (button) {
       button.addEventListener('click', function () {
-        var code = button.parentElement.querySelector('code').innerText;
+        const code = button.parentElement.querySelector('code').innerText;
         navigator.clipboard.writeText(code).then(function () {
-          var previous = button.textContent;
+          const previous = button.textContent;
           button.textContent = 'Copié';
+          setTimeout(function () { button.textContent = previous; }, 1200);
+        }).catch(function () {
+          const previous = button.textContent;
+          button.textContent = 'Erreur';
           setTimeout(function () { button.textContent = previous; }, 1200);
         });
       });
