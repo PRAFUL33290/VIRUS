@@ -3,279 +3,416 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commandes WP-CLI – Sécurité WordPress</title>
+  <title>Commandes WP-CLI — Sécurité WordPress</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #22c55e;
-      --danger: #ef4444;
-      --warn: #f59e0b;
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --text: #1d1d1f;
+      --text-2: #6e6e73;
+      --text-3: #86868b;
+      --accent: #0071e3;
+      --success: #28cd41;
+      --warning: #ff9500;
+      --danger: #ff3b30;
+      --border: rgba(0,0,0,0.08);
+      --sh2: 0 4px 24px rgba(0,0,0,0.09);
+      --term-bg: #1a1a1d;
+      --term-header: #2d2d30;
+      --r: 14px;
+      --f: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+      --fm: 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      background: linear-gradient(160deg, var(--bg), #020617);
-      color: var(--text);
-      padding: 24px;
+    body { font-family: var(--f); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* NAVBAR */
+    .navbar { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.88); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; height: 52px; gap: 8px; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; color: var(--text); text-decoration: none; flex-shrink: 0; margin-right: 8px; }
+    .nav-brand svg { width:20px; height:20px; }
+    .nav-links { display: flex; list-style: none; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { display: block; padding: 5px 11px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: background 0.15s, color 0.15s; }
+    .nav-links a:hover { background: rgba(0,0,0,0.06); color: var(--text); }
+    .nav-links a.active { background: var(--accent); color: #fff; }
+
+    /* HERO */
+    .hero { position: relative; height: 420px; overflow: hidden; }
+    .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(140deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.26) 100%); }
+    .hero-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 52px 52px 48px; color: #fff; }
+    .hero-badge { display: inline-flex; align-items: center; background: rgba(0,113,227,0.9); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; width: fit-content; }
+    .hero h1 { font-size: clamp(28px, 5vw, 54px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 12px; }
+    .hero p { font-size: clamp(15px, 2.2vw, 19px); opacity: 0.85; max-width: 580px; line-height: 1.5; }
+
+    /* MAIN */
+    .main { max-width: 1100px; margin: 0 auto; padding: 44px 24px 80px; }
+
+    /* CARD */
+    .card { background: var(--surface); border-radius: var(--r); box-shadow: var(--sh2); padding: 36px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .card h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); margin-bottom: 10px; }
+    .card h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .card h3:first-of-type { margin-top: 16px; }
+    .card p, .action { color: var(--text-2); font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
+    .action { font-style: italic; font-size: 14px; margin-bottom: 0; }
+    ul, ol { color: var(--text-2); padding-left: 20px; margin-bottom: 10px; }
+    li { margin-bottom: 5px; font-size: 15px; }
+
+    /* CODE BLOCK */
+    .code-wrap { margin: 10px 0 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+    .code-header { background: var(--term-header); padding: 9px 16px; display: flex; align-items: center; gap: 6px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .dot.r { background: #ff5f57; }
+    .dot.y { background: #febc2e; }
+    .dot.g { background: #28c840; }
+    .code-label { font-size: 11px; color: #888; font-family: var(--fm); margin-left: 6px; flex: 1; }
+    button.copy { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); color: #aaa; padding: 4px 12px; border-radius: 6px; font-size: 12px; font-family: var(--f); font-weight: 500; cursor: pointer; transition: all 0.15s; margin-left: auto; }
+    button.copy:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    pre { background: var(--term-bg); color: #f0f0f2; padding: 18px 20px; overflow-x: auto; font-family: var(--fm); font-size: 13.5px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; margin: 0; }
+    code { font-family: var(--fm); }
+    p code, li code { background: rgba(0,0,0,0.06); color: var(--accent); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+
+    /* NOTE BOXES */
+    .note { background: rgba(0,113,227,0.07); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; color: var(--text-2); }
+    .note.warn { background: rgba(255,149,0,0.08); border-left-color: var(--warning); }
+    .note.danger { background: rgba(255,59,48,0.08); border-left-color: var(--danger); }
+    .note.success { background: rgba(40,205,65,0.08); border-left-color: var(--success); }
+    .note strong { color: var(--text); }
+
+    /* STATUS */
+    .ok { color: var(--success); font-weight: 600; }
+    .bad { color: var(--danger); font-weight: 600; }
+    .cmd-name { display: inline-block; background: rgba(0,113,227,0.1); color: var(--accent); font-family: var(--fm); font-size: 13px; font-weight: 600; padding: 2px 8px; border-radius: 5px; }
+
+    /* AUDIT STEPS */
+    .audit-steps { display: flex; flex-direction: column; gap: 0; }
+    .audit-step { display: flex; gap: 16px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .audit-step:last-child { border-bottom: none; }
+    .step-num { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .step-content { flex: 1; }
+    .step-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+
+    /* FOOTER */
+    .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--text-3); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { height: 300px; }
+      .hero-content { padding: 24px 20px 28px; }
+      .card { padding: 22px 18px; border-radius: 12px; }
+      .main { padding: 24px 12px 60px; }
     }
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
-      display: grid;
-      gap: 16px;
-    }
-    .card {
-      background: rgba(17, 24, 39, 0.88);
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 18px;
-    }
-    h1, h2, h3 { margin-top: 0; }
-    h1 { color: var(--accent); }
-    h2 { color: #93c5fd; }
-    ul { margin: 0; padding-left: 20px; }
-    .tag { font-weight: 700; }
-    .ok { color: var(--accent); }
-    .bad { color: var(--danger); }
-    .warn { color: var(--warn); }
-    .code-wrap {
-      position: relative;
-      margin: 10px 0;
-    }
-    pre {
-      margin: 0;
-      background: #030712;
-      border: 1px solid #1f2937;
-      border-radius: 8px;
-      padding: 12px;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    code { color: #f8fafc; }
-    button.copy {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      border: 0;
-      border-radius: 6px;
-      background: #1d4ed8;
-      color: #fff;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .footer {
-      color: var(--muted);
-      font-size: 14px;
-    }
-    nav {
-      margin-bottom: 8px;
-    }
-    nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: 600;
-      margin-right: 16px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    nav a.active {
-      color: var(--accent);
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 2px;
-    }
-    p.action {
-      color: var(--muted);
-      margin: 4px 0 14px;
-      font-style: italic;
+    @media (max-width: 480px) {
+      .hero { height: 260px; }
+      .hero h1 { font-size: 22px; }
+      .nav-brand span { display: none; }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <nav class="card">
-      <a href="index.html">Audit Bash</a>
-      <a href="wp-cli.html" class="active">Commandes WP-CLI</a>
-      <a href="vps-config.html">Config VPS</a>
-      <a href="rsync-backup.html">Sauvegarde Rsync</a>
-    </nav>
 
-    <section class="card">
-      <h1>Commandes WP-CLI essentielles pour la sécurité WordPress</h1>
-      <p>WP-CLI est l'interface en ligne de commande officielle de WordPress. Voici les commandes indispensables pour détecter les fichiers corrompus et sécuriser un site.</p>
-    </section>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html">Commandes Basiques</a></li>
+        <li><a href="index.html">Audit Bash</a></li>
+        <li><a href="wp-cli.html" class="active">WP-CLI</a></li>
+        <li><a href="vps-config.html">Config VPS</a></li>
+        <li><a href="rsync-backup.html">Rsync</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <section class="card">
-      <h2>Vérification de l'intégrité des fichiers</h2>
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Code WordPress WP-CLI"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">WP-CLI</div>
+      <h1>Commandes WP-CLI<br>pour la Sécurité</h1>
+      <p>L'interface en ligne de commande officielle de WordPress pour détecter les fichiers corrompus et sécuriser votre site.</p>
+    </div>
+  </section>
 
-      <h3>Vérifier le cœur WordPress</h3>
+  <main class="main">
+
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Qu'est-ce que WP-CLI ?</h2>
+      <p>WP-CLI est l'outil en ligne de commande officiel pour administrer WordPress directement depuis le terminal, sans interface graphique. Il permet d'effectuer des vérifications d'intégrité, analyser la base de données et gérer les utilisateurs en quelques secondes.</p>
+      <div class="note success">
+        <strong>Prérequis :</strong> WP-CLI doit être installé sur votre serveur. Vérifiez avec <code>wp --version</code>.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Vérification de l'Intégrité des Fichiers</h2>
+
+      <h3><span class="cmd-name">wp core</span> — Vérifier le cœur WordPress</h3>
+      <p class="action">Compare les fichiers WordPress avec les versions officielles — détecte les modifications dans <code>wp-admin/</code> et <code>wp-includes/</code>.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp core verify-checksums</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Compare les fichiers du cœur WordPress avec les versions officielles. Détecte les modifications suspectes dans wp-admin/ et wp-includes/</p>
 
-      <h3>Vérifier tous les plugins</h3>
+      <h3><span class="cmd-name">wp plugin</span> — Vérifier tous les plugins</h3>
+      <p class="action">Contrôle que tous les plugins correspondent aux versions du dépôt officiel — repère les backdoors cachés.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp plugin verify-checksums --all</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Vérifie que tous les plugins installés correspondent aux versions du dépôt officiel WordPress. Repère les backdoors cachés dans les plugins.</p>
 
-      <h3>Vérifier tous les thèmes</h3>
+      <h3><span class="cmd-name">wp theme</span> — Vérifier tous les thèmes</h3>
+      <p class="action">Contrôle l'intégrité de tous les thèmes contre les versions officielles — identifie les thèmes piratés ou modifiés.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp theme verify-checksums --all</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Contrôle l'intégrité de tous les thèmes contre les versions officielles. Identifie les thèmes piratés ou modifiés.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Analyse de la base de données</h2>
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Analyse de la Base de Données</h2>
 
-      <h3>Vérifier la santé de la base</h3>
+      <h3><span class="cmd-name">wp db check</span> — Santé de la base</h3>
+      <p class="action">Vérifie la santé des tables MySQL — détecte les tables corrompues qui pourraient cacher du code malveillant.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp db check</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Vérifie la santé de la base de données MySQL. Détecte les tables corrompues qui pourraient cacher du code malveillant.</p>
 
-      <h3>Rechercher des scripts injectés dans les options</h3>
+      <h3><span class="cmd-name">wp option list</span> — Scripts injectés dans les options</h3>
+      <p class="action">Recherche des scripts JavaScript suspects injectés dans les options WordPress (technique courante de piratage).</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp option list --search="*&lt;script*" --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Recherche les scripts JavaScript suspects injectés dans les options WordPress (technique courante de piratage).</p>
 
-      <h3>Trouver les contenus contenant des scripts</h3>
+      <h3><span class="cmd-name">wp post list</span> — Contenus contenant des scripts</h3>
+      <p class="action">Trouve les pages/articles contenant des balises script potentiellement malveillantes.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp post list --post_type=any --s="&lt;script" --fields=ID,post_title,post_type</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les contenus (pages/articles) contenant des balises script potentiellement malveillantes.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Gestion des utilisateurs</h2>
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Gestion des Utilisateurs</h2>
 
-      <h3>Lister les administrateurs</h3>
+      <h3><span class="cmd-name">wp user list</span> — Lister les administrateurs</h3>
+      <p class="action">Liste tous les comptes administrateurs — permet de repérer des comptes pirates créés par des hackers.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp user list --role=administrator --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Liste tous les comptes administrateurs. Permet de repérer des comptes pirates créés par des hackers.</p>
 
-      <h3>Afficher les métadonnées utilisateurs</h3>
+      <h3><span class="cmd-name">wp user meta</span> — Métadonnées utilisateurs</h3>
+      <p class="action">Affiche toutes les métadonnées utilisateurs — peut révéler des permissions anormales.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp user list --field=user_login | xargs -I {} wp user meta list {} --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Affiche toutes les métadonnées utilisateurs. Peut révéler des permissions anormales.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Vérification des fichiers suspects</h2>
+    <div class="card">
+      <div class="section-label">Section 04</div>
+      <h2>Vérification des Fichiers Suspects</h2>
 
-      <h3>Fichiers PHP modifiés récemment</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers PHP modifiés récemment</h3>
+      <p class="action">Liste les fichiers PHP modifiés dans les 7 derniers jours — utile pour repérer des injections récentes.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>find . -name "*.php" -mtime -7 -ls</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Liste les fichiers PHP modifiés dans les 7 derniers jours. Utile pour repérer des injections récentes.</p>
 
-      <h3>Fichiers marqués suspects</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers marqués suspects</h3>
+      <p class="action">Trouve les fichiers marqués comme suspects par ClamAV ou autres scanners.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>find . -type f -name "*.suspected"</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les fichiers marqués comme suspects par ClamAV ou autres scanners.</p>
 
-      <h3>Rechercher du code obfusqué</h3>
+      <h3><span class="cmd-name">grep</span> — Rechercher du code obfusqué</h3>
+      <p class="action">Recherche le pattern d'obfuscation le plus courant dans le code malveillant PHP.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>grep -r "eval(base64_decode" --include="*.php" .</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Recherche le pattern d'obfuscation le plus courant dans le code malveillant PHP.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Permissions et propriété</h2>
+    <div class="card">
+      <div class="section-label">Section 05</div>
+      <h2>Permissions &amp; Propriété</h2>
 
-      <h3>Trouver les fichiers trop permissifs</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers trop permissifs</h3>
+      <p class="action">Trouve les fichiers avec permissions 777 (trop permissives = risque de sécurité).</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>find . -type f -perm 0777</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les fichiers avec permissions 777 (trop permissives = risque de sécurité).</p>
 
-      <h3>Simuler une mise à jour</h3>
+      <h3><span class="cmd-name">wp core update</span> — Simuler une mise à jour</h3>
+      <p class="action">Simule une mise à jour sans l'appliquer — montre si votre version est obsolète ou vulnérable.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp core update --dry-run</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Simule une mise à jour sans l'appliquer. Montre si votre version est obsolète/vulnérable.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Recommandation : audit complet</h2>
-      <p>Exécutez cette séquence dans l'ordre pour un audit de sécurité complet :</p>
+    <div class="card">
+      <div class="section-label">Audit Complet</div>
+      <h2>Séquence d'Audit Recommandée</h2>
+      <p>Exécutez ces commandes dans l'ordre pour un audit de sécurité complet et méthodique.</p>
 
-      <h3>1. Vérifier l'intégrité</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code># 1. Vérifier l'intégrité
-wp core verify-checksums
+      <div class="audit-steps">
+        <div class="audit-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Vérifier l'intégrité</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>wp core verify-checksums
 wp plugin verify-checksums --all
 wp theme verify-checksums --all</code></pre>
-      </div>
-
-      <h3>2. Base de données et utilisateurs</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code># 2. Base de données
-wp db check
+            </div>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Base de données et utilisateurs</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>wp db check
 wp user list --role=administrator</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Fichiers récents suspects</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>find . -name "*.php" -mtime -7 -ls</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Vérification des permissions</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>find . -type f -perm 0777</code></pre>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <h3>3. Fichiers récents suspects</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code># 3. Fichiers récents suspects
-find . -name "*.php" -mtime -7 -ls</code></pre>
-      </div>
-
-      <h3>4. Permissions</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code># 4. Permissions
-find . -type f -perm 0777</code></pre>
-      </div>
-    </section>
-
-    <section class="card">
-      <p class="footer">Astuce : utilisez les boutons "Copier" pour réutiliser les commandes en terminal. <a href="index.html" style="color:#93c5fd;">← Retour à l'audit Bash</a></p>
-    </section>
   </main>
 
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
   <script>
-    document.querySelectorAll('button.copy').forEach(function (button) {
-      button.addEventListener('click', function () {
-        const code = button.parentElement.querySelector('code').innerText;
-        navigator.clipboard.writeText(code).then(function () {
-          const previous = button.textContent;
-          button.textContent = 'Copié';
-          setTimeout(function () { button.textContent = previous; }, 1200);
-        }).catch(function () {
-          const previous = button.textContent;
-          button.textContent = 'Erreur';
-          setTimeout(function () { button.textContent = previous; }, 1200);
+    document.querySelectorAll('button.copy').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const code = btn.closest('.code-wrap').querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(function() {
+          const orig = btn.textContent;
+          btn.textContent = 'Copié ✓';
+          btn.style.color = '#28cd41';
+          setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
+        }).catch(function() {
+          const orig = btn.textContent;
+          btn.textContent = 'Erreur';
+          btn.style.color = '#ff453a';
+          setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
         });
       });
     });
