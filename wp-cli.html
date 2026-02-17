@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commandes WP-CLI – Sécurité WordPress</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      background: linear-gradient(160deg, var(--bg), #020617);
+      color: var(--text);
+      padding: 24px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 18px;
+    }
+    h1, h2, h3 { margin-top: 0; }
+    h1 { color: var(--accent); }
+    h2 { color: #93c5fd; }
+    ul { margin: 0; padding-left: 20px; }
+    .tag { font-weight: 700; }
+    .ok { color: var(--accent); }
+    .bad { color: var(--danger); }
+    .warn { color: var(--warn); }
+    .code-wrap {
+      position: relative;
+      margin: 10px 0;
+    }
+    pre {
+      margin: 0;
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    code { color: #f8fafc; }
+    button.copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: 0;
+      border-radius: 6px;
+      background: #1d4ed8;
+      color: #fff;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    nav {
+      margin-bottom: 8px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2px;
+    }
+    p.action {
+      color: var(--muted);
+      margin: 4px 0 14px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <nav class="card">
+      <a href="index.html">Audit Bash</a>
+      <a href="wp-cli.html" class="active">Commandes WP-CLI</a>
+    </nav>
+
+    <section class="card">
+      <h1>Commandes WP-CLI essentielles pour la sécurité WordPress</h1>
+      <p>WP-CLI est l'interface en ligne de commande officielle de WordPress. Voici les commandes indispensables pour détecter les fichiers corrompus et sécuriser un site.</p>
+    </section>
+
+    <section class="card">
+      <h2>Vérification de l'intégrité des fichiers</h2>
+
+      <h3>Vérifier le cœur WordPress</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp core verify-checksums</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Compare les fichiers du cœur WordPress avec les versions officielles. Détecte les modifications suspectes dans wp-admin/ et wp-includes/</p>
+
+      <h3>Vérifier tous les plugins</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp plugin verify-checksums --all</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Vérifie que tous les plugins installés correspondent aux versions du dépôt officiel WordPress. Repère les backdoors cachés dans les plugins.</p>
+
+      <h3>Vérifier tous les thèmes</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp theme verify-checksums --all</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Contrôle l'intégrité de tous les thèmes contre les versions officielles. Identifie les thèmes piratés ou modifiés.</p>
+    </section>
+
+    <section class="card">
+      <h2>Analyse de la base de données</h2>
+
+      <h3>Vérifier la santé de la base</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp db check</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Vérifie la santé de la base de données MySQL. Détecte les tables corrompues qui pourraient cacher du code malveillant.</p>
+
+      <h3>Rechercher des scripts injectés dans les options</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp option list --search="*&lt;script*" --format=table</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Recherche les scripts JavaScript suspects injectés dans les options WordPress (technique courante de piratage).</p>
+
+      <h3>Trouver les contenus contenant des scripts</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp post list --post_type=any --s="&lt;script" --fields=ID,post_title,post_type</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Trouve les contenus (pages/articles) contenant des balises script potentiellement malveillantes.</p>
+    </section>
+
+    <section class="card">
+      <h2>Gestion des utilisateurs</h2>
+
+      <h3>Lister les administrateurs</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp user list --role=administrator --format=table</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Liste tous les comptes administrateurs. Permet de repérer des comptes pirates créés par des hackers.</p>
+
+      <h3>Afficher les métadonnées utilisateurs</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp user list --field=user_login | xargs -I {} wp user meta list {} --format=table</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Affiche toutes les métadonnées utilisateurs. Peut révéler des permissions anormales.</p>
+    </section>
+
+    <section class="card">
+      <h2>Vérification des fichiers suspects</h2>
+
+      <h3>Fichiers PHP modifiés récemment</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>find . -name "*.php" -mtime -7 -ls</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Liste les fichiers PHP modifiés dans les 7 derniers jours. Utile pour repérer des injections récentes.</p>
+
+      <h3>Fichiers marqués suspects</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>find . -type f -name "*.suspected"</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Trouve les fichiers marqués comme suspects par ClamAV ou autres scanners.</p>
+
+      <h3>Rechercher du code obfusqué</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>grep -r "eval(base64_decode" --include="*.php" .</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Recherche le pattern d'obfuscation le plus courant dans le code malveillant PHP.</p>
+    </section>
+
+    <section class="card">
+      <h2>Permissions et propriété</h2>
+
+      <h3>Trouver les fichiers trop permissifs</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>find . -type f -perm 0777</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Trouve les fichiers avec permissions 777 (trop permissives = risque de sécurité).</p>
+
+      <h3>Simuler une mise à jour</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>wp core update --dry-run</code></pre>
+      </div>
+      <p class="action"><strong>Action :</strong> Simule une mise à jour sans l'appliquer. Montre si votre version est obsolète/vulnérable.</p>
+    </section>
+
+    <section class="card">
+      <h2>Recommandation : audit complet</h2>
+      <p>Exécutez cette séquence dans l'ordre pour un audit de sécurité complet :</p>
+
+      <h3>1. Vérifier l'intégrité</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code># 1. Vérifier l'intégrité
+wp core verify-checksums
+wp plugin verify-checksums --all
+wp theme verify-checksums --all</code></pre>
+      </div>
+
+      <h3>2. Base de données et utilisateurs</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code># 2. Base de données
+wp db check
+wp user list --role=administrator</code></pre>
+      </div>
+
+      <h3>3. Fichiers récents suspects</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code># 3. Fichiers récents suspects
+find . -name "*.php" -mtime -7 -ls</code></pre>
+      </div>
+
+      <h3>4. Permissions</h3>
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code># 4. Permissions
+find . -type f -perm 0777</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <p class="footer">Astuce : utilisez les boutons "Copier" pour réutiliser les commandes en terminal. <a href="index.html" style="color:#93c5fd;">← Retour à l'audit Bash</a></p>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('button.copy').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const code = button.parentElement.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(function () {
+          const previous = button.textContent;
+          button.textContent = 'Copié';
+          setTimeout(function () { button.textContent = previous; }, 1200);
+        }).catch(function () {
+          const previous = button.textContent;
+          button.textContent = 'Erreur';
+          setTimeout(function () { button.textContent = previous; }, 1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

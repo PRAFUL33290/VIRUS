@@ -74,10 +74,32 @@
       color: var(--muted);
       font-size: 14px;
     }
+    nav {
+      margin-bottom: 8px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2px;
+    }
   </style>
 </head>
 <body>
   <main class="container">
+    <nav class="card">
+      <a href="index.html" class="active">Audit Bash</a>
+      <a href="wp-cli.html">Commandes WP-CLI</a>
+    </nav>
+
     <section class="card">
       <h1>Détecter les fichiers malveillants sur un site WordPress en Bash</h1>
       <h2>1) Pourquoi scanner les fichiers WordPress</h2>
