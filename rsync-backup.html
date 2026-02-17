@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sauvegarde avec Rsync – Tutoriel Complet</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      background: linear-gradient(160deg, var(--bg), #020617);
+      color: var(--text);
+      padding: 24px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 18px;
+    }
+    h1, h2, h3 { margin-top: 0; }
+    h1 { color: var(--accent); }
+    h2 { color: #93c5fd; }
+    ul { margin: 0; padding-left: 20px; }
+    .tag { font-weight: 700; }
+    .ok { color: var(--accent); }
+    .bad { color: var(--danger); }
+    .warn { color: var(--warn); }
+    .code-wrap {
+      position: relative;
+      margin: 10px 0;
+    }
+    pre {
+      margin: 0;
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    code { color: #f8fafc; }
+    button.copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: 0;
+      border-radius: 6px;
+      background: #1d4ed8;
+      color: #fff;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    nav {
+      margin-bottom: 8px;
+    }
+    nav a {
+      color: #93c5fd;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    nav a.active {
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #1f2937;
+    }
+    table th {
+      background: #030712;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    table tr:nth-child(even) {
+      background: rgba(3, 7, 18, 0.3);
+    }
+    .note {
+      background: rgba(234, 179, 8, 0.1);
+      border-left: 4px solid var(--warn);
+      padding: 12px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <nav class="card">
+      <a href="index.html">Audit Bash</a>
+      <a href="wp-cli.html">Commandes WP-CLI</a>
+      <a href="vps-config.html">Config VPS</a>
+      <a href="rsync-backup.html" class="active">Sauvegarde Rsync</a>
+    </nav>
+
+    <section class="card">
+      <h1>Sauvegarde avec Rsync – Passez à la vitesse supérieure</h1>
+      <p>Voici ton tutoriel pour passer à la vitesse supérieure. Comme on l'a vu, on va oublier FileZilla et utiliser <strong>Rsync</strong>. C'est l'outil standard pour synchroniser des dossiers de manière <span class="ok">sécurisée</span> et <span class="ok">ultra-rapide</span>.</p>
+    </section>
+
+    <section class="card">
+      <h2>Étape 1 : Préparation (Les ingrédients)</h2>
+      <p>Avant de taper la commande, assure-toi d'avoir ces trois éléments :</p>
+      <ul>
+        <li><strong>Ton identifiant SSH</strong> (ex: <code>u12345678</code>)</li>
+        <li><strong>L'adresse IP de ton serveur</strong> (ex: <code>123.123.123.123</code>)</li>
+        <li><strong>Le chemin du dossier à sauvegarder</strong> : Connecte-toi au serveur et tape <code>pwd</code> dans le dossier de ton site pour l'obtenir (souvent <code>/home/u123/domains/tonsite.com/public_html</code>).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Étape 2 : La commande magique</h2>
+      <p>Ouvre le terminal de ton ordinateur (<strong>PowerShell</strong> sur Windows ou <strong>Terminal</strong> sur Mac) et tape la commande suivante :</p>
+      
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>rsync -avzP user@ip_du_serveur:/chemin/distant/ /chemin/local/</code></pre>
+      </div>
+
+      <h3>Décryptage des options (Pour comprendre ce qu'on fait)</h3>
+      <ul>
+        <li><code><strong>-a</strong></code> <span class="tag">(Archive)</span> : Garde tout intact (les dates des fichiers, les permissions, etc.). C'est indispensable pour un backup.</li>
+        <li><code><strong>-v</strong></code> <span class="tag">(Verbose)</span> : Le serveur te "parle" et te montre quel fichier il est en train de copier.</li>
+        <li><code><strong>-z</strong></code> <span class="tag">(Compress)</span> : Compresse les données pendant le transfert. C'est le secret de la rapidité !</li>
+        <li><code><strong>-P</strong></code> <span class="tag">(Progress)</span> : Affiche une barre de progression et permet de reprendre si ta connexion coupe.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Étape 3 : Automatiser avec un script (Le niveau Pro)</h2>
+      <p>Au lieu de retaper cette longue commande à chaque fois, on va créer un petit fichier "lanceur".</p>
+
+      <h3>Sur Windows (Fichier .bat)</h3>
+      <ol>
+        <li>Ouvre le <strong>Bloc-notes</strong>.</li>
+        <li>Colle ta commande rsync.</li>
+        <li>Ajoute <code>pause</code> à la ligne suivante (pour que la fenêtre ne se ferme pas tout de suite à la fin).</li>
+        <li>Enregistre le fichier sous le nom <code>Backup_Serveur.bat</code> sur ton bureau.</li>
+      </ol>
+      <p><span class="ok">➡️ Désormais, tu as juste à double-cliquer dessus pour lancer ta sauvegarde.</span></p>
+
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>rsync -avzP user@ip_du_serveur:/chemin/distant/ /chemin/local/
+pause</code></pre>
+      </div>
+
+      <h3>Sur Mac/Linux (Fichier .sh)</h3>
+      <ol>
+        <li>Crée un fichier texte nommé <code>backup.sh</code>.</li>
+        <li>Colle la commande et ajoute <code>read</code> à la fin.</li>
+        <li>Donne-lui les droits d'exécution avec <code>chmod +x backup.sh</code>.</li>
+      </ol>
+
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>#!/bin/bash
+rsync -avzP user@ip_du_serveur:/chemin/distant/ /chemin/local/
+read</code></pre>
+      </div>
+
+      <div class="code-wrap">
+        <button class="copy" type="button">Copier</button>
+        <pre><code>chmod +x backup.sh</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Pourquoi c'est mieux que "FileZilla" ?</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Fonctionnalité</th>
+            <th>FileZilla (FTP)</th>
+            <th>Rsync (SSH)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Vitesse</strong></td>
+            <td><span class="bad">Lent</span> (fichier par fichier)</td>
+            <td><span class="ok">Ultra-rapide</span> (flux continu)</td>
+          </tr>
+          <tr>
+            <td><strong>Reprise sur erreur</strong></td>
+            <td><span class="warn">Parfois instable</span></td>
+            <td><span class="ok">Parfait</span> (reprend au bit près)</td>
+          </tr>
+          <tr>
+            <td><strong>Intelligence</strong></td>
+            <td><span class="bad">Copie tout à chaque fois</span></td>
+            <td><span class="ok">Ne copie que ce qui a changé</span></td>
+          </tr>
+          <tr>
+            <td><strong>Sécurité</strong></td>
+            <td><span class="bad">Souvent non chiffré</span></td>
+            <td><span class="ok">Entièrement crypté via SSH</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <div class="note">
+        <h3 style="margin-top: 0;">⚠️ Note importante</h3>
+        <p>Si tu veux que la sauvegarde soit un <strong>"miroir exact"</strong> (c'est-à-dire que si tu supprimes un fichier sur le serveur, il se supprime aussi sur ton ordi), ajoute l'option <code>--delete</code> à ta commande.</p>
+        <p><span class="warn">Mais attention, c'est à double tranchant !</span></p>
+        
+        <div class="code-wrap">
+          <button class="copy" type="button">Copier</button>
+          <pre><code>rsync -avzP --delete user@ip_du_serveur:/chemin/distant/ /chemin/local/</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Conclusion</h2>
+      <ul>
+        <li>Rsync est <strong>plus rapide, plus intelligent et plus sécurisé</strong> que FileZilla.</li>
+        <li>L'automatisation avec des scripts te fait gagner du temps.</li>
+        <li>La reprise automatique garantit que tes sauvegardes sont toujours complètes.</li>
+        <li><span class="ok">➡️ Une fois configuré, c'est un simple double-clic !</span></li>
+      </ul>
+      <p class="footer">Astuce : utilisez les boutons "Copier" pour réutiliser les commandes en terminal.</p>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('button.copy').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const code = button.parentElement.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(function () {
+          const previous = button.textContent;
+          button.textContent = 'Copié';
+          setTimeout(function () { button.textContent = previous; }, 1200);
+        }).catch(function () {
+          const previous = button.textContent;
+          button.textContent = 'Erreur';
+          setTimeout(function () { button.textContent = previous; }, 1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
