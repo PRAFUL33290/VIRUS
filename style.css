@@ -1,0 +1,327 @@
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens ── */
+:root {
+  --bg:      #f5f5f7;
+  --surface: #ffffff;
+  --text:    #1d1d1f;
+  --muted:   #6e6e73;
+  --border:  rgba(0,0,0,0.09);
+  --shadow:  0 2px 8px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+  --accent:  #0071e3;
+  --ok:      #34c759;
+  --bad:     #ff3b30;
+  --warn:    #ff9500;
+  --radius:  14px;
+  --font:    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --mono:    "SF Mono", "Monaco", "Menlo", "Consolas", monospace;
+}
+
+/* ── Base ── */
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sticky frosted header ── */
+.site-header {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  background: var(--text);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.site-nav {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 11px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.site-nav a:hover {
+  background: rgba(0,0,0,0.06);
+  color: var(--text);
+}
+
+.site-nav a.active {
+  background: var(--text);
+  color: #fff;
+}
+
+/* ── Page layout ── */
+.page-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Hero card (dark, per-page banner) ── */
+.hero-card {
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius);
+  padding: 38px 32px;
+  box-shadow: var(--shadow);
+}
+
+.hero-card h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  color: #f5f5f7;
+  margin-bottom: 10px;
+}
+
+.hero-card p {
+  font-size: 15px;
+  color: rgba(245,245,247,0.55);
+  max-width: 620px;
+}
+
+/* ── Content cards ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Section headings ── */
+.card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin: 22px 0 10px;
+}
+
+.card h3:first-child,
+.card h3:first-of-type { margin-top: 0; }
+
+/* ── Prose ── */
+p  { font-size: 15px; margin: 10px 0; }
+p:first-child { margin-top: 0; }
+ul, ol { padding-left: 22px; }
+li { font-size: 15px; margin: 5px 0; }
+strong { font-weight: 600; }
+
+/* ── Inline code ── */
+p code, li code, td code {
+  background: rgba(0,0,0,0.06);
+  color: var(--text);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+/* ── macOS-style terminal code block ── */
+.code-wrap {
+  margin: 12px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+}
+
+.terminal-bar {
+  background: #3a3a3c;
+  padding: 9px 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+
+pre {
+  margin: 0;
+  background: #1c1c1e;
+  padding: 15px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+code { color: #e2e8f0; font-family: var(--mono); }
+
+/* ── Copy button (inside terminal-bar) ── */
+button.copy {
+  margin-left: auto;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 6px;
+  padding: 3px 11px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font);
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+button.copy:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+/* ── Status colours ── */
+.ok   { color: var(--ok); }
+.bad  { color: var(--bad); }
+.warn { color: var(--warn); }
+.tag  { font-weight: 600; }
+
+/* ── Callout/note boxes ── */
+.note {
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 14px 0;
+}
+
+.note-blue {
+  background: rgba(0,113,227,0.08);
+  border-left: 3px solid var(--accent);
+}
+
+.note-yellow {
+  background: rgba(255,149,0,0.08);
+  border-left: 3px solid var(--warn);
+}
+
+/* ── Table ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 14px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+table th {
+  background: var(--bg);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+table tr:last-child td { border-bottom: none; }
+
+/* ── Action description ── */
+p.action {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 6px 0 18px;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.footer-note {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  padding-top: 4px;
+}
+
+.footer-note a { color: var(--accent); text-decoration: none; }
+.footer-note a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .header-inner { flex-direction: column; height: auto; padding: 10px 16px 12px; gap: 8px; }
+  .site-nav { justify-content: center; }
+  .page-content { padding: 20px 16px 56px; gap: 14px; }
+  .card { padding: 20px; }
+  .hero-card { padding: 28px 22px; }
+  .hero-card h1 { font-size: 21px; }
+}
