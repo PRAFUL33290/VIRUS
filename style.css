@@ -31,7 +31,8 @@
   /* Layout */
   --r:     14px;
   --max-w: 1100px;
-  --topbar-h: 56px;
+  --sidebar-w: 220px;
+  --mobile-topbar-h: 88px;
 
   /* Typographie */
   --f:  -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
@@ -51,28 +52,30 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── TOP NAVBAR ── */
-.navbar {
+/* ── LEFT SIDEBAR ── */
+.sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  height: var(--topbar-h);
+  bottom: 0;
+  width: var(--sidebar-w);
   z-index: 200;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.96);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-inner {
+  border-right: 1px solid var(--border);
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 0 20px;
-  gap: 10px;
+  padding: 20px 12px 16px;
+  gap: 4px;
 }
 .nav-brand {
   display: flex;
@@ -83,26 +86,24 @@ body {
   color: var(--text);
   text-decoration: none;
   white-space: nowrap;
-  padding: 0 8px;
+  padding: 10px 10px 18px;
   flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
 }
 .nav-brand svg { width: 20px; height: 20px; flex-shrink: 0; }
 .nav-links {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   list-style: none;
   gap: 2px;
   flex: 1;
-  justify-content: center;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
-.nav-links::-webkit-scrollbar { display: none; }
 .nav-links a {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  gap: 8px;
+  padding: 9px 10px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
@@ -110,6 +111,7 @@ body {
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.15s, color 0.15s;
+  text-align: left;
 }
 .nav-links a svg {
   width: 15px;
@@ -125,15 +127,15 @@ body {
 .nav-links a.active { background: var(--accent); color: #fff; }
 .nav-links li.has-mega > a.active { background: var(--accent); color: #fff; }
 
-/* ── TOPBAR OFFSET FOR CONTENT ── */
-body { padding-top: var(--topbar-h); }
+/* ── SIDEBAR OFFSET FOR CONTENT ── */
+body { padding-left: var(--sidebar-w); }
 
-/* ── SSH BUTTON ── */
+/* ── SSH BUTTONS (sidebar bottom) ── */
 .nav-ssh-btn, .nav-ssh-laurie-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 9px 10px;
   background: #1c1c1e;
   color: #fff;
   border: none;
@@ -146,8 +148,11 @@ body { padding-top: var(--topbar-h); }
   transition: background 0.15s, transform 0.1s;
   line-height: 1;
   flex-shrink: 0;
+  width: 100%;
+  text-align: left;
 }
-.nav-ssh-btn { margin-left: auto; }
+.nav-ssh-btn { margin-top: auto; }
+.nav-ssh-laurie-btn { margin-top: 4px; }
 .nav-ssh-btn:hover, .nav-ssh-laurie-btn:hover  { background: #3a3a3c; }
 .nav-ssh-btn:active, .nav-ssh-laurie-btn:active { transform: scale(0.97); }
 .nav-ssh-btn svg, .nav-ssh-laurie-btn svg    { width: 13px; height: 13px; flex-shrink: 0; }
@@ -679,32 +684,32 @@ p code, li code {
 .site-footer a { color: var(--accent); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
-/* ── MEGA MENU ── */
+/* ── MEGA MENU (opens to the right of sidebar) ── */
 .nav-links li.has-mega { position: relative; }
 .nav-links li.has-mega > a {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
 .nav-links li.has-mega > a::after {
   content: '';
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid currentColor;
-  margin-left: 2px;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid currentColor;
+  margin-left: auto;
   opacity: 0.6;
   transition: transform 0.2s;
 }
-.nav-links li.has-mega:hover > a::after { transform: rotate(180deg); }
+.nav-links li.has-mega:hover > a::after { transform: rotate(90deg); }
 .mega-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: calc(100% + 8px);
+  transform: none;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.15);
@@ -857,13 +862,53 @@ p code, li code {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .navbar             { height: auto; min-height: var(--topbar-h); }
-  .nav-inner          { flex-wrap: wrap; padding: 8px 12px; gap: 6px; }
-  .nav-brand          { order: 1; }
-  .nav-ssh-btn        { order: 2; }
-  .nav-ssh-laurie-btn { order: 3; }
-  .nav-links          { order: 4; width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  :root { --sidebar-w: 0px; }
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: auto;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .sidebar-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 12px;
+    gap: 6px;
+    height: auto;
+  }
+  .nav-brand {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 4px 8px;
+    order: 1;
+  }
+  .nav-links {
+    flex-direction: row;
+    order: 4;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a svg    { display: none; }
+  .nav-ssh-btn        { order: 2; margin-top: 0; width: auto; }
+  .nav-ssh-laurie-btn { order: 3; margin-top: 0; width: auto; }
+  body { padding-left: 0; padding-top: var(--mobile-topbar-h); }
+  .mega-menu { left: 0; top: calc(100% + 4px); transform: none; }
+  .nav-links li.has-mega > a::after {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    border-bottom: none;
+    margin-left: 2px;
+  }
   .hero               { height: 300px; }
   .hero-content       { padding: 24px 20px 28px; }
   .card               { padding: 22px 18px; border-radius: 12px; }
@@ -873,7 +918,6 @@ p code, li code {
   .cmp-table          { font-size: 13px; }
   .cmp-table th,
   .cmp-table td       { padding: 10px 12px; }
-  .mega-menu          { left: 0; transform: none; }
   .home-grid          { grid-template-columns: 1fr; }
 }
 
