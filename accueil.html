@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TermSecure — Guides Sécurité Serveur &amp; Terminal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(0,113,227,0.9);
+      --hero-pos: center 55%;
+    }
+    .home-hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--accent);
+      font-family: var(--f);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.12s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: rgba(255,255,255,0.9); transform: scale(1.03); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: var(--f);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: background 0.15s, transform 0.12s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.25); transform: scale(1.03); }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .stat-item {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label { font-size: 13px; color: var(--text-2); }
+    @media (max-width: 600px) {
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .home-hero-cta { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="accueil.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="accueil.html" class="active"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Accueil</a></li>
+        <li class="has-mega">
+          <a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Terminal</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Guides Terminal</li>
+            <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+            <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+            <li><a href="affichage-dossiers.html"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>Affichage Dossiers</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="index.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WordPress</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sécurité WordPress</li>
+            <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+            <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Serveur</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Infrastructure</li>
+            <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+            <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+            <li><a href="sauvegarde-parvati.html"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+          </ul>
+        </li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Terminal — guides sécurité serveur"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Guides Serveur &amp; Sécurité</div>
+      <h1>TermSecure<br>— Maîtrisez votre Serveur</h1>
+      <p>Des guides pratiques pour administrer, sécuriser et optimiser votre serveur Linux, WordPress et VPS en toute confiance.</p>
+      <div class="home-hero-cta">
+        <a href="commandes-basiques.html" class="btn-primary">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>
+          Commencer
+        </a>
+        <a href="#guides" class="btn-secondary">
+          Explorer les guides →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- INTRO -->
+    <div class="card">
+      <div class="section-label">À propos</div>
+      <h2>Votre référence pour l'administration serveur</h2>
+      <p>TermSecure est une collection de guides clairs et opérationnels pour les développeurs, les administrateurs système et les webmasters qui gèrent des serveurs Linux. Chaque guide couvre un outil ou une problématique précise, avec des exemples de commandes copiables en un clic.</p>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-num">8</div>
+          <div class="stat-label">Guides disponibles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Commandes documentées</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Thématiques couvertes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUIDES -->
+    <div class="card" id="guides">
+      <div class="section-label">Terminal</div>
+      <h2>Guides Terminal &amp; Shell</h2>
+      <p>Maîtrisez le terminal Linux avec des commandes pratiques pour naviguer, gérer des fichiers et automatiser vos tâches.</p>
+      <div class="home-grid">
+        <a href="commandes-basiques.html" class="home-card">
+          <div class="home-card-icon" style="background:#0071e3">
+            <svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(0,113,227,0.1);color:var(--accent)">Débutant</span>
+          <h3>Commandes Basiques</h3>
+          <p>Navigation, gestion de fichiers, permissions, réseau — les fondamentaux du terminal en un seul guide.</p>
+        </a>
+        <a href="commandes-ssh.html" class="home-card">
+          <div class="home-card-icon" style="background:#5856d6">
+            <svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(88,86,214,0.1);color:#5856d6">SSH</span>
+          <h3>Commandes SSH</h3>
+          <p>Connexion sécurisée, tunnels, transferts de fichiers et gestion des clés — tout ce qu'il faut savoir sur SSH.</p>
+        </a>
+        <a href="affichage-dossiers.html" class="home-card">
+          <div class="home-card-icon" style="background:#ff9500">
+            <svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(255,149,0,0.1);color:var(--warning)">Dossiers</span>
+          <h3>Affichage des Dossiers</h3>
+          <p>Maîtrisez <code>ls</code>, <code>tree</code> et <code>find</code> pour afficher et filtrer uniquement les dossiers de votre système.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">WordPress &amp; Sécurité</div>
+      <h2>Sécuriser &amp; Administrer WordPress</h2>
+      <p>Détectez les infections, gérez votre site via la ligne de commande et renforcez sa sécurité.</p>
+      <div class="home-grid">
+        <a href="index.html" class="home-card">
+          <div class="home-card-icon" style="background:#ff3b30">
+            <svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(255,59,48,0.1);color:var(--danger)">Sécurité</span>
+          <h3>Audit Bash</h3>
+          <p>Détectez les fichiers malveillants, les backdoors et les injections PHP dans votre WordPress avec des commandes Bash.</p>
+        </a>
+        <a href="wp-cli.html" class="home-card">
+          <div class="home-card-icon" style="background:#28cd41">
+            <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(40,205,65,0.1);color:var(--success)">WP-CLI</span>
+          <h3>WP-CLI</h3>
+          <p>Gérez WordPress entièrement en ligne de commande : mises à jour, plugins, utilisateurs et plus encore.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Serveur &amp; Infrastructure</div>
+      <h2>Gérer votre Serveur VPS</h2>
+      <p>Configurez, sécurisez et sauvegardez votre infrastructure de A à Z.</p>
+      <div class="home-grid">
+        <a href="vps-config.html" class="home-card">
+          <div class="home-card-icon" style="background:#0071e3">
+            <svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(0,113,227,0.1);color:var(--accent)">VPS</span>
+          <h3>Configuration VPS</h3>
+          <p>De l'installation initiale à la sécurisation complète d'un VPS Linux — pare-feu, Nginx, SSL et plus.</p>
+        </a>
+        <a href="rsync-backup.html" class="home-card">
+          <div class="home-card-icon" style="background:#ff9500">
+            <svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(255,149,0,0.1);color:var(--warning)">Backup</span>
+          <h3>Rsync &amp; Sauvegarde</h3>
+          <p>Sauvegardez et synchronisez vos données de façon efficace avec rsync : options, exemples et stratégies.</p>
+        </a>
+        <a href="sauvegarde-parvati.html" class="home-card">
+          <div class="home-card-icon" style="background:#5856d6">
+            <svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>
+          </div>
+          <span class="home-card-tag" style="background:rgba(88,86,214,0.1);color:#5856d6">Parvati</span>
+          <h3>Sauvegarde Parvati</h3>
+          <p>Script et procédure de sauvegarde personnalisée pour le serveur Parvati — automatisation et restauration.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- POURQUOI -->
+    <div class="card">
+      <div class="section-label">Pourquoi TermSecure</div>
+      <h2>Conçu pour aller droit au but</h2>
+      <div class="home-feature-list">
+        <div class="home-feature">
+          <div class="home-feature-icon">
+            <svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>
+          </div>
+          <div class="home-feature-body">
+            <h4>Commandes copiables en un clic</h4>
+            <p>Chaque bloc de code dispose d'un bouton "Copier" pour coller la commande directement dans votre terminal.</p>
+          </div>
+        </div>
+        <div class="home-feature">
+          <div class="home-feature-icon">
+            <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><polyline points="10 7 10 10 12 12"/></svg>
+          </div>
+          <div class="home-feature-body">
+            <h4>Guides à jour et opérationnels</h4>
+            <p>Des contenus rédigés pour être immédiatement utilisables — pas de théorie inutile, que de la pratique.</p>
+          </div>
+        </div>
+        <div class="home-feature">
+          <div class="home-feature-icon">
+            <svg viewBox="0 0 20 20"><path d="M12 2l2 5h5l-4 3 1.5 5L12 12l-4.5 3L9 10 5 7h5z"/></svg>
+          </div>
+          <div class="home-feature-body">
+            <h4>SSH Hostinger intégré</h4>
+            <p>Connectez-vous en un clic à votre serveur Hostinger directement depuis la barre de navigation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
