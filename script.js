@@ -8,6 +8,11 @@
     var SSH_CMD  = 'ssh -p ' + SSH_PORT + ' ' + SSH_USER + '@' + SSH_HOST;
     var SSH_URI  = 'ssh://' + SSH_USER + '@' + SSH_HOST + ':' + SSH_PORT;
 
+    var LAURIE_HOST = 'monitor.o2switch.net';
+    var LAURIE_USER = 'gila4947';
+    var LAURIE_CMD  = 'ssh ' + LAURIE_USER + '@' + LAURIE_HOST;
+    var LAURIE_URI  = 'ssh://' + LAURIE_USER + '@' + LAURIE_HOST;
+
    /* Au clic sur le bouton SSH Hostinger :
        1. Copie la commande ssh dans le presse-papiers
        2. Ouvre directement l'URI ssh:// → macOS l'envoie au Terminal */
@@ -18,6 +23,11 @@
            navigator.clipboard.writeText(SSH_CMD).catch(function () {});
                  /* Ouvre directement le Terminal via le protocole ssh:// */
            window.location.href = SSH_URI;
+         }
+         if (e.target.closest('.nav-ssh-laurie-btn')) {
+                 e.preventDefault();
+                 navigator.clipboard.writeText(LAURIE_CMD).catch(function () {});
+                 window.location.href = LAURIE_URI;
          }
    });
 }());
