@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commandes SSH de Base — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(0,113,227,0.9);
+      --hero-pos: center 45%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+        <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+        <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+        <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+        <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+        <li><a href="commandes-ssh.html" class="active"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Terminal SSH — Commandes de base" loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Hostinger — SSH</div>
+      <h1>Commandes SSH<br>de Base</h1>
+      <p>Les commandes SSH essentielles que tout administrateur doit connaître pour gérer un serveur distant en toute sécurité.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Qu'est-ce que SSH ?</h2>
+      <p>SSH (Secure Shell) est un protocole réseau cryptographique permettant d'accéder à un serveur distant de manière sécurisée. Il chiffre toutes les données échangées entre le client et le serveur, ce qui en fait le standard pour l'administration de serveurs.</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Avantages de SSH</h4>
+          <ul>
+            <li>Connexion <strong>chiffrée</strong> de bout en bout</li>
+            <li>Authentification par <strong>clé cryptographique</strong></li>
+            <li>Transfert de fichiers sécurisé</li>
+            <li>Tunneling et redirection de ports</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>Prérequis</h4>
+          <ul>
+            <li>Un hébergement avec accès SSH (Hostinger)</li>
+            <li>Un client SSH (Terminal ou PuTTY)</li>
+            <li>Les identifiants de connexion</li>
+            <li>L'adresse IP du serveur</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Connexion</div>
+      <h2>Se Connecter en SSH</h2>
+      <p>La première étape est de se connecter à votre serveur via SSH depuis votre terminal.</p>
+
+      <h3><span class="cmd-name">ssh</span> — Connexion à un serveur distant</h3>
+      <p class="cmd-desc">Établit une connexion sécurisée avec votre serveur. Remplacez les valeurs par vos identifiants Hostinger.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ssh utilisateur@adresse_ip_du_serveur
+<span class="prompt">$ </span>ssh -p 65002 u734339183@62.72.37.40   <span class="comment"># exemple Hostinger avec port personnalisé</span></code></pre>
+      </div>
+      <div class="note">
+        <strong>Astuce Hostinger :</strong> Le port SSH par défaut est 22, mais Hostinger utilise souvent un port personnalisé comme <code>65002</code>. Vérifiez dans votre panneau hPanel.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Navigation &amp; Gestion de Fichiers</h2>
+      <p>Les commandes indispensables pour naviguer dans l'arborescence de votre serveur et manipuler les fichiers.</p>
+
+      <h3><span class="cmd-name">ls</span> — Lister le contenu d'un répertoire</h3>
+      <p class="cmd-desc">Affiche les fichiers et dossiers du répertoire courant.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls                <span class="comment"># liste simple</span>
+<span class="prompt">$ </span>ls -l             <span class="comment"># liste détaillée</span>
+<span class="prompt">$ </span>ls -la            <span class="comment"># avec fichiers cachés</span>
+<span class="prompt">$ </span>ls -lh            <span class="comment"># tailles lisibles (Ko, Mo)</span>
+<span class="prompt">$ </span>ls -R             <span class="comment"># liste récursive</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cd</span> — Changer de répertoire</h3>
+      <p class="cmd-desc">Permet de se déplacer dans l'arborescence du serveur.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cd /home/u734339183/domains/   <span class="comment"># chemin absolu</span>
+<span class="prompt">$ </span>cd public_html                  <span class="comment"># chemin relatif</span>
+<span class="prompt">$ </span>cd ..                           <span class="comment"># remonter d'un niveau</span>
+<span class="prompt">$ </span>cd ~                            <span class="comment"># retour au dossier home</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">pwd</span> — Afficher le répertoire courant</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>pwd
+/home/u734339183/domains/monsite.com/public_html</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">mkdir</span> — Créer un répertoire</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>mkdir mon-dossier
+<span class="prompt">$ </span>mkdir -p parent/enfant/sous-dossier   <span class="comment"># crée toute la hiérarchie</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">rmdir</span> — Supprimer un répertoire vide</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>rmdir mon-dossier-vide</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Manipulation de Fichiers</h2>
+      <p>Copier, déplacer, renommer et supprimer des fichiers sur votre serveur Hostinger.</p>
+
+      <h3><span class="cmd-name">touch</span> — Créer un fichier vide</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>touch fichier.txt
+<span class="prompt">$ </span>touch index.html style.css script.js   <span class="comment"># plusieurs fichiers</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cp</span> — Copier des fichiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cp fichier.txt copie.txt
+<span class="prompt">$ </span>cp -r dossier/ /backup/          <span class="comment"># copie récursive d'un dossier</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">mv</span> — Déplacer ou renommer</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>mv ancien-nom.txt nouveau-nom.txt     <span class="comment"># renommer</span>
+<span class="prompt">$ </span>mv fichier.txt /var/www/html/          <span class="comment"># déplacer</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">rm</span> — Supprimer des fichiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>rm fichier.txt
+<span class="prompt">$ </span>rm -r dossier/         <span class="comment"># supprimer un dossier et son contenu</span>
+<span class="prompt">$ </span>rm -rf dossier/        <span class="comment"># forcer sans confirmation</span></code></pre>
+      </div>
+      <div class="note danger">
+        <strong>Attention :</strong> <code>rm -rf</code> est irréversible. Vérifiez toujours le chemin avant d'exécuter cette commande, surtout sur un serveur de production.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Lecture &amp; Édition de Fichiers</h2>
+
+      <h3><span class="cmd-name">cat</span> — Afficher le contenu d'un fichier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cat wp-config.php
+<span class="prompt">$ </span>cat -n fichier.txt           <span class="comment"># avec numéros de ligne</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">head</span> / <span class="cmd-name">tail</span> — Début ou fin d'un fichier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>head -n 20 fichier.txt       <span class="comment"># 20 premières lignes</span>
+<span class="prompt">$ </span>tail -n 50 error.log         <span class="comment"># 50 dernières lignes</span>
+<span class="prompt">$ </span>tail -f /var/log/syslog      <span class="comment"># suivi en temps réel</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">nano</span> — Éditeur de texte en terminal</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>nano wp-config.php
+<span class="comment"># CTRL+O = sauvegarder | CTRL+X = quitter | CTRL+W = rechercher</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">vi</span> / <span class="cmd-name">vim</span> — Éditeur avancé</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>vi fichier.txt
+<span class="comment"># i = mode insertion | Esc = mode commande | :wq = sauvegarder et quitter | :q! = quitter sans sauvegarder</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 04</div>
+      <h2>Recherche &amp; Filtrage</h2>
+
+      <h3><span class="cmd-name">find</span> — Rechercher des fichiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>find . -name "*.php"                <span class="comment"># trouver par extension</span>
+<span class="prompt">$ </span>find . -type f -mtime -7            <span class="comment"># modifiés ces 7 derniers jours</span>
+<span class="prompt">$ </span>find . -size +10M                   <span class="comment"># fichiers de plus de 10 Mo</span>
+<span class="prompt">$ </span>find . -type f -name ".htaccess"    <span class="comment"># trouver les .htaccess</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">grep</span> — Rechercher dans le contenu</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>grep "motif" fichier.txt
+<span class="prompt">$ </span>grep -r "eval(" --include="*.php" .   <span class="comment"># recherche récursive</span>
+<span class="prompt">$ </span>grep -i "error" /var/log/syslog       <span class="comment"># insensible à la casse</span>
+<span class="prompt">$ </span>grep -c "404" access.log              <span class="comment"># compter les occurrences</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">locate</span> — Recherche rapide par index</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>locate wp-config.php
+<span class="prompt">$ </span>sudo updatedb              <span class="comment"># mettre à jour l'index de recherche</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 05</div>
+      <h2>Permissions &amp; Propriété</h2>
+      <p>Essentiel pour la sécurité de votre hébergement Hostinger.</p>
+
+      <h3><span class="cmd-name">chmod</span> — Modifier les permissions</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>chmod 755 dossier/              <span class="comment"># dossiers web</span>
+<span class="prompt">$ </span>chmod 644 fichier.php           <span class="comment"># fichiers PHP</span>
+<span class="prompt">$ </span>chmod 600 wp-config.php         <span class="comment"># fichiers sensibles</span>
+<span class="prompt">$ </span>chmod +x script.sh              <span class="comment"># rendre exécutable</span></code></pre>
+      </div>
+      <div class="note">
+        <strong>Rappel :</strong> 7=rwx | 6=rw- | 5=r-x | 4=r-- — ordre : <strong>propriétaire / groupe / autres</strong>
+      </div>
+
+      <h3><span class="cmd-name">chown</span> — Changer le propriétaire</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>chown www-data:www-data fichier.php
+<span class="prompt">$ </span>chown -R www-data:www-data /var/www/html/   <span class="comment"># récursif</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 06</div>
+      <h2>Transfert de Fichiers</h2>
+      <p>Transférer des fichiers entre votre machine locale et votre serveur Hostinger.</p>
+
+      <h3><span class="cmd-name">scp</span> — Copie sécurisée via SSH</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>scp fichier.txt user@ip:/chemin/distant/       <span class="comment"># local → serveur</span>
+<span class="prompt">$ </span>scp user@ip:/chemin/fichier.txt ./local/        <span class="comment"># serveur → local</span>
+<span class="prompt">$ </span>scp -r dossier/ user@ip:/chemin/distant/        <span class="comment"># dossier complet</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">wget</span> — Télécharger depuis une URL</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>wget https://wordpress.org/latest.tar.gz
+<span class="prompt">$ </span>wget -O nom-fichier.zip https://exemple.com/archive.zip</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">curl</span> — Requêtes HTTP</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>curl -I https://monsite.com               <span class="comment"># headers HTTP</span>
+<span class="prompt">$ </span>curl -o fichier.zip https://url/archive   <span class="comment"># télécharger</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 07</div>
+      <h2>Archives &amp; Compression</h2>
+      <p>Gérer les sauvegardes et archives sur votre serveur.</p>
+
+      <h3><span class="cmd-name">tar</span> — Créer et extraire des archives</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>tar -czf backup.tar.gz public_html/     <span class="comment"># créer une archive</span>
+<span class="prompt">$ </span>tar -xzf backup.tar.gz                  <span class="comment"># extraire</span>
+<span class="prompt">$ </span>tar -tzf backup.tar.gz                  <span class="comment"># lister le contenu</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">zip</span> / <span class="cmd-name">unzip</span> — Archives ZIP</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>zip -r sauvegarde.zip public_html/
+<span class="prompt">$ </span>unzip sauvegarde.zip
+<span class="prompt">$ </span>unzip sauvegarde.zip -d /chemin/destination/</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 08</div>
+      <h2>Surveillance Système</h2>
+      <p>Surveiller les ressources de votre serveur Hostinger.</p>
+
+      <h3><span class="cmd-name">df</span> — Espace disque</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>df -h                       <span class="comment"># espace disque en format lisible</span>
+<span class="prompt">$ </span>df -h /home/                <span class="comment"># espace d'une partition spécifique</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">du</span> — Taille des dossiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>du -sh public_html/         <span class="comment"># taille totale d'un dossier</span>
+<span class="prompt">$ </span>du -sh * | sort -rh         <span class="comment"># trier par taille décroissante</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">top</span> / <span class="cmd-name">htop</span> — Processus actifs</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>top                         <span class="comment"># moniteur interactif (q pour quitter)</span>
+<span class="prompt">$ </span>htop                        <span class="comment"># version améliorée (si installé)</span>
+<span class="prompt">$ </span>ps aux                      <span class="comment"># liste de tous les processus</span>
+<span class="prompt">$ </span>ps aux | grep php           <span class="comment"># filtrer par nom</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">free</span> — Mémoire RAM</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>free -h                     <span class="comment"># mémoire en format lisible</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">uptime</span> — Durée de fonctionnement</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>uptime                      <span class="comment"># temps de fonctionnement + charge serveur</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 09</div>
+      <h2>Réseau &amp; Diagnostic</h2>
+
+      <h3><span class="cmd-name">ping</span> — Tester la connectivité</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ping -c 4 google.com       <span class="comment"># 4 paquets</span>
+<span class="prompt">$ </span>ping -c 4 monsite.com      <span class="comment"># tester son propre site</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">netstat</span> / <span class="cmd-name">ss</span> — Ports ouverts</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ss -tulpn                  <span class="comment"># ports en écoute</span>
+<span class="prompt">$ </span>netstat -tulpn             <span class="comment"># alternative (si installé)</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">hostname</span> — Informations serveur</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>hostname                   <span class="comment"># nom du serveur</span>
+<span class="prompt">$ </span>hostname -I                <span class="comment"># adresse IP du serveur</span>
+<span class="prompt">$ </span>uname -a                   <span class="comment"># infos système complètes</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 10</div>
+      <h2>Gestion des Processus</h2>
+
+      <h3><span class="cmd-name">kill</span> — Arrêter un processus</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>kill 1234                  <span class="comment"># arrêter le processus PID 1234</span>
+<span class="prompt">$ </span>kill -9 1234               <span class="comment"># forcer l'arrêt</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">systemctl</span> — Gestion des services</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>sudo systemctl status nginx       <span class="comment"># statut du service</span>
+<span class="prompt">$ </span>sudo systemctl restart nginx      <span class="comment"># redémarrer</span>
+<span class="prompt">$ </span>sudo systemctl stop nginx         <span class="comment"># arrêter</span>
+<span class="prompt">$ </span>sudo systemctl start nginx        <span class="comment"># démarrer</span></code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>Cheat Sheet — Commandes SSH Essentielles</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ssh user@ip</code><p>Connexion SSH</p></div>
+        <div class="cheat-item"><code>ls -la</code><p>Lister fichiers</p></div>
+        <div class="cheat-item"><code>cd /chemin</code><p>Changer de dossier</p></div>
+        <div class="cheat-item"><code>pwd</code><p>Répertoire courant</p></div>
+        <div class="cheat-item"><code>cp -r src/ dst/</code><p>Copier récursivement</p></div>
+        <div class="cheat-item"><code>mv old new</code><p>Déplacer / renommer</p></div>
+        <div class="cheat-item"><code>rm -rf dir/</code><p>Supprimer (prudence !)</p></div>
+        <div class="cheat-item"><code>cat fichier</code><p>Afficher contenu</p></div>
+        <div class="cheat-item"><code>nano fichier</code><p>Éditeur texte</p></div>
+        <div class="cheat-item"><code>grep -r "txt" .</code><p>Rechercher dans fichiers</p></div>
+        <div class="cheat-item"><code>find . -name "*.php"</code><p>Trouver des fichiers</p></div>
+        <div class="cheat-item"><code>chmod 644 file</code><p>Permissions fichier</p></div>
+        <div class="cheat-item"><code>tar -czf a.tar.gz d/</code><p>Créer archive</p></div>
+        <div class="cheat-item"><code>scp f.txt user@ip:.</code><p>Copie sécurisée</p></div>
+        <div class="cheat-item"><code>wget https://url</code><p>Télécharger fichier</p></div>
+        <div class="cheat-item"><code>df -h</code><p>Espace disque</p></div>
+        <div class="cheat-item"><code>top</code><p>Moniteur processus</p></div>
+        <div class="cheat-item"><code>tail -f log</code><p>Suivre logs live</p></div>
+        <div class="cheat-item"><code>kill -9 PID</code><p>Forcer arrêt process</p></div>
+        <div class="cheat-item"><code>systemctl restart svc</code><p>Redémarrer service</p></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Source : <a href="https://www.hostinger.com/fr/tutoriels/commandes-ssh-de-base-que-vous-devez-connaitre" target="_blank" rel="noopener">Hostinger — Commandes SSH</a> &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
