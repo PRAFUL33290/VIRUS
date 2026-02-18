@@ -13,6 +13,11 @@
     var LAURIE_CMD  = 'ssh ' + LAURIE_USER + '@' + LAURIE_HOST;
     var LAURIE_URI  = 'ssh://' + LAURIE_USER + '@' + LAURIE_HOST;
 
+    var KAJAL_HOST = 'pen.o2switch.net';
+    var KAJAL_USER = 'lepo2136';
+    var KAJAL_CMD  = 'ssh ' + KAJAL_USER + '@' + KAJAL_HOST;
+    var KAJAL_URI  = 'ssh://' + KAJAL_USER + '@' + KAJAL_HOST;
+
    /* Au clic sur le bouton SSH Hostinger :
        1. Copie la commande ssh dans le presse-papiers
        2. Ouvre directement l'URI ssh:// → macOS l'envoie au Terminal */
@@ -28,6 +33,11 @@
                  e.preventDefault();
                  navigator.clipboard.writeText(LAURIE_CMD).catch(function () {});
                  window.location.href = LAURIE_URI;
+         }
+         if (e.target.closest('.nav-ssh-kajal-btn')) {
+                 e.preventDefault();
+                 navigator.clipboard.writeText(KAJAL_CMD).catch(function () {});
+                 window.location.href = KAJAL_URI;
          }
    });
 }());
