@@ -5,7 +5,6 @@
   var SSH_HOST = '62.72.37.40';
   var SSH_PORT = '65002';
   var SSH_USER = 'u734339183';
-  var SSH_PASS = 'Praful33$';
   var SSH_CMD  = 'ssh -p ' + SSH_PORT + ' ' + SSH_USER + '@' + SSH_HOST;
   var SSH_URI  = 'ssh://' + SSH_USER + '@' + SSH_HOST + ':' + SSH_PORT;
 
@@ -34,12 +33,12 @@
           '<button data-copy="sshCmdVal">Copier</button>' +
         '</div>' +
       '</div>' +
-      '<div class="ssh-field">' +
-        '<label>Mot de passe</label>' +
-        '<div class="ssh-copy-row">' +
-          '<code id="sshPwdVal">' + SSH_PASS + '</code>' +
-          '<button data-copy="sshPwdVal">Copier</button>' +
-        '</div>' +
+      '<div class="ssh-key-badge">' +
+        '<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M7 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>' +
+          '<path d="M11 7h8M16 7v3M19 7v3"/>' +
+        '</svg>' +
+        'Authentification par clé SSH' +
       '</div>' +
       '<a class="ssh-launch-btn" href="' + SSH_URI + '" target="_blank">' +
         '<svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
@@ -48,7 +47,7 @@
         '</svg>' +
         'Ouvrir dans le Terminal' +
       '</a>' +
-      '<p class="ssh-hint">La commande SSH est copiée automatiquement · Collez dans votre terminal</p>' +
+      '<p class="ssh-hint">La commande est copiée automatiquement · Collez dans votre terminal</p>' +
     '</div>';
   document.body.appendChild(overlay);
 
@@ -58,11 +57,9 @@
   }
   function closeModal() { overlay.classList.remove('open'); }
 
-  /* Bouton d'ouverture (délégation car script chargé avant le DOM final) */
   document.addEventListener('click', function (e) {
     if (e.target.closest('.nav-ssh-btn')) openModal();
   });
-
   overlay.querySelector('.ssh-close-btn').addEventListener('click', closeModal);
   overlay.addEventListener('click', function (e) {
     if (e.target === overlay) closeModal();
@@ -71,7 +68,6 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  /* Boutons Copier dans la modale */
   overlay.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var val = document.getElementById(btn.getAttribute('data-copy')).textContent;
@@ -85,31 +81,28 @@
   });
 }());
 
-
-document.querySelectorAll('button.copy').forEach(function(btn) {
-  btn.addEventListener('click', function() {
+/* ── COPIER LES BLOCS DE CODE ── */
+document.querySelectorAll('button.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
     var pre = btn.closest('.code-wrap').querySelector('code');
     var text = pre.innerText
       .replace(/^\$ /gm, '')
-      .replace(/^#[^\n]*/gm, function(m) {
-        // garder les commentaires inline (après du code), retirer les lignes commentaires seules
-        return '';
-      })
+      .replace(/^#[^\n]*/gm, function () { return ''; })
       .split('\n')
-      .map(function(l) { return l.trim() === '' ? null : l; })
+      .map(function (l) { return l.trim() === '' ? null : l; })
       .filter(Boolean)
       .join('\n');
 
-    navigator.clipboard.writeText(text).then(function() {
+    navigator.clipboard.writeText(text).then(function () {
       var orig = btn.textContent;
       btn.textContent = 'Copié ✓';
       btn.style.color = '#28cd41';
-      setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
-    }).catch(function() {
+      setTimeout(function () { btn.textContent = orig; btn.style.color = ''; }, 1500);
+    }).catch(function () {
       var orig = btn.textContent;
       btn.textContent = 'Erreur';
       btn.style.color = '#ff453a';
-      setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
+      setTimeout(function () { btn.textContent = orig; btn.style.color = ''; }, 1500);
     });
   });
 });
