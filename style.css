@@ -128,12 +128,11 @@ body {
 body { padding-top: var(--topbar-h); }
 
 /* ── SSH BUTTON ── */
-.nav-ssh-btn {
+.nav-ssh-btn, .nav-ssh-laurie-btn {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  margin-left: auto;
   background: #1c1c1e;
   color: #fff;
   border: none;
@@ -147,9 +146,10 @@ body { padding-top: var(--topbar-h); }
   line-height: 1;
   flex-shrink: 0;
 }
-.nav-ssh-btn:hover  { background: #3a3a3c; }
-.nav-ssh-btn:active { transform: scale(0.97); }
-.nav-ssh-btn svg    { width: 13px; height: 13px; flex-shrink: 0; }
+.nav-ssh-btn { margin-left: auto; }
+.nav-ssh-btn:hover, .nav-ssh-laurie-btn:hover  { background: #3a3a3c; }
+.nav-ssh-btn:active, .nav-ssh-laurie-btn:active { transform: scale(0.97); }
+.nav-ssh-btn svg, .nav-ssh-laurie-btn svg    { width: 13px; height: 13px; flex-shrink: 0; }
 .ssh-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
@@ -860,7 +860,8 @@ p code, li code {
   .nav-inner          { flex-wrap: wrap; padding: 8px 12px; gap: 6px; }
   .nav-brand          { order: 1; }
   .nav-ssh-btn        { order: 2; }
-  .nav-links          { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  .nav-ssh-laurie-btn { order: 3; }
+  .nav-links          { order: 4; width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
   .nav-links a svg    { display: none; }
   .hero               { height: 300px; }
   .hero-content       { padding: 24px 20px 28px; }
@@ -881,7 +882,7 @@ p code, li code {
   .hero p             { font-size: 14px; }
   .nav-brand span     { display: none; }
   .cmp-table          { display: block; overflow-x: auto; }
-  .nav-ssh-btn span:not(.ssh-dot) { display: none; }
-  .nav-ssh-btn        { padding: 6px 10px; gap: 0; }
+  .nav-ssh-btn span:not(.ssh-dot), .nav-ssh-laurie-btn span:not(.ssh-dot) { display: none; }
+  .nav-ssh-btn, .nav-ssh-laurie-btn { padding: 6px 10px; gap: 0; }
   .nav-links a        { font-size: 12px; padding: 5px 7px; }
 }
