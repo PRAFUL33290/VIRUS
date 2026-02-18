@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batterie Mac — Guide Terminal — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(40,205,65,0.85);
+      --hero-pos: center 40%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="accueil.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="accueil.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Accueil</a></li>
+        <li class="has-mega">
+          <a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Terminal</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Guides Terminal</li>
+            <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+            <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+            <li><a href="affichage-dossiers.html"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>Affichage Dossiers</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="index.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WordPress</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sécurité WordPress</li>
+            <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+            <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Sauvegardes</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sauvegardes</li>
+            <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+            <li><a href="sauvegarde-parvati.html"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Serveur</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Infrastructure</li>
+            <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="batterie.html" class="active"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M17 9h1a1 1 0 0 1 0 2h-1"/><line x1="6" y1="10" x2="14" y2="10"/></svg>Batterie</a>
+        </li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+      <button class="nav-ssh-laurie-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Laurie
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="MacBook — gestion batterie Terminal"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🔋 Mac &amp; Batterie</div>
+      <h1>Guide de Survie :<br>Dompter la Batterie<br>de son Mac</h1>
+      <p>Ton Mac exécute en permanence des dizaines de tâches invisibles. Voici comment reprendre le contrôle via le Terminal et optimiser chaque % de batterie.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Pourquoi la batterie se vide-t-elle si vite ?</h2>
+      <p>Ton Mac exécute en permanence des dizaines de tâches invisibles. Parfois, ces processus "s'emballent" et consomment plus d'énergie que ton écran lui-même. Voici comment reprendre le contrôle.</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4 style="color:var(--danger)">Processus coupables fréquents</h4>
+          <ul>
+            <li><code>photoanalysid</code> — analyse des photos</li>
+            <li><code>suggestd</code> — suggestions Siri</li>
+            <li><code>contactsd</code> — synchro des contacts</li>
+            <li><code>mds_stores</code> — indexation Spotlight</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4 style="color:var(--warning)">Signes d'une surconsommation</h4>
+          <ul>
+            <li>Mac chaud sans raison apparente</li>
+            <li>Ventilateurs qui tournent fort</li>
+            <li>Batterie à 15% en moins d'une heure</li>
+            <li>Ralentissements inexpliqués</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Identifier les coupables : <span class="cmd-name">top -o power</span></h2>
+      <p>Avant de frapper, il faut savoir où viser. Le Terminal possède son propre "Moniteur d'activité" ultra-léger.</p>
+
+      <h3><span class="cmd-name">top</span> — Surveiller la consommation en temps réel</h3>
+      <p class="cmd-desc">Elle classe les processus par consommation d'énergie en temps réel.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>top -o power</code></pre>
+      </div>
+      <div class="note">
+        <strong>Ce qu'il faut surveiller :</strong> Regarde la colonne <code>%CPU</code>. Si un nom comme <code>photoanalysid</code>, <code>suggestd</code> ou <code>contactsd</code> dépasse les <strong>50%</strong>, c'est lui qui vide ta batterie. Appuie sur <code>q</code> pour quitter.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>L'art de "tuer" proprement : <span class="cmd-name">kill</span> et <span class="cmd-name">pkill</span></h2>
+      <p>Quand un processus système décide de scanner toute ta bibliothèque de photos ou de synchroniser tes contacts alors que tu es à 15% de batterie, il faut intervenir.</p>
+
+      <h3><span class="cmd-name">kill</span> — La méthode chirurgicale</h3>
+      <p class="cmd-desc">Chaque programme a un numéro d'identité unique appelé PID (identifiable via <code>top</code>).</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>kill 2358</code></pre>
+      </div>
+      <div class="note">
+        <strong>C'est quoi ?</strong> C'est une demande polie au programme de s'arrêter. macOS lui envoie le signal SIGTERM, lui laissant le temps de se fermer proprement.
+      </div>
+
+      <h3><span class="cmd-name">pkill</span> — La méthode "sniper"</h3>
+      <p class="cmd-desc">Plus rapide, elle utilise le nom du programme. Pas besoin de chercher le numéro.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>pkill -f [nom_du_processus]</code></pre>
+      </div>
+
+      <h3>Les cibles prioritaires pour la batterie</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>pkill -f photoanalysid   # Arrête l'analyse des visages/objets dans Photos
+pkill -f suggestd        # Stoppe les suggestions Siri qui scannent tes mails
+pkill -f contactsd       # Interrompt une synchronisation de contacts capricieuse</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Pourquoi ça marche ?</h2>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Processeurs modernes &amp; basse consommation</h4>
+          <ul>
+            <li>Les puces Apple Silicon sont très efficaces, mais elles consomment dès qu'elles "réfléchissent"</li>
+            <li>Couper ces processus force le CPU à rester en état <strong>Idle</strong> (basse consommation)</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>Indexation &amp; chaleur</h4>
+          <ul>
+            <li>macOS pré-calcule tout en arrière-plan pour que tout soit instantané</li>
+            <li>Moins de calcul = moins de chaleur = <strong>moins de ventilateurs</strong></li>
+            <li>Énorme soulagement pour la durée de vie de la batterie</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note success">
+        <strong>Bon à savoir :</strong> macOS relancera ces processus automatiquement au prochain redémarrage ou dès qu'il estimera qu'ils sont à nouveau nécessaires.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Section 04</div>
+      <h2>Automatisation : <span class="cmd-name">pmset</span></h2>
+      <p>Pour une solution à plus long terme, utilise la commande de gestion d'énergie native de macOS.</p>
+
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Commande Terminal</th>
+            <th>Utilité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Veille forcée</td>
+            <td><code>sudo pmset -b displaysleep 2</code></td>
+            <td>Éteint l'écran après 2 min sur batterie</td>
+          </tr>
+          <tr>
+            <td>Désactiver Power Nap</td>
+            <td><code>sudo pmset -b powernap 0</code></td>
+            <td>Empêche le Mac de travailler pendant qu'il dort</td>
+          </tr>
+          <tr>
+            <td>Réduction luminosité</td>
+            <td><code>sudo pmset -b lessbright 1</code></td>
+            <td>Baisse automatiquement l'éclat sur batterie</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Commandes <span class="cmd-name">pmset</span> détaillées</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>sudo pmset -b displaysleep 2   # Éteint l'écran après 2 min sur batterie
+sudo pmset -b powernap 0       # Désactive le Power Nap (sync en veille)
+sudo pmset -b lessbright 1     # Réduit la luminosité sur batterie</code></pre>
+      </div>
+
+      <div class="note warn">
+        <strong>Note importante :</strong> Ces commandes ne sont pas dangereuses, mais elles sont temporaires. macOS relancera ces processus au prochain redémarrage. C'est donc une solution parfaite pour <strong>finir un projet urgent en déplacement</strong>.
+      </div>
+
+      <h3>Vérifier les réglages actuels</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>pmset -g   # Affiche tous les réglages de gestion d'énergie actuels</code></pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>Cheat Sheet — Batterie Mac</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>top -o power</code><p>Trier les processus par conso énergie</p></div>
+        <div class="cheat-item"><code>kill [PID]</code><p>Arrêter un processus par son ID</p></div>
+        <div class="cheat-item"><code>pkill -f photoanalysid</code><p>Stopper l'analyse de Photos</p></div>
+        <div class="cheat-item"><code>pkill -f suggestd</code><p>Stopper les suggestions Siri</p></div>
+        <div class="cheat-item"><code>pkill -f contactsd</code><p>Stopper la synchro des contacts</p></div>
+        <div class="cheat-item"><code>sudo pmset -b displaysleep 2</code><p>Veille écran en 2 min</p></div>
+        <div class="cheat-item"><code>sudo pmset -b powernap 0</code><p>Désactiver Power Nap</p></div>
+        <div class="cheat-item"><code>sudo pmset -b lessbright 1</code><p>Réduire luminosité sur batterie</p></div>
+        <div class="cheat-item"><code>pmset -g</code><p>Voir les réglages d'énergie</p></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
