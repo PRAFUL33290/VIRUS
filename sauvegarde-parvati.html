@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide Sauvegarde Parvati India — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(255,149,0,0.9);
+      --hero-pos: center 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+        <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+        <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+        <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+        <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+        <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+        <li><a href="sauvegarde-parvati.html" class="active"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Sauvegarde serveur — stockage de données"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🛡️ Sauvegarde Complète</div>
+      <h1>Guide Ultime<br>Sauvegarde Parvati India</h1>
+      <p>Comment copier l'intégralité de votre site (fichiers web + base de données SQL) depuis votre serveur Hostinger vers votre Mac.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <!-- INTRODUCTION -->
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Présentation du Guide</h2>
+      <p>Ce guide récapitule comment copier l'intégralité de votre site (fichiers web + base de données SQL) depuis votre serveur Hostinger vers votre dossier local sur Mac. Il combine les commandes SSH essentielles avec une procédure de sauvegarde complète et automatisée.</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Ce que vous allez faire</h4>
+          <ul>
+            <li>Exporter la <strong>base de données</strong> SQL</li>
+            <li>Synchroniser tous les <strong>fichiers du site</strong></li>
+            <li>Créer un <strong>raccourci</strong> pour automatiser</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>Prérequis</h4>
+          <ul>
+            <li>Un Mac avec le <strong>Terminal</strong></li>
+            <li>Un accès <strong>SSH</strong> à votre serveur Hostinger</li>
+            <li>Les identifiants de la <strong>base de données</strong> (dans wp-config.php)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMANDES SSH DE BASE -->
+    <div class="card">
+      <div class="section-label">Rappel SSH</div>
+      <h2>Commandes SSH Essentielles</h2>
+      <p>Avant de commencer la sauvegarde, voici les commandes SSH de base que vous devez maîtriser pour naviguer sur votre serveur.</p>
+
+      <h3><span class="cmd-name">ssh</span> — Se connecter au serveur</h3>
+      <p class="cmd-desc">Établit une connexion sécurisée et chiffrée avec votre serveur distant via le protocole SSH.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ssh -p 65002 u734339183@62.72.37.40</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">ls</span> — Lister les fichiers</h3>
+      <p class="cmd-desc">Affiche le contenu d'un répertoire sur le serveur.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls -la         <span class="comment"># liste détaillée avec fichiers cachés</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cd</span> — Naviguer dans les dossiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cd /home/u734339183/domains/parvati-india.fr/</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">pwd</span> — Afficher le répertoire courant</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>pwd
+/home/u734339183/domains/parvati-india.fr</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cat</span> — Lire un fichier</h3>
+      <p class="cmd-desc">Utile pour vérifier le contenu de <code>wp-config.php</code> et récupérer les identifiants de base de données.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cat wp-config.php   <span class="comment"># affiche le fichier de configuration WordPress</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">rm</span> — Supprimer un fichier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>rm fichier.txt     <span class="comment"># supprimer un fichier</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">exit</span> — Quitter la session SSH</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>exit</code></pre>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 1 : PRÉPARER LA BASE DE DONNÉES -->
+    <div class="card">
+      <div class="section-label">Étape 01</div>
+      <h2>Préparer la Base de Données (Côté Serveur)</h2>
+      <p>Avant de lancer la copie des fichiers, il faut créer une image de la base de données.</p>
+
+      <h3>1. Connexion SSH</h3>
+      <p>Ouvrez votre Terminal sur Mac et connectez-vous au serveur :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — Terminal Mac</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>ssh -p 65002 u734339183@62.72.37.40</code></pre>
+      </div>
+
+      <h3>2. Création de l'export SQL</h3>
+      <p>Tapez cette commande pour générer le fichier de sauvegarde au milieu de vos fichiers :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — sur le serveur</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>mysqldump -u u734339183_TqhXi -p u734339183_iOR9E > /home/u734339183/domains/parvati-india.fr/backup_db.sql</code></pre>
+      </div>
+      <div class="note">
+        <strong>Mot de passe :</strong> Entrez le mot de passe de la base de données (celui du fichier <code>wp-config.php</code>) quand il est demandé.
+      </div>
+
+      <h3>3. Quitter le serveur</h3>
+      <p>Tapez <code>exit</code> pour revenir à votre terminal local.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>exit</code></pre>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 : LANCER LA SAUVEGARDE -->
+    <div class="card">
+      <div class="section-label">Étape 02</div>
+      <h2>Lancer la Sauvegarde (Côté Mac)</h2>
+      <p>Utilisez <code>rsync</code> pour récupérer tout le dossier. Grâce à l'étape précédente, le fichier <code>backup_db.sql</code> sera téléchargé en même temps que vos images et vos plugins.</p>
+
+      <h3>Commande manuelle</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — Terminal Mac</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rsync -avzP -e "ssh -p 65002" u734339183@62.72.37.40:/home/u734339183/domains/parvati-india.fr/ "/Users/julienguerrier/Desktop/PARVATI INDIA/"</code></pre>
+      </div>
+
+      <h3>Décryptage des options rsync</h3>
+      <ul class="option-list">
+        <li class="option-item">
+          <span class="opt-tag">-a</span>
+          <div class="opt-info">
+            <strong>Archive</strong>
+            <span>Conserve intégralement les dates, permissions et liens symboliques.</span>
+          </div>
+        </li>
+        <li class="option-item">
+          <span class="opt-tag">-v</span>
+          <div class="opt-info">
+            <strong>Verbose</strong>
+            <span>Affiche chaque fichier en cours de copie pour suivre l'avancement.</span>
+          </div>
+        </li>
+        <li class="option-item">
+          <span class="opt-tag">-z</span>
+          <div class="opt-info">
+            <strong>Compress</strong>
+            <span>Compresse les données pendant le transfert pour plus de rapidité.</span>
+          </div>
+        </li>
+        <li class="option-item">
+          <span class="opt-tag">-P</span>
+          <div class="opt-info">
+            <strong>Progress</strong>
+            <span>Affiche une barre de progression et permet de <strong>reprendre</strong> si la connexion est coupée.</span>
+          </div>
+        </li>
+        <li class="option-item">
+          <span class="opt-tag">-e</span>
+          <div class="opt-info">
+            <strong>Remote shell</strong>
+            <span>Spécifie la commande SSH à utiliser, ici avec le port personnalisé <code>65002</code>.</span>
+          </div>
+        </li>
+      </ul>
+      <img class="card-photo"
+           src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=1060&h=240&fit=crop&auto=format&q=80"
+           alt="Terminal — sauvegarde en cours" loading="lazy" />
+    </div>
+
+    <!-- ÉTAPE 3 : AUTOMATISER -->
+    <div class="card">
+      <div class="section-label">Étape 03</div>
+      <h2>Automatiser avec un Raccourci (L'Alias)</h2>
+      <p>Pour ne plus avoir à copier-coller cette commande, créez un raccourci nommé <code>save-parvati</code> sur votre Mac.</p>
+
+      <h3>Configuration (à faire une seule fois)</h3>
+
+      <div class="audit-steps">
+        <div class="audit-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Ouvrir le fichier de configuration</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>nano ~/.zshrc</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Coller cette ligne tout en bas</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash — ligne à ajouter</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>alias save-parvati='rsync -avzP -e "ssh -p 65002" u734339183@62.72.37.40:/home/u734339183/domains/parvati-india.fr/ "/Users/julienguerrier/Desktop/PARVATI INDIA/"'</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Sauvegarder et quitter Nano</h4>
+            <p><strong>Ctrl + O</strong> → <strong>Entrée</strong> → <strong>Ctrl + X</strong></p>
+          </div>
+        </div>
+        <div class="audit-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Activer le raccourci</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>source ~/.zshrc</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note success">
+        <strong>C'est fait !</strong> Désormais, tapez simplement <code>save-parvati</code> dans le Terminal pour lancer la sauvegarde complète.
+      </div>
+    </div>
+
+    <!-- RÉCAPITULATIF -->
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>💡 Résumé des Commandes à Retenir</h2>
+
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Commande</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Se connecter au serveur</td>
+            <td><code>ssh -p 65002 u734339183@62.72.37.40</code></td>
+          </tr>
+          <tr>
+            <td>Sauvegarder la base (sur serveur)</td>
+            <td><code>mysqldump -u u734339183_TqhXi -p u734339183_iOR9E &gt; .../backup_db.sql</code></td>
+          </tr>
+          <tr>
+            <td>Lancer la synchro (sur Mac)</td>
+            <td><code>save-parvati</code></td>
+          </tr>
+          <tr>
+            <td>Supprimer le backup (sur serveur)</td>
+            <td><code>rm /home/u734339183/domains/parvati-india.fr/backup_db.sql</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- NOTE DE SÉCURITÉ -->
+    <div class="card">
+      <div class="section-label">⚠️ Sécurité</div>
+      <h2>Note de Sécurité Importante</h2>
+      <p>Une fois que vous avez fini votre sauvegarde sur votre Mac, connectez-vous au serveur et <strong>supprimez le fichier backup_db.sql</strong> :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — sur le serveur</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rm /home/u734339183/domains/parvati-india.fr/backup_db.sql</code></pre>
+      </div>
+      <div class="note danger">
+        <strong>Pourquoi ?</strong> Cela évite que quelqu'un d'autre puisse deviner l'adresse du fichier et télécharger votre base de données depuis un navigateur. Ne laissez <strong>jamais</strong> un fichier SQL accessible publiquement sur votre serveur.
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET SSH -->
+    <div class="card">
+      <div class="section-label">Aide-mémoire</div>
+      <h2>Cheat Sheet — Commandes SSH Utiles</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ssh -p port user@ip</code><p>Connexion SSH</p></div>
+        <div class="cheat-item"><code>ls -la</code><p>Lister fichiers (détails)</p></div>
+        <div class="cheat-item"><code>cd /chemin</code><p>Changer de dossier</p></div>
+        <div class="cheat-item"><code>pwd</code><p>Répertoire courant</p></div>
+        <div class="cheat-item"><code>cat fichier</code><p>Afficher contenu</p></div>
+        <div class="cheat-item"><code>nano fichier</code><p>Éditeur texte</p></div>
+        <div class="cheat-item"><code>cp -r src/ dst/</code><p>Copier récursivement</p></div>
+        <div class="cheat-item"><code>mv old new</code><p>Déplacer / renommer</p></div>
+        <div class="cheat-item"><code>rm fichier</code><p>Supprimer un fichier</p></div>
+        <div class="cheat-item"><code>chmod 644 file</code><p>Permissions fichier</p></div>
+        <div class="cheat-item"><code>mysqldump -u user -p db</code><p>Export base SQL</p></div>
+        <div class="cheat-item"><code>rsync -avzP src dst</code><p>Synchroniser fichiers</p></div>
+        <div class="cheat-item"><code>tar -czf a.tar.gz d/</code><p>Créer archive</p></div>
+        <div class="cheat-item"><code>df -h</code><p>Espace disque</p></div>
+        <div class="cheat-item"><code>exit</code><p>Quitter la session</p></div>
+        <div class="cheat-item"><code>source ~/.zshrc</code><p>Recharger config</p></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
