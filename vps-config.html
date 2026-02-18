@@ -3,280 +3,296 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration VPS – Tutoriel Sécurisé</title>
+  <title>Configuration VPS Sécurisé — Tutoriel Complet</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #22c55e;
-      --danger: #ef4444;
-      --warn: #f59e0b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      background: linear-gradient(160deg, var(--bg), #020617);
-      color: var(--text);
-      padding: 24px;
-    }
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
-      display: grid;
-      gap: 16px;
-    }
-    .card {
-      background: rgba(17, 24, 39, 0.88);
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 18px;
-    }
-    h1, h2, h3 { margin-top: 0; }
-    h1 { color: var(--accent); }
-    h2 { color: #93c5fd; }
-    ul { margin: 0; padding-left: 20px; }
-    .tag { font-weight: 700; }
-    .ok { color: var(--accent); }
-    .bad { color: var(--danger); }
-    .warn { color: var(--warn); }
-    .code-wrap {
-      position: relative;
-      margin: 10px 0;
-    }
-    pre {
-      margin: 0;
-      background: #030712;
-      border: 1px solid #1f2937;
-      border-radius: 8px;
-      padding: 12px;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    code { color: #f8fafc; }
-    button.copy {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      border: 0;
-      border-radius: 6px;
-      background: #1d4ed8;
-      color: #fff;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .footer {
-      color: var(--muted);
-      font-size: 14px;
-    }
-    nav {
-      margin-bottom: 8px;
-    }
-    nav a {
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: 600;
-      margin-right: 16px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    nav a.active {
-      color: var(--accent);
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 2px;
-    }
-    p.action {
-      color: var(--muted);
-      margin: 4px 0 14px;
-      font-style: italic;
-    }
-    .note {
-      background: rgba(59, 130, 246, 0.1);
-      border-left: 3px solid #3b82f6;
-      padding: 8px 12px;
-      margin: 10px 0;
-      border-radius: 4px;
+      --hero-badge-bg: rgba(40,205,65,0.85);
+      --hero-pos: center 50%;
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <nav class="card">
-      <a href="index.html">Audit Bash</a>
-      <a href="wp-cli.html">Commandes WP-CLI</a>
-      <a href="vps-config.html" class="active">Config VPS</a>
-      <a href="rsync-backup.html">Sauvegarde Rsync</a>
-    </nav>
 
-    <section class="card">
-      <h1>Configuration complète d'un VPS sécurisé</h1>
-      <p>Voici la liste complète et ordonnée des commandes tapées dans le tutoriel pour configurer le VPS :</p>
-    </section>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html">Commandes Basiques</a></li>
+        <li><a href="index.html">Audit Bash</a></li>
+        <li><a href="wp-cli.html">WP-CLI</a></li>
+        <li><a href="vps-config.html" class="active">Config VPS</a></li>
+        <li><a href="rsync-backup.html">Rsync</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <section class="card">
-      <h2>1. Mise à jour et Utilisateurs</h2>
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Salle de serveurs VPS"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Infrastructure</div>
+      <h1>Configuration<br>VPS Sécurisé</h1>
+      <p>Passez d'un accès root non protégé à un serveur professionnel avec authentification SSH par clé et pare-feu actif.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="card">
+      <div class="section-label">Vue d'ensemble</div>
+      <h2>Objectif de ce tutoriel</h2>
+      <p>Voici la liste complète et ordonnée des commandes pour configurer un VPS de zéro. À la fin, votre serveur sera protégé par :</p>
+      <ul class="checklist">
+        <li>
+          <span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+          Système d'exploitation à jour
+        </li>
+        <li>
+          <span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+          Utilisateur non-root avec droits sudo
+        </li>
+        <li>
+          <span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+          Authentification SSH par clé cryptographique
+        </li>
+        <li>
+          <span class="check-icon"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>
+          Pare-feu UFW configuré et actif
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Étape 01</div>
+      <h2>Mise à Jour &amp; Utilisateurs</h2>
 
       <h3>Mettre à jour le système</h3>
+      <p>Toujours commencer par s'assurer que le système est à jour avec les derniers correctifs de sécurité.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — en tant que root</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>apt update && apt upgrade -y</code></pre>
       </div>
 
-      <h3>Créer un utilisateur (remplacez username par le vôtre)</h3>
+      <h3>Créer un utilisateur</h3>
+      <p>Remplacez <code>username</code> par le nom d'utilisateur souhaité.</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>adduser username</code></pre>
       </div>
 
-      <h3>Donner les droits administrateur</h3>
+      <h3>Donner les droits administrateur (sudo)</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>usermod -aG sudo username</code></pre>
       </div>
 
       <h3>Vérifier les droits de l'utilisateur</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>id username</code></pre>
       </div>
 
       <h3>Passer sur le compte utilisateur</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>su - username</code></pre>
       </div>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>2. Sécurisation SSH (Clés)</h2>
+    <div class="card">
+      <div class="section-label">Étape 02</div>
+      <h2>Sécurisation SSH par Clés</h2>
+      <p>L'authentification par clé cryptographique est bien plus sécurisée qu'un simple mot de passe. Voici comment la configurer.</p>
 
-      <h3>Générer une clé (sur votre ordinateur local)</h3>
+      <h3>Générer une clé SSH — sur votre ordinateur local</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">local — votre machine</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>ssh-keygen -t ed25519 -C "votre_note"</code></pre>
+      </div>
+      <div class="note">
+        <strong>Ed25519</strong> est l'algorithme recommandé aujourd'hui — plus sécurisé et plus rapide que RSA.
       </div>
 
       <h3>Créer le dossier SSH sur le serveur</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — sur le serveur</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>mkdir -p ~/.ssh</code></pre>
       </div>
 
-      <h3>Ouvrir l'éditeur pour coller la clé publique</h3>
+      <h3>Ajouter votre clé publique</h3>
+      <p>Ouvrez l'éditeur pour coller votre clé publique (contenu du fichier <code>~/.ssh/id_ed25519.pub</code> de votre machine locale).</p>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>nano ~/.ssh/authorized_keys</code></pre>
       </div>
       <div class="note">
-        <strong>Note :</strong> Pour sauvegarder dans Nano, faites <strong>CTRL+O</strong>, Entrée, puis <strong>CTRL+X</strong>.
+        <strong>Dans Nano :</strong> Collez votre clé publique, puis <strong>CTRL+O</strong> pour sauvegarder, <strong>Entrée</strong> pour confirmer, puis <strong>CTRL+X</strong> pour quitter.
       </div>
 
-      <h3>Sécuriser les permissions du dossier</h3>
+      <h3>Sécuriser les permissions</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code>chmod 700 ~/.ssh</code></pre>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys</code></pre>
       </div>
 
-      <h3>Sécuriser les permissions du fichier</h3>
+      <h3>Tester la connexion par clé — depuis votre machine locale</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code>chmod 600 ~/.ssh/authorized_keys</code></pre>
-      </div>
-
-      <h3>Se connecter au VPS (depuis votre ordinateur local)</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">local — votre machine</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>ssh username@votre_ip_vps</code></pre>
+      </div>
+      <div class="note success">
+        <strong>Vérifiez</strong> que la connexion par clé fonctionne avant de désactiver l'authentification par mot de passe.
       </div>
 
       <h3>Redémarrer le service SSH</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>sudo systemctl restart ssh</code></pre>
       </div>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>3. Pare-feu (UFW)</h2>
+    <div class="card">
+      <div class="section-label">Étape 03</div>
+      <h2>Pare-feu UFW</h2>
+      <p>UFW (Uncomplicated Firewall) simplifie la gestion du pare-feu Linux. Configurez-le <strong>avant</strong> de l'activer pour ne pas perdre l'accès SSH.</p>
 
-      <h3>Vérifier le statut</h3>
+      <h3>Vérifier le statut actuel</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>sudo ufw status</code></pre>
       </div>
 
-      <h3>Autoriser la connexion SSH (indispensable avant d'activer)</h3>
+      <h3>Autoriser SSH — indispensable avant l'activation</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>sudo ufw allow OpenSSH</code></pre>
       </div>
-      <div class="note">
-        <strong>⚠️ Important :</strong> Cette commande est <strong>indispensable</strong> avant d'activer le pare-feu pour ne pas perdre l'accès SSH !
+      <div class="note danger">
+        <strong>Critique :</strong> Sans cette règle, vous perdrez définitivement l'accès SSH au serveur lors de l'activation du pare-feu.
       </div>
 
-      <h3>Autoriser le trafic Web classique (Port 80)</h3>
+      <h3>Autoriser le trafic Web</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code>sudo ufw allow 80/tcp</code></pre>
-      </div>
-
-      <h3>Autoriser le trafic Web sécurisé (Port 443)</h3>
-      <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
-        <pre><code>sudo ufw allow 443/tcp</code></pre>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>sudo ufw allow 80/tcp      # HTTP
+sudo ufw allow 443/tcp     # HTTPS</code></pre>
       </div>
 
       <h3>Activer le pare-feu</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>sudo ufw enable</code></pre>
       </div>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>4. Finalisation</h2>
+    <div class="card">
+      <div class="section-label">Finalisation</div>
+      <h2>Redémarrage &amp; Vérification</h2>
 
       <h3>Redémarrer le serveur</h3>
       <div class="code-wrap">
-        <button class="copy" type="button">Copier</button>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>sudo reboot</code></pre>
       </div>
-    </section>
 
-    <section class="card">
-      <h2>Conclusion</h2>
-      <p>Ces commandes permettent de passer d'un accès "root" peu sécurisé à un environnement professionnel protégé par clé SSH et un pare-feu actif.</p>
-      <ul>
-        <li><span class="ok">✓ Système à jour</span></li>
-        <li><span class="ok">✓ Utilisateur non-root avec droits sudo</span></li>
-        <li><span class="ok">✓ Authentification par clé SSH</span></li>
-        <li><span class="ok">✓ Pare-feu configuré et actif</span></li>
-      </ul>
-      <p class="footer">Astuce : utilisez les boutons "Copier" pour réutiliser les commandes en terminal.</p>
-    </section>
+      <p>Après le redémarrage, reconnectez-vous par SSH et vérifiez le statut final :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>sudo ufw status verbose    # vérifier le pare-feu
+sudo systemctl status ssh  # vérifier SSH</code></pre>
+      </div>
+
+      <div class="note success">
+        <strong>Félicitations !</strong> Votre VPS est maintenant sécurisé avec authentification par clé SSH et pare-feu actif. Votre serveur est prêt pour la production.
+      </div>
+    </div>
+
   </main>
 
-  <script>
-    document.querySelectorAll('button.copy').forEach(function (button) {
-      button.addEventListener('click', function () {
-        const code = button.parentElement.querySelector('code').innerText;
-        navigator.clipboard.writeText(code).then(function () {
-          const previous = button.textContent;
-          button.textContent = 'Copié';
-          setTimeout(function () { button.textContent = previous; }, 1200);
-        }).catch(function () {
-          const previous = button.textContent;
-          button.textContent = 'Erreur';
-          setTimeout(function () { button.textContent = previous; }, 1200);
-        });
-      });
-    });
-  </script>
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

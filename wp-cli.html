@@ -3,252 +3,303 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commandes WP-CLI – Sécurité WordPress</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Commandes WP-CLI — Sécurité WordPress</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(0,113,227,0.9);
+      --hero-pos: center 35%;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="site-logo" href="index.html">
-        <span class="logo-icon">⌘</span>
-        Terminal Mac
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
       </a>
-      <nav class="site-nav">
-        <a href="index.html">Audit Bash</a>
-        <a href="wp-cli.html" class="active">WP-CLI</a>
-        <a href="vps-config.html">Config VPS</a>
-        <a href="rsync-backup.html">Rsync</a>
-      </nav>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html">Commandes Basiques</a></li>
+        <li><a href="index.html">Audit Bash</a></li>
+        <li><a href="wp-cli.html" class="active">WP-CLI</a></li>
+        <li><a href="vps-config.html">Config VPS</a></li>
+        <li><a href="rsync-backup.html">Rsync</a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
 
-  <main class="page-content">
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Code WordPress WP-CLI"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">WP-CLI</div>
+      <h1>Commandes WP-CLI<br>pour la Sécurité</h1>
+      <p>L'interface en ligne de commande officielle de WordPress pour détecter les fichiers corrompus et sécuriser votre site.</p>
+    </div>
+  </section>
 
-    <section class="hero-card">
-      <h1>Commandes WP-CLI essentielles pour la sécurité WordPress</h1>
-      <p>WP-CLI est l'interface en ligne de commande officielle de WordPress. Voici les commandes indispensables pour détecter les fichiers corrompus et sécuriser un site.</p>
-    </section>
+  <main class="main">
 
-    <section class="card">
-      <h2>Vérification de l'intégrité des fichiers</h2>
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Qu'est-ce que WP-CLI ?</h2>
+      <p>WP-CLI est l'outil en ligne de commande officiel pour administrer WordPress directement depuis le terminal, sans interface graphique. Il permet d'effectuer des vérifications d'intégrité, analyser la base de données et gérer les utilisateurs en quelques secondes.</p>
+      <div class="note success">
+        <strong>Prérequis :</strong> WP-CLI doit être installé sur votre serveur. Vérifiez avec <code>wp --version</code>.
+      </div>
+    </div>
 
-      <h3>Vérifier le cœur WordPress</h3>
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Vérification de l'Intégrité des Fichiers</h2>
+
+      <h3><span class="cmd-name">wp core</span> — Vérifier le cœur WordPress</h3>
+      <p class="action">Compare les fichiers WordPress avec les versions officielles — détecte les modifications dans <code>wp-admin/</code> et <code>wp-includes/</code>.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp core verify-checksums</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Compare les fichiers du cœur WordPress avec les versions officielles. Détecte les modifications suspectes dans wp-admin/ et wp-includes/</p>
 
-      <h3>Vérifier tous les plugins</h3>
+      <h3><span class="cmd-name">wp plugin</span> — Vérifier tous les plugins</h3>
+      <p class="action">Contrôle que tous les plugins correspondent aux versions du dépôt officiel — repère les backdoors cachés.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp plugin verify-checksums --all</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Vérifie que tous les plugins installés correspondent aux versions du dépôt officiel WordPress. Repère les backdoors cachés dans les plugins.</p>
 
-      <h3>Vérifier tous les thèmes</h3>
+      <h3><span class="cmd-name">wp theme</span> — Vérifier tous les thèmes</h3>
+      <p class="action">Contrôle l'intégrité de tous les thèmes contre les versions officielles — identifie les thèmes piratés ou modifiés.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp theme verify-checksums --all</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Contrôle l'intégrité de tous les thèmes contre les versions officielles. Identifie les thèmes piratés ou modifiés.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Analyse de la base de données</h2>
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Analyse de la Base de Données</h2>
 
-      <h3>Vérifier la santé de la base</h3>
+      <h3><span class="cmd-name">wp db check</span> — Santé de la base</h3>
+      <p class="action">Vérifie la santé des tables MySQL — détecte les tables corrompues qui pourraient cacher du code malveillant.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp db check</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Vérifie la santé de la base de données MySQL. Détecte les tables corrompues qui pourraient cacher du code malveillant.</p>
 
-      <h3>Rechercher des scripts injectés dans les options</h3>
+      <h3><span class="cmd-name">wp option list</span> — Scripts injectés dans les options</h3>
+      <p class="action">Recherche des scripts JavaScript suspects injectés dans les options WordPress (technique courante de piratage).</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp option list --search="*&lt;script*" --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Recherche les scripts JavaScript suspects injectés dans les options WordPress (technique courante de piratage).</p>
 
-      <h3>Trouver les contenus contenant des scripts</h3>
+      <h3><span class="cmd-name">wp post list</span> — Contenus contenant des scripts</h3>
+      <p class="action">Trouve les pages/articles contenant des balises script potentiellement malveillantes.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp post list --post_type=any --s="&lt;script" --fields=ID,post_title,post_type</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les contenus (pages/articles) contenant des balises script potentiellement malveillantes.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Gestion des utilisateurs</h2>
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Gestion des Utilisateurs</h2>
 
-      <h3>Lister les administrateurs</h3>
+      <h3><span class="cmd-name">wp user list</span> — Lister les administrateurs</h3>
+      <p class="action">Liste tous les comptes administrateurs — permet de repérer des comptes pirates créés par des hackers.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp user list --role=administrator --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Liste tous les comptes administrateurs. Permet de repérer des comptes pirates créés par des hackers.</p>
 
-      <h3>Afficher les métadonnées utilisateurs</h3>
+      <h3><span class="cmd-name">wp user meta</span> — Métadonnées utilisateurs</h3>
+      <p class="action">Affiche toutes les métadonnées utilisateurs — peut révéler des permissions anormales.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp user list --field=user_login | xargs -I {} wp user meta list {} --format=table</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Affiche toutes les métadonnées utilisateurs. Peut révéler des permissions anormales.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Vérification des fichiers suspects</h2>
+    <div class="card">
+      <div class="section-label">Section 04</div>
+      <h2>Vérification des Fichiers Suspects</h2>
 
-      <h3>Fichiers PHP modifiés récemment</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers PHP modifiés récemment</h3>
+      <p class="action">Liste les fichiers PHP modifiés dans les 7 derniers jours — utile pour repérer des injections récentes.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -name "*.php" -mtime -7 -ls</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Liste les fichiers PHP modifiés dans les 7 derniers jours. Utile pour repérer des injections récentes.</p>
 
-      <h3>Fichiers marqués suspects</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers marqués suspects</h3>
+      <p class="action">Trouve les fichiers marqués comme suspects par ClamAV ou autres scanners.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -type f -name "*.suspected"</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les fichiers marqués comme suspects par ClamAV ou autres scanners.</p>
 
-      <h3>Rechercher du code obfusqué</h3>
+      <h3><span class="cmd-name">grep</span> — Rechercher du code obfusqué</h3>
+      <p class="action">Recherche le pattern d'obfuscation le plus courant dans le code malveillant PHP.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>grep -r "eval(base64_decode" --include="*.php" .</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Recherche le pattern d'obfuscation le plus courant dans le code malveillant PHP.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Permissions et propriété</h2>
+    <div class="card">
+      <div class="section-label">Section 05</div>
+      <h2>Permissions &amp; Propriété</h2>
 
-      <h3>Trouver les fichiers trop permissifs</h3>
+      <h3><span class="cmd-name">find</span> — Fichiers trop permissifs</h3>
+      <p class="action">Trouve les fichiers avec permissions 777 (trop permissives = risque de sécurité).</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -type f -perm 0777</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Trouve les fichiers avec permissions 777 (trop permissives = risque de sécurité).</p>
 
-      <h3>Simuler une mise à jour</h3>
+      <h3><span class="cmd-name">wp core update</span> — Simuler une mise à jour</h3>
+      <p class="action">Simule une mise à jour sans l'appliquer — montre si votre version est obsolète ou vulnérable.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>wp core update --dry-run</code></pre>
       </div>
-      <p class="action"><strong>Action :</strong> Simule une mise à jour sans l'appliquer. Montre si votre version est obsolète/vulnérable.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>Recommandation : audit complet</h2>
-      <p>Exécutez cette séquence dans l'ordre pour un audit de sécurité complet :</p>
+    <div class="card">
+      <div class="section-label">Audit Complet</div>
+      <h2>Séquence d'Audit Recommandée</h2>
+      <p>Exécutez ces commandes dans l'ordre pour un audit de sécurité complet et méthodique.</p>
 
-      <h3>1. Vérifier l'intégrité</h3>
-      <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-          <button class="copy" type="button">Copier</button>
-        </div>
-        <pre><code># 1. Vérifier l'intégrité
-wp core verify-checksums
+      <div class="audit-steps">
+        <div class="audit-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Vérifier l'intégrité</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>wp core verify-checksums
 wp plugin verify-checksums --all
 wp theme verify-checksums --all</code></pre>
-      </div>
-
-      <h3>2. Base de données et utilisateurs</h3>
-      <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-          <button class="copy" type="button">Copier</button>
+            </div>
+          </div>
         </div>
-        <pre><code># 2. Base de données
-wp db check
+        <div class="audit-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Base de données et utilisateurs</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>wp db check
 wp user list --role=administrator</code></pre>
-      </div>
-
-      <h3>3. Fichiers récents suspects</h3>
-      <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-          <button class="copy" type="button">Copier</button>
+            </div>
+          </div>
         </div>
-        <pre><code># 3. Fichiers récents suspects
-find . -name "*.php" -mtime -7 -ls</code></pre>
-      </div>
-
-      <h3>4. Permissions</h3>
-      <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-          <button class="copy" type="button">Copier</button>
+        <div class="audit-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Fichiers récents suspects</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>find . -name "*.php" -mtime -7 -ls</code></pre>
+            </div>
+          </div>
         </div>
-        <pre><code># 4. Permissions
-find . -type f -perm 0777</code></pre>
+        <div class="audit-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Vérification des permissions</h4>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="code-label">bash</span>
+                <button class="copy" type="button">Copier</button>
+              </div>
+              <pre><code>find . -type f -perm 0777</code></pre>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="card">
-      <p class="footer-note">Astuce : utilisez les boutons « Copier » pour coller les commandes directement dans votre terminal. <a href="index.html">← Retour à l'audit Bash</a></p>
-    </section>
+    </div>
 
   </main>
 
-  <script>
-    document.querySelectorAll('button.copy').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var code = btn.closest('.code-wrap').querySelector('code').innerText;
-        navigator.clipboard.writeText(code).then(function() {
-          var prev = btn.textContent;
-          btn.textContent = 'Copié ✓';
-          setTimeout(function() { btn.textContent = prev; }, 1500);
-        }).catch(function() {
-          var prev = btn.textContent;
-          btn.textContent = 'Erreur';
-          setTimeout(function() { btn.textContent = prev; }, 1500);
-        });
-      });
-    });
-  </script>
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

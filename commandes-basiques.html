@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commandes Basiques du Terminal — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(0,113,227,0.9);
+      --hero-pos: center 40%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html" class="active">Commandes Basiques</a></li>
+        <li><a href="index.html">Audit Bash</a></li>
+        <li><a href="wp-cli.html">WP-CLI</a></li>
+        <li><a href="vps-config.html">Config VPS</a></li>
+        <li><a href="rsync-backup.html">Rsync</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Terminal avec du code" loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Guide Débutant</div>
+      <h1>Commandes<br>Basiques du Terminal</h1>
+      <p>Maîtrisez les commandes essentielles pour naviguer, gérer des fichiers et administrer un serveur Linux/macOS.</p>
+    </div>
+  </section>
+
+  <!-- CONTENU -->
+  <main class="main">
+
+    <!-- 1. NAVIGATION & DOSSIERS -->
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Navigation &amp; Dossiers</h2>
+      <p>Les commandes fondamentales pour se repérer et gérer les répertoires dans le système de fichiers.</p>
+
+      <h3><span class="cmd-name">pwd</span> — Afficher le répertoire actuel</h3>
+      <p class="cmd-desc">Print Working Directory — affiche le chemin complet où vous êtes actuellement.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>pwd
+/home/utilisateur/documents</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">ls</span> — Lister les fichiers</h3>
+      <p class="cmd-desc">Affiche le contenu d'un répertoire. Avec <code>-la</code> : inclut les fichiers cachés et les détails.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls             <span class="comment"># liste simple</span>
+<span class="prompt">$ </span>ls -l          <span class="comment"># liste détaillée</span>
+<span class="prompt">$ </span>ls -la         <span class="comment"># avec fichiers cachés</span>
+<span class="prompt">$ </span>ls -lh         <span class="comment"># tailles lisibles (Ko, Mo...)</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cd</span> — Changer de répertoire</h3>
+      <p class="cmd-desc">Change Directory — se déplace dans l'arborescence.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cd /var/www/html       <span class="comment"># chemin absolu</span>
+<span class="prompt">$ </span>cd mon-dossier         <span class="comment"># chemin relatif</span>
+<span class="prompt">$ </span>cd ..                  <span class="comment"># remonter d'un niveau</span>
+<span class="prompt">$ </span>cd ~                   <span class="comment"># dossier home</span>
+<span class="prompt">$ </span>cd -                   <span class="comment"># dossier précédent</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">mkdir</span> — Créer un dossier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>mkdir mon-dossier
+<span class="prompt">$ </span>mkdir -p parent/enfant/sous-dossier   <span class="comment"># crée toute la chaîne</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">rmdir</span> — Supprimer un dossier vide</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>rmdir mon-dossier-vide</code></pre>
+      </div>
+      <div class="note">
+        <strong>Astuce :</strong> Pour supprimer un dossier avec contenu, utilisez <code>rm -rf dossier/</code> — avec précaution !
+      </div>
+    </div>
+
+    <!-- 2. GESTION DES FICHIERS -->
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Gestion des Fichiers</h2>
+      <p>Copier, déplacer, renommer et supprimer des fichiers et dossiers.</p>
+
+      <h3><span class="cmd-name">touch</span> — Créer un fichier vide</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>touch fichier.txt
+<span class="prompt">$ </span>touch f1.txt f2.txt   <span class="comment"># plusieurs à la fois</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">cp</span> — Copier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cp source.txt destination.txt
+<span class="prompt">$ </span>cp source.txt /var/www/html/
+<span class="prompt">$ </span>cp -r dossier/ /backup/        <span class="comment"># copie récursive</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">mv</span> — Déplacer / Renommer</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>mv ancien.txt nouveau.txt      <span class="comment"># renommer</span>
+<span class="prompt">$ </span>mv fichier.txt /var/www/html/  <span class="comment"># déplacer</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">rm</span> — Supprimer</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>rm fichier.txt
+<span class="prompt">$ </span>rm -r dossier/         <span class="comment"># supprimer un dossier et son contenu</span>
+<span class="prompt">$ </span>rm -rf dossier/        <span class="comment"># forcer la suppression sans confirmation</span></code></pre>
+      </div>
+      <div class="note danger">
+        <strong>Danger :</strong> <code>rm -rf</code> supprime définitivement sans corbeille. Vérifiez toujours le chemin avant d'exécuter.
+      </div>
+    </div>
+
+    <!-- 3. LECTURE DE FICHIERS -->
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Lecture de Fichiers</h2>
+      <p>Visualiser le contenu d'un fichier sans l'ouvrir dans un éditeur.</p>
+
+      <h3><span class="cmd-name">cat</span> — Afficher tout le contenu</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>cat fichier.txt
+<span class="prompt">$ </span>cat -n fichier.txt        <span class="comment"># avec numéros de ligne</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">head</span> / <span class="cmd-name">tail</span> — Début ou fin du fichier</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>head fichier.txt          <span class="comment"># 10 premières lignes</span>
+<span class="prompt">$ </span>head -n 20 fichier.txt    <span class="comment"># 20 premières lignes</span>
+<span class="prompt">$ </span>tail fichier.txt          <span class="comment"># 10 dernières lignes</span>
+<span class="prompt">$ </span>tail -f /var/log/nginx/access.log   <span class="comment"># suivi en temps réel</span></code></pre>
+      </div>
+      <div class="note success">
+        <strong>Pro tip :</strong> <code>tail -f</code> est essentiel pour surveiller les logs en temps réel (serveur web, erreurs PHP...).
+      </div>
+
+      <h3><span class="cmd-name">less</span> — Afficher page par page</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>less fichier.txt
+<span class="comment"># Touches : espace = page suivante | q = quitter | / = rechercher</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 4. RECHERCHE -->
+    <div class="card">
+      <div class="section-label">Section 04</div>
+      <h2>Recherche</h2>
+      <p>Trouver des fichiers et du contenu rapidement dans l'arborescence.</p>
+
+      <h3><span class="cmd-name">find</span> — Rechercher des fichiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>find . -name "*.php"              <span class="comment"># par extension</span>
+<span class="prompt">$ </span>find . -type f -mtime -7          <span class="comment"># modifiés < 7 jours</span>
+<span class="prompt">$ </span>find /var/www -name "config.php"  <span class="comment"># par nom exact</span>
+<span class="prompt">$ </span>find . -size +10M                 <span class="comment"># fichiers > 10 Mo</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">grep</span> — Rechercher dans les fichiers</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>grep "motif" fichier.txt
+<span class="prompt">$ </span>grep -r "ERROR" /var/log/     <span class="comment"># recherche récursive</span>
+<span class="prompt">$ </span>grep -i "warning" access.log  <span class="comment"># insensible à la casse</span>
+<span class="prompt">$ </span>grep -n "eval(" fichier.php   <span class="comment"># avec numéros de ligne</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">which</span> — Localiser une commande</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>which php      <span class="comment"># /usr/bin/php</span>
+<span class="prompt">$ </span>which nginx    <span class="comment"># /usr/sbin/nginx</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 5. INFORMATIONS SYSTÈME -->
+    <div class="card">
+      <div class="section-label">Section 05</div>
+      <h2>Informations Système</h2>
+      <p>Surveiller les ressources et obtenir des informations sur le serveur.</p>
+
+      <h3><span class="cmd-name">whoami</span> / <span class="cmd-name">uname</span> — Identité système</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>whoami          <span class="comment"># utilisateur actuel</span>
+<span class="prompt">$ </span>uname -a        <span class="comment"># infos complètes du système</span>
+<span class="prompt">$ </span>hostname        <span class="comment"># nom du serveur</span>
+<span class="prompt">$ </span>uptime          <span class="comment"># durée de fonctionnement + charge</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">df</span> / <span class="cmd-name">du</span> — Espace disque</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>df -h                    <span class="comment"># espace disque global</span>
+<span class="prompt">$ </span>du -sh /var/www/html/    <span class="comment"># taille d'un dossier</span>
+<span class="prompt">$ </span>du -sh * | sort -rh      <span class="comment"># trier par taille</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">free</span> / <span class="cmd-name">top</span> — Mémoire &amp; processus</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>free -h              <span class="comment"># mémoire RAM disponible</span>
+<span class="prompt">$ </span>top                  <span class="comment"># moniteur interactif (q pour quitter)</span>
+<span class="prompt">$ </span>ps aux               <span class="comment"># liste tous les processus</span>
+<span class="prompt">$ </span>ps aux | grep nginx  <span class="comment"># filtrer par nom</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 6. PERMISSIONS -->
+    <div class="card">
+      <div class="section-label">Section 06</div>
+      <h2>Permissions &amp; Propriété</h2>
+      <p>Gérer qui peut lire, écrire et exécuter des fichiers — fondamental pour la sécurité.</p>
+
+      <h3><span class="cmd-name">chmod</span> — Changer les permissions</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>chmod 755 dossier/        <span class="comment"># dossiers web recommandé</span>
+<span class="prompt">$ </span>chmod 644 fichier.php     <span class="comment"># fichiers web recommandé</span>
+<span class="prompt">$ </span>chmod 600 wp-config.php   <span class="comment"># fichiers sensibles</span>
+<span class="prompt">$ </span>chmod +x script.sh        <span class="comment"># rendre exécutable</span>
+<span class="prompt">$ </span>chmod -R 755 /var/www/    <span class="comment"># récursif</span></code></pre>
+      </div>
+      <div class="note">
+        <strong>Mémo :</strong> 7=rwx | 6=rw- | 5=r-x | 4=r-- — ordre : <strong>propriétaire / groupe / autres</strong>
+      </div>
+
+      <h3><span class="cmd-name">chown</span> — Changer le propriétaire</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>chown www-data:www-data fichier.php
+<span class="prompt">$ </span>chown -R www-data:www-data /var/www/  <span class="comment"># récursif</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 7. RÉSEAU -->
+    <div class="card">
+      <div class="section-label">Section 07</div>
+      <h2>Réseau</h2>
+      <p>Diagnostiquer la connexion, transférer des fichiers et se connecter à distance.</p>
+
+      <h3><span class="cmd-name">ping</span> — Tester la connectivité</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ping -c 4 google.com</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">curl</span> — Requêtes HTTP</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>curl https://example.com
+<span class="prompt">$ </span>curl -I https://example.com        <span class="comment"># headers HTTP seulement</span>
+<span class="prompt">$ </span>curl -o fichier.zip https://url/   <span class="comment"># télécharger</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">ssh</span> / <span class="cmd-name">scp</span> — Connexion &amp; transfert SSH</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ssh utilisateur@ip_serveur
+<span class="prompt">$ </span>scp fichier.txt user@ip:/var/www/    <span class="comment"># local → serveur</span>
+<span class="prompt">$ </span>scp user@ip:/var/log/error.log .     <span class="comment"># serveur → local</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">ss</span> — Ports ouverts</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ss -tulpn     <span class="comment"># ports en écoute</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 8. ARCHIVES -->
+    <div class="card">
+      <div class="section-label">Section 08</div>
+      <h2>Archives &amp; Compression</h2>
+      <p>Créer et extraire des archives — indispensable pour les sauvegardes et les transferts.</p>
+
+      <h3><span class="cmd-name">tar</span> — Archive TAR</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>tar -czf archive.tar.gz dossier/   <span class="comment"># créer</span>
+<span class="prompt">$ </span>tar -xzf archive.tar.gz            <span class="comment"># extraire</span>
+<span class="prompt">$ </span>tar -tzf archive.tar.gz            <span class="comment"># lister le contenu</span></code></pre>
+      </div>
+
+      <h3><span class="cmd-name">zip</span> / <span class="cmd-name">unzip</span></h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>zip -r archive.zip dossier/
+<span class="prompt">$ </span>unzip archive.zip
+<span class="prompt">$ </span>unzip archive.zip -d /destination/</code></pre>
+      </div>
+    </div>
+
+    <!-- 9. ASTUCES -->
+    <div class="card">
+      <div class="section-label">Section 09</div>
+      <h2>Astuces &amp; Raccourcis</h2>
+      <p>Des commandes qui font gagner du temps au quotidien.</p>
+
+      <h3>Redirections &amp; Pipes</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls -la > liste.txt               <span class="comment"># rediriger (écrase)</span>
+<span class="prompt">$ </span>echo "ligne" >> fichier.txt       <span class="comment"># ajouter à la fin</span>
+<span class="prompt">$ </span>cat access.log | grep "404"       <span class="comment"># chaîner des commandes</span></code></pre>
+      </div>
+
+      <h3>Historique &amp; Navigation rapide</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>history          <span class="comment"># liste des commandes précédentes</span>
+<span class="prompt">$ </span>!!               <span class="comment"># répéter la dernière commande</span>
+<span class="prompt">$ </span>clear            <span class="comment"># effacer l'écran (ou Ctrl+L)</span>
+<span class="prompt">$ </span>man ls           <span class="comment"># manuel de la commande ls</span></code></pre>
+      </div>
+
+      <h3>Nano — Éditeur de texte simple</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>nano fichier.txt
+<span class="comment"># CTRL+O = sauvegarder | CTRL+X = quitter | CTRL+W = chercher</span></code></pre>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>Cheat Sheet — 20 Commandes Essentielles</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>pwd</code><p>Répertoire actuel</p></div>
+        <div class="cheat-item"><code>ls -la</code><p>Lister avec détails</p></div>
+        <div class="cheat-item"><code>cd /chemin</code><p>Changer de dossier</p></div>
+        <div class="cheat-item"><code>mkdir -p a/b</code><p>Créer dossiers imbriqués</p></div>
+        <div class="cheat-item"><code>cp -r src/ dst/</code><p>Copier récursivement</p></div>
+        <div class="cheat-item"><code>mv old new</code><p>Déplacer / renommer</p></div>
+        <div class="cheat-item"><code>rm -rf dir/</code><p>Supprimer (prudence !)</p></div>
+        <div class="cheat-item"><code>cat fichier</code><p>Afficher contenu</p></div>
+        <div class="cheat-item"><code>tail -f log</code><p>Suivre logs en direct</p></div>
+        <div class="cheat-item"><code>grep -r "txt" .</code><p>Rechercher dans fichiers</p></div>
+        <div class="cheat-item"><code>find . -name "*.php"</code><p>Trouver des fichiers</p></div>
+        <div class="cheat-item"><code>chmod 755 dir/</code><p>Permissions dossier</p></div>
+        <div class="cheat-item"><code>chmod 644 file</code><p>Permissions fichier</p></div>
+        <div class="cheat-item"><code>chown -R www-data .</code><p>Changer propriétaire</p></div>
+        <div class="cheat-item"><code>df -h</code><p>Espace disque</p></div>
+        <div class="cheat-item"><code>free -h</code><p>Mémoire RAM</p></div>
+        <div class="cheat-item"><code>ps aux</code><p>Processus actifs</p></div>
+        <div class="cheat-item"><code>ssh user@ip</code><p>Connexion SSH</p></div>
+        <div class="cheat-item"><code>tar -czf a.tar.gz d/</code><p>Créer archive</p></div>
+        <div class="cheat-item"><code>tar -xzf a.tar.gz</code><p>Extraire archive</p></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Photos : <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> — Libres de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

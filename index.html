@@ -3,233 +3,266 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audit Bash – Détecter les fichiers malveillants WordPress</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Audit Bash — Détecter les Fichiers Malveillants WordPress</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(255,59,48,0.85);
+      --hero-pos: center 40%;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="site-logo" href="index.html">
-        <span class="logo-icon">⌘</span>
-        Terminal Mac
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
       </a>
-      <nav class="site-nav">
-        <a href="index.html" class="active">Audit Bash</a>
-        <a href="wp-cli.html">WP-CLI</a>
-        <a href="vps-config.html">Config VPS</a>
-        <a href="rsync-backup.html">Rsync</a>
-      </nav>
+      <ul class="nav-links">
+        <li><a href="commandes-basiques.html">Commandes Basiques</a></li>
+        <li><a href="index.html" class="active">Audit Bash</a></li>
+        <li><a href="wp-cli.html">WP-CLI</a></li>
+        <li><a href="vps-config.html">Config VPS</a></li>
+        <li><a href="rsync-backup.html">Rsync</a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
 
-  <main class="page-content">
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Cybersécurité WordPress"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Sécurité WordPress</div>
+      <h1>Détecter les Fichiers<br>Malveillants en Bash</h1>
+      <p>Un audit rapide de votre site WordPress pour identifier les infections, injections et backdoors avec des commandes terminal simples.</p>
+    </div>
+  </section>
 
-    <section class="hero-card">
-      <h1>Détecter les fichiers malveillants WordPress en Bash</h1>
-      <p>Un audit rapide en ligne de commande pour repérer infections, backdoors et fichiers suspects sur votre serveur.</p>
-    </section>
+  <main class="main">
 
-    <section class="card">
-      <h2>1) Pourquoi scanner les fichiers WordPress</h2>
-      <p>Un site compromis peut être utilisé pour :</p>
-      <ul>
-        <li>injecter du <strong>code malveillant</strong></li>
-        <li>rediriger les visiteurs vers des sites frauduleux</li>
-        <li>envoyer du <strong>spam</strong></li>
-        <li>être blacklisté par Google</li>
-      </ul>
-      <h3>Signes d'alerte</h3>
-      <ul>
-        <li>site lent ou redirections étranges</li>
-        <li>nouveaux fichiers inconnus</li>
-        <li>comptes administrateurs suspects</li>
-        <li>antivirus ou navigateur qui bloque le site</li>
-      </ul>
-    </section>
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Pourquoi scanner les fichiers WordPress ?</h2>
+      <p>Les sites WordPress compromis peuvent être utilisés à votre insu pour des activités malveillantes. Un audit Bash rapide permet de détecter <strong>80 % des infections</strong> sans outil externe.</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4 style="color:var(--danger)">Risques d'une infection</h4>
+          <ul>
+            <li>Injection de <strong>code malveillant</strong></li>
+            <li>Redirection vers sites frauduleux</li>
+            <li>Envoi de <strong>spam</strong> en masse</li>
+            <li>Blacklistage par Google</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4 style="color:var(--warning)">Signes d'alerte</h4>
+          <ul>
+            <li>Site lent ou redirections étranges</li>
+            <li>Nouveaux fichiers inconnus</li>
+            <li>Comptes administrateurs suspects</li>
+            <li>Antivirus bloquant le site</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <section class="card">
-      <h2>2) Commandes essentielles d'audit</h2>
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Commandes Essentielles d'Audit</h2>
 
-      <h3>Rechercher du code PHP suspect</h3>
+      <h3><span class="cmd-name">grep</span> — Rechercher du code PHP suspect</h3>
+      <p>Première commande à lancer en cas de doute — détecte obfuscation et exécution de code.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>grep -R --line-number -E "eval\(|base64_decode|gzinflate|shell_exec|system\(|passthru|exec\(" .</code></pre>
       </div>
       <ul>
-        <li>obfuscation (<code>base64_decode</code>, <code>gzinflate</code>)</li>
-        <li>exécution de commandes système (<code>exec</code>, <code>shell_exec</code>)</li>
-        <li>injection de code (<code>eval</code>)</li>
-        <li><span class="tag warn">➡️ Première commande à lancer lors d'un doute.</span></li>
+        <li>Obfuscation : <code>base64_decode</code>, <code>gzinflate</code></li>
+        <li>Exécution système : <code>exec</code>, <code>shell_exec</code></li>
+        <li>Injection de code : <code>eval</code></li>
       </ul>
 
-      <h3>Lister les fichiers modifiés récemment</h3>
+      <h3><span class="cmd-name">find</span> — Lister les fichiers modifiés récemment</h3>
+      <p>Repère un piratage récent ou l'activité d'un plugin compromis.</p>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -type f -mtime -7</code></pre>
       </div>
-      <ul>
-        <li>fichiers modifiés <strong>dans les 7 derniers jours</strong></li>
-        <li>repérer un piratage récent</li>
-        <li>voir l'activité d'un plugin compromis</li>
-      </ul>
 
-      <h3>Détecter des fichiers PHP dans <code>uploads</code> ⚠️</h3>
+      <h3><span class="cmd-name">find</span> — Détecter des fichiers PHP dans <code>uploads</code></h3>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find wp-content/uploads -type f -name "*.php"</code></pre>
       </div>
-      <p><span class="ok">Normalement aucun fichier PHP ne doit être présent dans uploads.</span><br><span class="bad">Présence = forte suspicion de malware.</span></p>
+      <div class="note danger">
+        <strong>Règle absolue :</strong> Aucun fichier PHP ne doit être présent dans <code>uploads/</code>. Sa présence = forte suspicion de malware.
+      </div>
 
-      <h3>Vérifier les permissions anormales</h3>
+      <h3><span class="cmd-name">find</span> — Vérifier les permissions anormales</h3>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -type f -perm -777</code></pre>
       </div>
-      <p>Un fichier en <strong>777</strong> est modifiable par tout le monde et dangereux en production.</p>
+      <p>Un fichier en <strong>777</strong> est modifiable par tout le monde — dangereux en production.</p>
 
-      <h3>Trouver les fichiers cachés ou inhabituels</h3>
+      <h3><span class="cmd-name">find</span> — Trouver les fichiers cachés ou inhabituels</h3>
       <div class="code-wrap">
-        <div class="terminal-bar">
-          <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code>find . -type f -name ".*.php"</code></pre>
       </div>
       <p>Les malwares utilisent souvent des fichiers cachés, des noms aléatoires ou des doubles extensions.</p>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>3) Interpréter les résultats</h2>
-      <h3>Comportement normal</h3>
-      <ul>
-        <li>fichiers modifiés après <strong>mise à jour ou sauvegarde</strong></li>
-        <li>fonctions sensibles dans <strong>plugins connus</strong></li>
-        <li>logs Wordfence ou WooCommerce</li>
-        <li><span class="ok">➡️ Rien d'alarmant seul.</span></li>
-      </ul>
-      <h3>Comportement suspect</h3>
-      <ul>
-        <li>PHP dans <code>uploads</code></li>
-        <li>fichiers récents hors plugins ou thèmes</li>
-        <li>code obfusqué incompréhensible</li>
-        <li>permissions 777</li>
-        <li><span class="bad">➡️ Nécessite une analyse immédiate.</span></li>
-      </ul>
-    </section>
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Interpréter les Résultats</h2>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4 class="ok">Comportement normal</h4>
+          <ul>
+            <li>Fichiers modifiés après <strong>mise à jour</strong></li>
+            <li>Fonctions sensibles dans <strong>plugins connus</strong></li>
+            <li>Logs Wordfence ou WooCommerce</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4 class="bad">Comportement suspect</h4>
+          <ul>
+            <li>PHP dans <code>uploads/</code></li>
+            <li>Fichiers récents hors plugins / thèmes</li>
+            <li>Code obfusqué incompréhensible</li>
+            <li>Permissions 777</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <section class="card">
-      <h2>4) Procédure rapide en cas de doute</h2>
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Procédure Rapide en Cas de Doute</h2>
 
       <h3>1. Sauvegarder immédiatement</h3>
       <div class="code-wrap">
-        <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><button class="copy" type="button">Copier</button></div>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>tar -czf backup-site.tar.gz .</code></pre>
       </div>
 
       <h3>2. Désactiver les plugins</h3>
       <div class="code-wrap">
-        <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><button class="copy" type="button">Copier</button></div>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>mv wp-content/plugins wp-content/plugins.disabled
 mkdir wp-content/plugins</code></pre>
       </div>
       <p>Permet de vérifier si l'infection vient d'un plugin.</p>
 
-      <h3>3. Vérifier l'intégrité de WordPress (WP-CLI)</h3>
+      <h3>3. Vérifier l'intégrité WordPress (WP-CLI)</h3>
       <div class="code-wrap">
-        <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><button class="copy" type="button">Copier</button></div>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>wp core verify-checksums</code></pre>
       </div>
 
       <h3>4. Vérifier les comptes administrateurs</h3>
       <div class="code-wrap">
-        <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><button class="copy" type="button">Copier</button></div>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">SQL</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
         <pre><code>SELECT user_login, user_email FROM wp_users;</code></pre>
       </div>
-      <ul>
-        <li>utilisateurs inconnus</li>
-        <li>emails suspects</li>
-      </ul>
 
       <h3>5. Nettoyer et sécuriser</h3>
       <ul>
-        <li>supprimer les fichiers malveillants</li>
-        <li>réinstaller WordPress propre</li>
-        <li>changer <strong>tous les mots de passe</strong></li>
-        <li>mettre à jour plugins et thèmes</li>
+        <li>Supprimer les fichiers malveillants identifiés</li>
+        <li>Réinstaller WordPress propre</li>
+        <li>Changer <strong>tous les mots de passe</strong></li>
+        <li>Mettre à jour plugins et thèmes</li>
       </ul>
-    </section>
+    </div>
 
-    <section class="card">
-      <h2>5) Bonnes pratiques de prévention</h2>
-      <h3>Mises à jour régulières</h3>
-      <ul>
-        <li>WordPress</li>
-        <li>plugins</li>
-        <li>thèmes</li>
-      </ul>
+    <div class="card">
+      <div class="section-label">Prévention</div>
+      <h2>Bonnes Pratiques</h2>
 
-      <h3>Pare-feu applicatif</h3>
-      <ul>
-        <li>Wordfence</li>
-        <li>Sucuri</li>
-        <li><span class="ok">➡️ Bloque la majorité des attaques automatiques.</span></li>
-      </ul>
-
-      <h3>Sauvegardes automatiques</h3>
-      <ul>
-        <li>sauvegarde quotidienne</li>
-        <li>stockage <strong>hors serveur</strong></li>
-      </ul>
-
-      <h3>Permissions sécurisées recommandées</h3>
+      <h3>Permissions recommandées</h3>
       <div class="code-wrap">
-        <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span><button class="copy" type="button">Copier</button></div>
-        <pre><code>Dossiers : 755
-Fichiers : 644
-wp-config.php : 600</code></pre>
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>find . -type d -exec chmod 755 {} \;   # dossiers : 755
+find . -type f -exec chmod 644 {} \;   # fichiers : 644
+chmod 600 wp-config.php                # config : 600</code></pre>
       </div>
-    </section>
 
-    <section class="card">
-      <h2>Conclusion</h2>
-      <ul>
-        <li>Un audit Bash rapide permet déjà de détecter <strong>80 % des infections WordPress</strong>.</li>
-        <li>La clé reste : <strong>surveillance + mises à jour + sauvegardes</strong>.</li>
-        <li>Une version « script bash d'audit complet en une commande » peut être dérivée de cette checklist.</li>
-      </ul>
-      <p class="footer-note">Astuce : utilisez les boutons « Copier » pour coller les commandes directement dans votre terminal.</p>
-    </section>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Mises à jour régulières</h4>
+          <ul>
+            <li>WordPress core</li>
+            <li>Tous les plugins</li>
+            <li>Tous les thèmes</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4>Pare-feu applicatif</h4>
+          <ul>
+            <li>Wordfence</li>
+            <li>Sucuri</li>
+            <li class="ok">Bloque la majorité des attaques automatiques</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
   </main>
 
-  <script>
-    document.querySelectorAll('button.copy').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var code = btn.closest('.code-wrap').querySelector('code').innerText;
-        navigator.clipboard.writeText(code).then(function() {
-          var prev = btn.textContent;
-          btn.textContent = 'Copié ✓';
-          setTimeout(function() { btn.textContent = prev; }, 1500);
-        }).catch(function() {
-          var prev = btn.textContent;
-          btn.textContent = 'Erreur';
-          setTimeout(function() { btn.textContent = prev; }, 1500);
-        });
-      });
-    });
-  </script>
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
