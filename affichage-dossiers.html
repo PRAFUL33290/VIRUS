@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afficher les Dossiers — Guide Ultime ls, tree, find — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(255,149,0,0.9);
+      --hero-pos: center 45%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="accueil.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="accueil.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Accueil</a></li>
+        <li class="has-mega">
+          <a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Terminal</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Guides Terminal</li>
+            <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+            <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+            <li><a href="affichage-dossiers.html" class="active"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>Affichage Dossiers</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="index.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WordPress</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sécurité WordPress</li>
+            <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+            <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Serveur</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Infrastructure</li>
+            <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+            <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+            <li><a href="sauvegarde-parvati.html"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+          </ul>
+        </li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Terminal affichage de dossiers"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">📁 Guide Dossiers</div>
+      <h1>Maîtriser l'affichage<br>des Dossiers</h1>
+      <p>Comment isoler uniquement les répertoires dans votre terminal avec <code style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:5px;">ls</code>, <code style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:5px;">tree</code> et <code style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:5px;">find</code>.</p>
+    </div>
+  </section>
+
+  <!-- CONTENU -->
+  <main class="main">
+
+    <!-- INTRO -->
+    <div class="card">
+      <div class="section-label">Introduction</div>
+      <h2>Pourquoi filtrer les dossiers ?</h2>
+      <p>Dans le flux de travail d'un développeur ou d'un administrateur système, le terminal peut vite devenir encombré. Par défaut, la commande <code>ls</code> mélange fichiers, scripts et répertoires. Voici comment isoler uniquement ce qui vous intéresse : les dossiers.</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4 style="color:var(--accent)">Cas d'usage courants</h4>
+          <ul>
+            <li>Explorer la structure d'un projet</li>
+            <li>Documenter une arborescence</li>
+            <li>Écrire des scripts de gestion</li>
+            <li>Auditer un répertoire <code>wp-content</code></li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h4 style="color:var(--warning)">Le problème de base</h4>
+          <ul>
+            <li><code>ls</code> mélange fichiers et dossiers</li>
+            <li>Difficile à lire dans les grands répertoires</li>
+            <li>Peu adapté à l'automatisation</li>
+            <li>Sans option, pas de distinction de type</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. LS -->
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2><span class="cmd-name">ls</span> — Rapidité et Efficacité</h2>
+      <p>L'outil <code>ls</code> est le couteau suisse du terminal, mais il nécessite quelques options spécifiques pour filtrer par type d'objet.</p>
+
+      <h3>La syntaxe courte</h3>
+      <p class="cmd-desc">Le symbole <code>*/</code> indique au shell de ne regarder que les éléments se terminant par un slash (donc les répertoires). L'option <code>-d</code> empêche <code>ls</code> d'entrer à l'intérieur de ces dossiers pour en lister le contenu.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls -d */</code></pre>
+      </div>
+      <div class="note success">
+        <strong>Ultra rapide :</strong> Parfaite pour une consultation rapide dans n'importe quel répertoire.
+      </div>
+
+      <h3>La version détaillée (Long format)</h3>
+      <p class="cmd-desc">Si vous avez besoin de voir les permissions et les dates de modification, utilisez <code>grep</code> pour capturer uniquement les lignes commençant par la lettre <code>d</code> (pour <em>directory</em>).</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls -l | grep '^d'</code></pre>
+      </div>
+      <ul>
+        <li>La lettre <code>d</code> en début de ligne identifie un répertoire dans <code>ls -l</code></li>
+        <li>Affiche les permissions, le propriétaire, la date et le nom</li>
+        <li>Parfait pour vérifier les droits d'accès des dossiers</li>
+      </ul>
+
+      <h3>Variantes utiles</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>ls -d */                    <span class="comment"># dossiers du répertoire courant</span>
+<span class="prompt">$ </span>ls -d /var/www/*/            <span class="comment"># dossiers dans un chemin précis</span>
+<span class="prompt">$ </span>ls -la | grep '^d'           <span class="comment"># avec fichiers cachés</span>
+<span class="prompt">$ </span>ls -lh | grep '^d'           <span class="comment"># avec tailles lisibles</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 2. TREE -->
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2><span class="cmd-name">tree</span> — La clarté visuelle</h2>
+      <p>Si vous préférez une vue hiérarchique (en "arbre"), <code>tree</code> est l'outil idéal, à condition de savoir le brider.</p>
+
+      <h3>Afficher uniquement la structure</h3>
+      <p class="cmd-desc">L'option <code>-d</code> restreint l'affichage aux répertoires uniquement — les fichiers sont ignorés.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>tree -d</code></pre>
+      </div>
+
+      <h3>Limiter la profondeur — Le "Game Changer"</h3>
+      <p class="cmd-desc">Pour éviter que <code>tree</code> ne scanne tout votre projet (et votre dossier <code>node_modules</code>), limitez-le au premier ou deuxième niveau.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>tree -d -L 1       <span class="comment"># profondeur 1 : niveau racine seulement</span>
+<span class="prompt">$ </span>tree -d -L 2       <span class="comment"># profondeur 2 : deux niveaux</span>
+<span class="prompt">$ </span>tree -d -L 3       <span class="comment"># profondeur 3 : trois niveaux</span></code></pre>
+      </div>
+      <div class="note warn">
+        <strong>Installation :</strong> <code>tree</code> n'est pas toujours installé par défaut. Installez-le avec <code>apt install tree</code> (Debian/Ubuntu) ou <code>brew install tree</code> (macOS).
+      </div>
+
+      <h3>Autres options pratiques</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>tree -d -L 2 /var/www/        <span class="comment"># chemin spécifique</span>
+<span class="prompt">$ </span>tree -d --noreport             <span class="comment"># sans le résumé final</span>
+<span class="prompt">$ </span>tree -d -L 2 > structure.txt  <span class="comment"># exporter dans un fichier</span></code></pre>
+      </div>
+    </div>
+
+    <!-- 3. FIND -->
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2><span class="cmd-name">find</span> — La précision chirurgicale</h2>
+      <p>Pour des scripts ou des recherches complexes, <code>find</code> est plus puissant car il permet de cibler le type d'objet nativement.</p>
+
+      <h3>Commande de base</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>find . -maxdepth 1 -type d</code></pre>
+      </div>
+      <ul>
+        <li><code>.</code> : Cherche dans le dossier actuel</li>
+        <li><code>-maxdepth 1</code> : Ne descend pas dans les sous-dossiers</li>
+        <li><code>-type d</code> : Filtre uniquement les <em>directories</em></li>
+      </ul>
+
+      <h3>Exclure le répertoire courant (<code>.</code>)</h3>
+      <p class="cmd-desc">Par défaut, <code>find</code> inclut le répertoire courant dans les résultats. Pour l'exclure :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>find . -maxdepth 1 -type d ! -name '.'</code></pre>
+      </div>
+
+      <h3>Variantes avancées</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>find . -maxdepth 1 -type d ! -name '.'          <span class="comment"># sans le dossier courant</span>
+<span class="prompt">$ </span>find /var/www -type d -maxdepth 2               <span class="comment"># chemin personnalisé</span>
+<span class="prompt">$ </span>find . -type d -name "wp-*"                     <span class="comment"># dossiers commençant par wp-</span>
+<span class="prompt">$ </span>find . -type d -mtime -7                        <span class="comment"># dossiers modifiés < 7 jours</span>
+<span class="prompt">$ </span>find . -maxdepth 1 -type d -exec ls -la {} \;   <span class="comment"># détails de chaque dossier</span></code></pre>
+      </div>
+      <div class="note success">
+        <strong>Astuce script :</strong> <code>find</code> est idéal dans les scripts car il retourne un résultat par ligne, facilement traitable avec une boucle <code>for</code>.
+      </div>
+    </div>
+
+    <!-- COMPARATIF -->
+    <div class="card">
+      <div class="section-label">Comparatif</div>
+      <h2>💡 Comparatif des méthodes</h2>
+      <p>Chaque outil a ses forces selon le contexte d'utilisation. Voici un récapitulatif pour choisir la bonne commande.</p>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Commande</th>
+            <th>Avantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Le Shell pur</td>
+            <td><code>ls -d */</code></td>
+            <td>Ultra rapide, pas de fioritures.</td>
+          </tr>
+          <tr>
+            <td>Le Filtre</td>
+            <td><code>ls -l | grep '^d'</code></td>
+            <td>Parfait pour voir les droits d'accès.</td>
+          </tr>
+          <tr>
+            <td>Le Visuel</td>
+            <td><code>tree -d -L 1</code></td>
+            <td>Idéal pour documenter une structure.</td>
+          </tr>
+          <tr>
+            <td>Le Script</td>
+            <td><code>find . -maxdepth 1 -type d</code></td>
+            <td>Le plus robuste pour automatiser des tâches.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ALIAS -->
+    <div class="card">
+      <div class="section-label">Conseil Pro</div>
+      <h2>Le conseil de pro : L'Alias</h2>
+      <p>Si vous tapez souvent ces commandes, créez un raccourci permanent. Ajoutez ces lignes à votre fichier de configuration (<code>.bashrc</code> ou <code>.zshrc</code>) :</p>
+
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash — ~/.bashrc ou ~/.zshrc</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="comment"># Lister uniquement les dossiers (rapide)</span>
+alias lsd='ls -d */'
+
+<span class="comment"># Lister les dossiers avec détails et droits</span>
+alias lsdf='ls -l | grep "^d"'
+
+<span class="comment"># Arborescence limitée à 2 niveaux</span>
+alias tree2='tree -d -L 2'</code></pre>
+      </div>
+
+      <h3>Activer les alias</h3>
+      <p>Après avoir modifié votre fichier de configuration, rechargez-le :</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code><span class="prompt">$ </span>source ~/.bashrc    <span class="comment"># pour Bash</span>
+<span class="prompt">$ </span>source ~/.zshrc     <span class="comment"># pour Zsh</span></code></pre>
+      </div>
+      <div class="note success">
+        <strong>Désormais :</strong> taper simplement <code>lsd</code> dans votre terminal n'affichera que vos dossiers.
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>Cheat Sheet — Affichage des Dossiers</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>ls -d */</code><p>Dossiers du répertoire courant</p></div>
+        <div class="cheat-item"><code>ls -l | grep '^d'</code><p>Dossiers avec permissions</p></div>
+        <div class="cheat-item"><code>ls -la | grep '^d'</code><p>Avec dossiers cachés</p></div>
+        <div class="cheat-item"><code>tree -d</code><p>Arborescence dossiers</p></div>
+        <div class="cheat-item"><code>tree -d -L 2</code><p>Arborescence sur 2 niveaux</p></div>
+        <div class="cheat-item"><code>tree -d > struct.txt</code><p>Exporter la structure</p></div>
+        <div class="cheat-item"><code>find . -maxdepth 1 -type d</code><p>Dossiers niveau 1</p></div>
+        <div class="cheat-item"><code>find . -type d -name "wp-*"</code><p>Dossiers par motif</p></div>
+        <div class="cheat-item"><code>alias lsd='ls -d */'</code><p>Créer un raccourci</p></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
