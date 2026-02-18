@@ -31,8 +31,7 @@
   /* Layout */
   --r:     14px;
   --max-w: 1100px;
-  --sidebar-w: 230px;
-  --mobile-nav-h: 52px;
+  --topbar-h: 56px;
 
   /* Typographie */
   --f:  -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
@@ -52,28 +51,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── SIDEBAR ── */
+/* ── TOP NAVBAR ── */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  width: var(--sidebar-w);
+  right: 0;
+  height: var(--topbar-h);
   z-index: 200;
   background: rgba(255,255,255,0.92);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
+  border-bottom: 1px solid var(--border);
 }
 .nav-inner {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  min-height: 100%;
-  padding: 28px 16px;
-  gap: 6px;
+  flex-direction: row;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 20px;
+  gap: 10px;
 }
 .nav-brand {
   display: flex;
@@ -84,33 +83,37 @@ body {
   color: var(--text);
   text-decoration: none;
   white-space: nowrap;
-  margin-bottom: 22px;
   padding: 0 8px;
+  flex-shrink: 0;
 }
 .nav-brand svg { width: 20px; height: 20px; flex-shrink: 0; }
 .nav-links {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   list-style: none;
   gap: 2px;
+  flex: 1;
+  justify-content: center;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.nav-links::-webkit-scrollbar { display: none; }
 .nav-links a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
+  gap: 6px;
+  padding: 6px 10px;
   border-radius: 8px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-2);
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.15s, color 0.15s;
-  text-align: left;
 }
 .nav-links a svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
   stroke: currentColor;
   fill: none;
@@ -121,8 +124,8 @@ body {
 .nav-links a:hover { background: rgba(0,0,0,0.06); color: var(--text); }
 .nav-links a.active { background: var(--accent); color: #fff; }
 
-/* ── SIDEBAR OFFSET FOR CONTENT ── */
-body { padding-left: var(--sidebar-w); }
+/* ── TOPBAR OFFSET FOR CONTENT ── */
+body { padding-top: var(--topbar-h); }
 
 /* ── SSH BUTTON ── */
 .nav-ssh-btn {
@@ -130,7 +133,7 @@ body { padding-left: var(--sidebar-w); }
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  margin-top: 18px;
+  margin-left: auto;
   background: #1c1c1e;
   color: #fff;
   border: none;
@@ -142,8 +145,7 @@ body { padding-left: var(--sidebar-w); }
   white-space: nowrap;
   transition: background 0.15s, transform 0.1s;
   line-height: 1;
-  width: 100%;
-  justify-content: center;
+  flex-shrink: 0;
 }
 .nav-ssh-btn:hover  { background: #3a3a3c; }
 .nav-ssh-btn:active { transform: scale(0.97); }
@@ -678,16 +680,13 @@ p code, li code {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  body                { padding-left: 0; }
-  .navbar             { position: fixed; top: 0; left: 0; right: 0; bottom: auto; width: 100%; height: var(--mobile-nav-h); border-right: none; border-bottom: 1px solid var(--border); overflow: visible; }
-  .nav-inner          { flex-direction: row; align-items: center; min-height: var(--mobile-nav-h); padding: 0 16px; gap: 10px; justify-content: space-between; }
-  .nav-brand          { margin-bottom: 0; }
-  .nav-links          { flex-direction: row; overflow-x: auto; scrollbar-width: none; flex: 1; justify-content: center; }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links a        { padding: 5px 10px; }
+  .navbar             { height: auto; min-height: var(--topbar-h); }
+  .nav-inner          { flex-wrap: wrap; padding: 8px 12px; gap: 6px; }
+  .nav-brand          { order: 1; }
+  .nav-ssh-btn        { order: 2; }
+  .nav-links          { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
   .nav-links a svg    { display: none; }
-  .nav-ssh-btn        { margin-top: 0; width: auto; }
-  .hero               { height: 300px; margin-top: var(--mobile-nav-h); }
+  .hero               { height: 300px; }
   .hero-content       { padding: 24px 20px 28px; }
   .card               { padding: 22px 18px; border-radius: 12px; }
   .main               { padding: 24px 12px 60px; }
@@ -706,4 +705,5 @@ p code, li code {
   .cmp-table          { display: block; overflow-x: auto; }
   .nav-ssh-btn span:not(.ssh-dot) { display: none; }
   .nav-ssh-btn        { padding: 6px 10px; gap: 0; }
+  .nav-links a        { font-size: 12px; padding: 5px 7px; }
 }
