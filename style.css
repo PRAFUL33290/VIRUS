@@ -1,0 +1,494 @@
+/* ==========================================================
+   TermSecure — Unified Design System (Apple-inspired)
+   Partagé par toutes les pages du site
+   ========================================================== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── VARIABLES ── */
+:root {
+  /* Palette */
+  --bg:       #f5f5f7;
+  --surface:  #ffffff;
+  --text:     #1d1d1f;
+  --text-2:   #6e6e73;
+  --text-3:   #86868b;
+  --accent:   #0071e3;
+  --success:  #28cd41;
+  --warning:  #ff9500;
+  --danger:   #ff3b30;
+  --border:   rgba(0,0,0,0.08);
+
+  /* Ombres */
+  --sh:  0 2px 8px  rgba(0,0,0,0.06);
+  --sh2: 0 4px 24px rgba(0,0,0,0.09);
+  --sh3: 0 8px 40px rgba(0,0,0,0.14);
+
+  /* Terminal */
+  --term-bg:     #1a1a1d;
+  --term-header: #2d2d30;
+
+  /* Layout */
+  --r:     14px;
+  --max-w: 1100px;
+
+  /* Typographie */
+  --f:  -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --fm: 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  /* Variables par page (surcharger dans <style> inline) */
+  --hero-badge-bg: var(--accent);
+  --hero-pos: center center;
+}
+
+/* ── BASE ── */
+body {
+  font-family: var(--f);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  gap: 8px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.nav-brand svg { width: 20px; height: 20px; }
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  display: block;
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-links a:hover { background: rgba(0,0,0,0.06); color: var(--text); }
+.nav-links a.active { background: var(--accent); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+}
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--hero-pos);
+  display: block;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(140deg, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.26) 100%);
+}
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 52px 52px 48px;
+  color: #fff;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--hero-badge-bg);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  width: fit-content;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 54px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin-bottom: 12px;
+}
+.hero p {
+  font-size: clamp(15px, 2.2vw, 19px);
+  opacity: 0.85;
+  max-width: 580px;
+  line-height: 1.5;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 44px 24px 80px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--r);
+  box-shadow: var(--sh2);
+  padding: 36px;
+  margin-bottom: 24px;
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 28px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h3:first-of-type { margin-top: 16px; }
+.card h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.card p { color: var(--text-2); font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
+ul, ol { color: var(--text-2); padding-left: 20px; margin-bottom: 10px; }
+li { margin-bottom: 5px; font-size: 15px; }
+
+/* ── CODE BLOCKS ── */
+.code-wrap {
+  margin: 10px 0 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+.code-header {
+  background: var(--term-header);
+  padding: 9px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.dot.r { background: #ff5f57; }
+.dot.y { background: #febc2e; }
+.dot.g { background: #28c840; }
+.code-label { font-size: 11px; color: #888; font-family: var(--fm); margin-left: 6px; flex: 1; }
+button.copy {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #aaa;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: var(--f);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: auto;
+}
+button.copy:hover { background: rgba(255,255,255,0.2); color: #fff; }
+pre {
+  background: var(--term-bg);
+  color: #f0f0f2;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: var(--fm);
+  font-size: 13.5px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+code { font-family: var(--fm); }
+p code, li code {
+  background: rgba(0,0,0,0.06);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* Décorations terminal */
+.prompt  { color: #30d158; user-select: none; }
+.comment { color: #6e6e73; font-style: italic; }
+
+/* ── NOTES & ALERTES ── */
+.note {
+  background: rgba(0,113,227,0.07);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 12px 0;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.note.warn    { background: rgba(255,149,0,0.08);  border-left-color: var(--warning); }
+.note.danger  { background: rgba(255,59,48,0.08);  border-left-color: var(--danger);  }
+.note.success { background: rgba(40,205,65,0.08);  border-left-color: var(--success); }
+.note strong  { color: var(--text); }
+
+/* ── STATUTS ── */
+.ok    { color: var(--success); font-weight: 600; }
+.bad   { color: var(--danger);  font-weight: 600; }
+.warn-t { color: var(--warning); font-weight: 600; }
+
+/* ── BADGES COMMANDE ── */
+.cmd-name {
+  display: inline-block;
+  background: rgba(0,113,227,0.1);
+  color: var(--accent);
+  font-family: var(--fm);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+/* ── ACTION TEXT (italique sous les h3) ── */
+.action {
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 2px;
+  line-height: 1.6;
+}
+
+/* ── CMD DESC ── */
+.cmd-desc { font-size: 14px; color: var(--text-2); margin-bottom: 2px; line-height: 1.5; }
+
+/* ── TWO COLUMNS ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 16px;
+}
+.mini-card {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 18px;
+}
+.mini-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.mini-card ul { margin: 0; padding-left: 16px; }
+.mini-card li { font-size: 13.5px; }
+
+/* ── ÉTAPES NUMÉROTÉES (utilisé dans wp-cli) ── */
+.audit-steps { display: flex; flex-direction: column; }
+.audit-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.audit-step:last-child { border-bottom: none; padding-bottom: 0; }
+.step-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.step-content { flex: 1; }
+.step-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+
+/* ── CHECKLIST AVEC COCHES (utilisé dans vps-config) ── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--text-2);
+}
+.check-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.check-icon svg {
+  width: 12px; height: 12px;
+  stroke: #fff; fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── LISTE OPTIONS (utilisé dans rsync) ── */
+.option-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+.option-item { display: flex; gap: 14px; align-items: flex-start; }
+.opt-tag {
+  flex-shrink: 0;
+  font-family: var(--fm);
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(0,0,0,0.07);
+  color: var(--text);
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin-top: 1px;
+}
+.opt-info { flex: 1; }
+.opt-info strong { display: block; font-size: 14px; color: var(--text); margin-bottom: 2px; }
+.opt-info span   { font-size: 13.5px; color: var(--text-2); }
+
+/* ── TABLEAU COMPARATIF (utilisé dans rsync) ── */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.cmp-table th {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 700;
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.cmp-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-2);
+  background: var(--surface);
+}
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table td:first-child { font-weight: 600; color: var(--text); }
+
+/* ── GRILLE CHEAT SHEET (utilisé dans commandes-basiques) ── */
+.cheat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.cheat-item {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.cheat-item code {
+  display: block;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 4px;
+  background: none;
+  padding: 0;
+}
+.cheat-item p { font-size: 12.5px; color: var(--text-2); margin: 0; }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-3);
+}
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero               { height: 300px; }
+  .hero-content       { padding: 24px 20px 28px; }
+  .card               { padding: 22px 18px; border-radius: 12px; }
+  .main               { padding: 24px 12px 60px; }
+  .two-col            { grid-template-columns: 1fr; }
+  .cheat-grid         { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .cmp-table          { font-size: 13px; }
+  .cmp-table th,
+  .cmp-table td       { padding: 10px 12px; }
+}
+
+@media (max-width: 480px) {
+  .hero               { height: 260px; }
+  .hero h1            { font-size: 22px; }
+  .hero p             { font-size: 14px; }
+  .nav-brand span     { display: none; }
+  .cmp-table          { display: block; overflow-x: auto; }
+}

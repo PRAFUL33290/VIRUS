@@ -3,332 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Commandes Basiques du Terminal</title>
+  <title>Commandes Basiques du Terminal — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f5f5f7;
-      --surface: #ffffff;
-      --text: #1d1d1f;
-      --text-2: #6e6e73;
-      --text-3: #86868b;
-      --accent: #0071e3;
-      --success: #28cd41;
-      --warning: #ff9500;
-      --danger: #ff3b30;
-      --border: rgba(0,0,0,0.08);
-      --sh: 0 2px 8px rgba(0,0,0,0.06);
-      --sh2: 0 4px 24px rgba(0,0,0,0.09);
-      --term-bg: #1a1a1d;
-      --term-header: #2d2d30;
-      --r: 14px;
-      --f: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-      --fm: 'SF Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
-    }
-    body {
-      font-family: var(--f);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAVBAR ── */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      height: 52px;
-      gap: 8px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--text);
-      text-decoration: none;
-      flex-shrink: 0;
-      margin-right: 8px;
-    }
-    .nav-brand svg { width:20px; height:20px; }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      flex: 1;
-    }
-    .nav-links::-webkit-scrollbar { display: none; }
-    .nav-links a {
-      display: block;
-      padding: 5px 11px;
-      border-radius: 8px;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--text-2);
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-links a:hover { background: rgba(0,0,0,0.06); color: var(--text); }
-    .nav-links a.active { background: var(--accent); color: #fff; }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      height: 420px;
-      overflow: hidden;
-    }
-    .hero-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-      display: block;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(140deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.30) 100%);
-    }
-    .hero-content {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 52px 52px 48px;
-      color: #fff;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(0,113,227,0.9);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-      width: fit-content;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 54px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.08;
-      margin-bottom: 12px;
-    }
-    .hero p {
-      font-size: clamp(15px, 2.2vw, 19px);
-      opacity: 0.85;
-      max-width: 560px;
-      line-height: 1.5;
-    }
-
-    /* ── MAIN ── */
-    .main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 44px 24px 80px;
-    }
-
-    /* ── CARD ── */
-    .card {
-      background: var(--surface);
-      border-radius: var(--r);
-      box-shadow: var(--sh2);
-      padding: 36px;
-      margin-bottom: 24px;
-    }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-    .card h2 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .card > p, .intro-text {
-      color: var(--text-2);
-      font-size: 15px;
-      margin-bottom: 0;
-      line-height: 1.6;
-    }
-    .card h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin-top: 28px;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .card h3:first-of-type { margin-top: 20px; }
-    .cmd-desc {
-      font-size: 14px;
-      color: var(--text-2);
-      margin-bottom: 2px;
-    }
-
-    /* ── CODE BLOCK ── */
-    .code-wrap {
-      margin: 10px 0 20px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
-    }
-    .code-header {
-      background: var(--term-header);
-      padding: 9px 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .dot.r { background: #ff5f57; }
-    .dot.y { background: #febc2e; }
-    .dot.g { background: #28c840; }
-    .code-label {
-      font-size: 11px;
-      color: #888;
-      font-family: var(--fm);
-      margin-left: 6px;
-      flex: 1;
-    }
-    button.copy {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.18);
-      color: #aaa;
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-family: var(--f);
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-      margin-left: auto;
-    }
-    button.copy:hover { background: rgba(255,255,255,0.2); color: #fff; }
-    pre {
-      background: var(--term-bg);
-      color: #f0f0f2;
-      padding: 18px 20px;
-      overflow-x: auto;
-      font-family: var(--fm);
-      font-size: 13.5px;
-      line-height: 1.75;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin: 0;
-    }
-    code { font-family: var(--fm); }
-    .prompt { color: #30d158; user-select: none; }
-    .comment { color: #6e6e73; font-style: italic; }
-
-    /* ── NOTE BOXES ── */
-    .note {
-      background: rgba(0,113,227,0.07);
-      border-left: 3px solid var(--accent);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin: 14px 0 4px;
-      font-size: 14px;
-      color: var(--text-2);
-    }
-    .note.warn { background: rgba(255,149,0,0.08); border-left-color: var(--warning); }
-    .note.danger { background: rgba(255,59,48,0.08); border-left-color: var(--danger); }
-    .note.success { background: rgba(40,205,65,0.08); border-left-color: var(--success); }
-    .note strong { color: var(--text); }
-    .ok { color: var(--success); font-weight: 600; }
-    .bad { color: var(--danger); font-weight: 600; }
-    .warn-text { color: var(--warning); font-weight: 600; }
-
-    /* ── CMD BADGE ── */
-    .cmd-name {
-      display: inline-block;
-      background: rgba(0,113,227,0.1);
-      color: var(--accent);
-      font-family: var(--fm);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 5px;
-    }
-
-    /* ── CHEATSHEET GRID ── */
-    .cheat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .cheat-item {
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .cheat-item code {
-      display: block;
-      font-size: 13px;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .cheat-item p {
-      font-size: 12.5px;
-      color: var(--text-2);
-      margin: 0;
-    }
-
-    /* ── FOOTER ── */
-    .site-footer {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 24px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--text-3);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .hero { height: 300px; }
-      .hero-content { padding: 24px 20px 28px; }
-      .card { padding: 22px 18px; border-radius: 12px; }
-      .main { padding: 24px 12px 60px; }
-      .cheat-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-    }
-    @media (max-width: 480px) {
-      .hero { height: 260px; }
-      .hero h1 { font-size: 24px; }
-      .hero p { font-size: 14px; }
-      .nav-brand span { display: none; }
+      --hero-badge-bg: rgba(0,113,227,0.9);
+      --hero-pos: center 40%;
     }
   </style>
 </head>
@@ -359,8 +39,7 @@
   <section class="hero">
     <img class="hero-img"
          src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1400&h=500&fit=crop&auto=format&q=80"
-         alt="Terminal avec du code"
-         loading="eager" />
+         alt="Terminal avec du code" loading="eager" />
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-badge">Guide Débutant</div>
@@ -369,14 +48,14 @@
     </div>
   </section>
 
-  <!-- MAIN -->
+  <!-- CONTENU -->
   <main class="main">
 
     <!-- 1. NAVIGATION & DOSSIERS -->
     <div class="card">
       <div class="section-label">Section 01</div>
       <h2>Navigation &amp; Dossiers</h2>
-      <p class="intro-text">Les commandes fondamentales pour se repérer et gérer les répertoires dans le système de fichiers.</p>
+      <p>Les commandes fondamentales pour se repérer et gérer les répertoires dans le système de fichiers.</p>
 
       <h3><span class="cmd-name">pwd</span> — Afficher le répertoire actuel</h3>
       <p class="cmd-desc">Print Working Directory — affiche le chemin complet où vous êtes actuellement.</p>
@@ -400,7 +79,7 @@
         </div>
         <pre><code><span class="prompt">$ </span>ls             <span class="comment"># liste simple</span>
 <span class="prompt">$ </span>ls -l          <span class="comment"># liste détaillée</span>
-<span class="prompt">$ </span>ls -la         <span class="comment"># avec fichiers cachés (.htaccess, etc.)</span>
+<span class="prompt">$ </span>ls -la         <span class="comment"># avec fichiers cachés</span>
 <span class="prompt">$ </span>ls -lh         <span class="comment"># tailles lisibles (Ko, Mo...)</span></code></pre>
       </div>
 
@@ -412,11 +91,11 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>cd /var/www/html        <span class="comment"># chemin absolu</span>
-<span class="prompt">$ </span>cd mon-dossier          <span class="comment"># chemin relatif</span>
+        <pre><code><span class="prompt">$ </span>cd /var/www/html       <span class="comment"># chemin absolu</span>
+<span class="prompt">$ </span>cd mon-dossier         <span class="comment"># chemin relatif</span>
 <span class="prompt">$ </span>cd ..                  <span class="comment"># remonter d'un niveau</span>
-<span class="prompt">$ </span>cd ~                   <span class="comment"># aller dans le dossier home</span>
-<span class="prompt">$ </span>cd -                   <span class="comment"># retourner au dossier précédent</span></code></pre>
+<span class="prompt">$ </span>cd ~                   <span class="comment"># dossier home</span>
+<span class="prompt">$ </span>cd -                   <span class="comment"># dossier précédent</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">mkdir</span> — Créer un dossier</h3>
@@ -440,7 +119,7 @@
         <pre><code><span class="prompt">$ </span>rmdir mon-dossier-vide</code></pre>
       </div>
       <div class="note">
-        <strong>Astuce :</strong> Pour supprimer un dossier avec contenu, utilisez <code>rm -rf dossier/</code> — mais avec précaution !
+        <strong>Astuce :</strong> Pour supprimer un dossier avec contenu, utilisez <code>rm -rf dossier/</code> — avec précaution !
       </div>
     </div>
 
@@ -448,7 +127,7 @@
     <div class="card">
       <div class="section-label">Section 02</div>
       <h2>Gestion des Fichiers</h2>
-      <p class="intro-text">Copier, déplacer, renommer et supprimer des fichiers et dossiers.</p>
+      <p>Copier, déplacer, renommer et supprimer des fichiers et dossiers.</p>
 
       <h3><span class="cmd-name">touch</span> — Créer un fichier vide</h3>
       <div class="code-wrap">
@@ -458,7 +137,7 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>touch fichier.txt
-<span class="prompt">$ </span>touch fichier1.txt fichier2.txt   <span class="comment"># plusieurs à la fois</span></code></pre>
+<span class="prompt">$ </span>touch f1.txt f2.txt   <span class="comment"># plusieurs à la fois</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">cp</span> — Copier</h3>
@@ -470,7 +149,7 @@
         </div>
         <pre><code><span class="prompt">$ </span>cp source.txt destination.txt
 <span class="prompt">$ </span>cp source.txt /var/www/html/
-<span class="prompt">$ </span>cp -r dossier/ /backup/         <span class="comment"># copie récursive (dossiers)</span></code></pre>
+<span class="prompt">$ </span>cp -r dossier/ /backup/        <span class="comment"># copie récursive</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">mv</span> — Déplacer / Renommer</h3>
@@ -480,8 +159,8 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>mv ancien-nom.txt nouveau-nom.txt   <span class="comment"># renommer</span>
-<span class="prompt">$ </span>mv fichier.txt /var/www/html/       <span class="comment"># déplacer</span></code></pre>
+        <pre><code><span class="prompt">$ </span>mv ancien.txt nouveau.txt      <span class="comment"># renommer</span>
+<span class="prompt">$ </span>mv fichier.txt /var/www/html/  <span class="comment"># déplacer</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">rm</span> — Supprimer</h3>
@@ -492,11 +171,11 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>rm fichier.txt
-<span class="prompt">$ </span>rm -r dossier/          <span class="comment"># supprimer un dossier et son contenu</span>
-<span class="prompt">$ </span>rm -rf dossier/         <span class="comment"># forcer la suppression sans confirmation</span></code></pre>
+<span class="prompt">$ </span>rm -r dossier/         <span class="comment"># supprimer un dossier et son contenu</span>
+<span class="prompt">$ </span>rm -rf dossier/        <span class="comment"># forcer la suppression sans confirmation</span></code></pre>
       </div>
       <div class="note danger">
-        <strong>Danger :</strong> <code>rm -rf</code> supprime définitivement sans corbeille. Impossible d'annuler. Vérifiez toujours le chemin avant d'exécuter.
+        <strong>Danger :</strong> <code>rm -rf</code> supprime définitivement sans corbeille. Vérifiez toujours le chemin avant d'exécuter.
       </div>
     </div>
 
@@ -504,7 +183,7 @@
     <div class="card">
       <div class="section-label">Section 03</div>
       <h2>Lecture de Fichiers</h2>
-      <p class="intro-text">Visualiser le contenu d'un fichier sans l'ouvrir dans un éditeur.</p>
+      <p>Visualiser le contenu d'un fichier sans l'ouvrir dans un éditeur.</p>
 
       <h3><span class="cmd-name">cat</span> — Afficher tout le contenu</h3>
       <div class="code-wrap">
@@ -527,11 +206,10 @@
         <pre><code><span class="prompt">$ </span>head fichier.txt          <span class="comment"># 10 premières lignes</span>
 <span class="prompt">$ </span>head -n 20 fichier.txt    <span class="comment"># 20 premières lignes</span>
 <span class="prompt">$ </span>tail fichier.txt          <span class="comment"># 10 dernières lignes</span>
-<span class="prompt">$ </span>tail -n 50 access.log     <span class="comment"># 50 dernières lignes</span>
 <span class="prompt">$ </span>tail -f /var/log/nginx/access.log   <span class="comment"># suivi en temps réel</span></code></pre>
       </div>
       <div class="note success">
-        <strong>Pro tip :</strong> <code>tail -f</code> est essentiel pour surveiller des logs en temps réel (serveur web, erreurs PHP, etc.).
+        <strong>Pro tip :</strong> <code>tail -f</code> est essentiel pour surveiller les logs en temps réel (serveur web, erreurs PHP...).
       </div>
 
       <h3><span class="cmd-name">less</span> — Afficher page par page</h3>
@@ -542,7 +220,7 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>less fichier.txt
-<span class="comment"># Touches : espace (page suivante) | q (quitter) | / (rechercher)</span></code></pre>
+<span class="comment"># Touches : espace = page suivante | q = quitter | / = rechercher</span></code></pre>
       </div>
     </div>
 
@@ -550,7 +228,7 @@
     <div class="card">
       <div class="section-label">Section 04</div>
       <h2>Recherche</h2>
-      <p class="intro-text">Trouver des fichiers et du contenu rapidement dans l'arborescence.</p>
+      <p>Trouver des fichiers et du contenu rapidement dans l'arborescence.</p>
 
       <h3><span class="cmd-name">find</span> — Rechercher des fichiers</h3>
       <div class="code-wrap">
@@ -559,11 +237,10 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>find . -name "*.php"                  <span class="comment"># par extension</span>
-<span class="prompt">$ </span>find . -type f -mtime -7              <span class="comment"># modifiés il y a moins de 7 jours</span>
-<span class="prompt">$ </span>find /var/www -name "config.php"      <span class="comment"># par nom exact</span>
-<span class="prompt">$ </span>find . -type d -name "cache"          <span class="comment"># dossiers uniquement</span>
-<span class="prompt">$ </span>find . -size +10M                     <span class="comment"># fichiers > 10 Mo</span></code></pre>
+        <pre><code><span class="prompt">$ </span>find . -name "*.php"              <span class="comment"># par extension</span>
+<span class="prompt">$ </span>find . -type f -mtime -7          <span class="comment"># modifiés < 7 jours</span>
+<span class="prompt">$ </span>find /var/www -name "config.php"  <span class="comment"># par nom exact</span>
+<span class="prompt">$ </span>find . -size +10M                 <span class="comment"># fichiers > 10 Mo</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">grep</span> — Rechercher dans les fichiers</h3>
@@ -574,22 +251,20 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>grep "motif" fichier.txt
-<span class="prompt">$ </span>grep -r "ERROR" /var/log/           <span class="comment"># recherche récursive</span>
-<span class="prompt">$ </span>grep -i "warning" access.log        <span class="comment"># insensible à la casse</span>
-<span class="prompt">$ </span>grep -n "eval(" fichier.php          <span class="comment"># affiche les numéros de ligne</span>
-<span class="prompt">$ </span>grep -l "eval(" *.php               <span class="comment"># liste seulement les fichiers</span></code></pre>
+<span class="prompt">$ </span>grep -r "ERROR" /var/log/     <span class="comment"># recherche récursive</span>
+<span class="prompt">$ </span>grep -i "warning" access.log  <span class="comment"># insensible à la casse</span>
+<span class="prompt">$ </span>grep -n "eval(" fichier.php   <span class="comment"># avec numéros de ligne</span></code></pre>
       </div>
 
-      <h3><span class="cmd-name">which</span> / <span class="cmd-name">whereis</span> — Localiser une commande</h3>
+      <h3><span class="cmd-name">which</span> — Localiser une commande</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>which php        <span class="comment"># /usr/bin/php</span>
-<span class="prompt">$ </span>which nginx      <span class="comment"># /usr/sbin/nginx</span>
-<span class="prompt">$ </span>whereis mysql    <span class="comment"># chemin + pages de man</span></code></pre>
+        <pre><code><span class="prompt">$ </span>which php      <span class="comment"># /usr/bin/php</span>
+<span class="prompt">$ </span>which nginx    <span class="comment"># /usr/sbin/nginx</span></code></pre>
       </div>
     </div>
 
@@ -597,20 +272,19 @@
     <div class="card">
       <div class="section-label">Section 05</div>
       <h2>Informations Système</h2>
-      <p class="intro-text">Surveiller les ressources et obtenir des informations sur le serveur.</p>
+      <p>Surveiller les ressources et obtenir des informations sur le serveur.</p>
 
-      <h3><span class="cmd-name">uname</span> / <span class="cmd-name">whoami</span> — Identité système</h3>
+      <h3><span class="cmd-name">whoami</span> / <span class="cmd-name">uname</span> — Identité système</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>whoami                  <span class="comment"># utilisateur actuel</span>
-<span class="prompt">$ </span>uname -a                <span class="comment"># infos complètes du système</span>
-<span class="prompt">$ </span>hostname                <span class="comment"># nom du serveur</span>
-<span class="prompt">$ </span>uptime                  <span class="comment"># durée de fonctionnement + charge</span>
-<span class="prompt">$ </span>id                      <span class="comment"># UID, GID et groupes</span></code></pre>
+        <pre><code><span class="prompt">$ </span>whoami          <span class="comment"># utilisateur actuel</span>
+<span class="prompt">$ </span>uname -a        <span class="comment"># infos complètes du système</span>
+<span class="prompt">$ </span>hostname        <span class="comment"># nom du serveur</span>
+<span class="prompt">$ </span>uptime          <span class="comment"># durée de fonctionnement + charge</span></code></pre>
       </div>
 
       <h3><span class="cmd-name">df</span> / <span class="cmd-name">du</span> — Espace disque</h3>
@@ -620,31 +294,22 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>df -h                    <span class="comment"># espace disque global (lisible)</span>
+        <pre><code><span class="prompt">$ </span>df -h                    <span class="comment"># espace disque global</span>
 <span class="prompt">$ </span>du -sh /var/www/html/    <span class="comment"># taille d'un dossier</span>
-<span class="prompt">$ </span>du -sh * | sort -rh      <span class="comment"># trier par taille décroissante</span></code></pre>
+<span class="prompt">$ </span>du -sh * | sort -rh      <span class="comment"># trier par taille</span></code></pre>
       </div>
 
-      <h3><span class="cmd-name">free</span> — Mémoire RAM</h3>
+      <h3><span class="cmd-name">free</span> / <span class="cmd-name">top</span> — Mémoire &amp; processus</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>free -h                  <span class="comment"># mémoire en Mo/Go lisible</span></code></pre>
-      </div>
-
-      <h3><span class="cmd-name">top</span> / <span class="cmd-name">ps</span> — Processus en cours</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span class="code-label">bash</span>
-          <button class="copy" type="button">Copier</button>
-        </div>
-        <pre><code><span class="prompt">$ </span>top                      <span class="comment"># moniteur interactif (q pour quitter)</span>
-<span class="prompt">$ </span>ps aux                   <span class="comment"># liste tous les processus</span>
-<span class="prompt">$ </span>ps aux | grep nginx      <span class="comment"># filtrer par nom</span></code></pre>
+        <pre><code><span class="prompt">$ </span>free -h              <span class="comment"># mémoire RAM disponible</span>
+<span class="prompt">$ </span>top                  <span class="comment"># moniteur interactif (q pour quitter)</span>
+<span class="prompt">$ </span>ps aux               <span class="comment"># liste tous les processus</span>
+<span class="prompt">$ </span>ps aux | grep nginx  <span class="comment"># filtrer par nom</span></code></pre>
       </div>
     </div>
 
@@ -652,7 +317,7 @@
     <div class="card">
       <div class="section-label">Section 06</div>
       <h2>Permissions &amp; Propriété</h2>
-      <p class="intro-text">Gérer qui peut lire, écrire et exécuter des fichiers — fondamental pour la sécurité.</p>
+      <p>Gérer qui peut lire, écrire et exécuter des fichiers — fondamental pour la sécurité.</p>
 
       <h3><span class="cmd-name">chmod</span> — Changer les permissions</h3>
       <div class="code-wrap">
@@ -661,16 +326,14 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>chmod 755 dossier/        <span class="comment"># rwxr-xr-x (dossiers web recommandé)</span>
-<span class="prompt">$ </span>chmod 644 fichier.php     <span class="comment"># rw-r--r-- (fichiers web recommandé)</span>
-<span class="prompt">$ </span>chmod 600 wp-config.php   <span class="comment"># rw------- (fichiers sensibles)</span>
+        <pre><code><span class="prompt">$ </span>chmod 755 dossier/        <span class="comment"># dossiers web recommandé</span>
+<span class="prompt">$ </span>chmod 644 fichier.php     <span class="comment"># fichiers web recommandé</span>
+<span class="prompt">$ </span>chmod 600 wp-config.php   <span class="comment"># fichiers sensibles</span>
 <span class="prompt">$ </span>chmod +x script.sh        <span class="comment"># rendre exécutable</span>
-<span class="prompt">$ </span>chmod -R 755 /var/www/    <span class="comment"># récursif sur tout un dossier</span></code></pre>
+<span class="prompt">$ </span>chmod -R 755 /var/www/    <span class="comment"># récursif</span></code></pre>
       </div>
-
       <div class="note">
-        <strong>Mémo permissions :</strong> 7=rwx | 6=rw- | 5=r-x | 4=r-- | 0=---
-        <br>Ordre : <strong>propriétaire / groupe / autres</strong>
+        <strong>Mémo :</strong> 7=rwx | 6=rw- | 5=r-x | 4=r-- — ordre : <strong>propriétaire / groupe / autres</strong>
       </div>
 
       <h3><span class="cmd-name">chown</span> — Changer le propriétaire</h3>
@@ -680,8 +343,7 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>chown www-data fichier.php
-<span class="prompt">$ </span>chown www-data:www-data fichier.php   <span class="comment"># utilisateur:groupe</span>
+        <pre><code><span class="prompt">$ </span>chown www-data:www-data fichier.php
 <span class="prompt">$ </span>chown -R www-data:www-data /var/www/  <span class="comment"># récursif</span></code></pre>
       </div>
     </div>
@@ -690,7 +352,7 @@
     <div class="card">
       <div class="section-label">Section 07</div>
       <h2>Réseau</h2>
-      <p class="intro-text">Diagnostiquer la connexion, transférer des fichiers et se connecter à distance.</p>
+      <p>Diagnostiquer la connexion, transférer des fichiers et se connecter à distance.</p>
 
       <h3><span class="cmd-name">ping</span> — Tester la connectivité</h3>
       <div class="code-wrap">
@@ -699,8 +361,7 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>ping google.com
-<span class="prompt">$ </span>ping -c 4 google.com       <span class="comment"># limiter à 4 paquets</span></code></pre>
+        <pre><code><span class="prompt">$ </span>ping -c 4 google.com</code></pre>
       </div>
 
       <h3><span class="cmd-name">curl</span> — Requêtes HTTP</h3>
@@ -711,12 +372,11 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>curl https://example.com
-<span class="prompt">$ </span>curl -I https://example.com          <span class="comment"># headers HTTP seulement</span>
-<span class="prompt">$ </span>curl -o fichier.zip https://url/fichier.zip   <span class="comment"># télécharger</span>
-<span class="prompt">$ </span>curl -s https://api.example.com/data | python3 -m json.tool</code></pre>
+<span class="prompt">$ </span>curl -I https://example.com        <span class="comment"># headers HTTP seulement</span>
+<span class="prompt">$ </span>curl -o fichier.zip https://url/   <span class="comment"># télécharger</span></code></pre>
       </div>
 
-      <h3><span class="cmd-name">ssh</span> — Connexion à distance</h3>
+      <h3><span class="cmd-name">ssh</span> / <span class="cmd-name">scp</span> — Connexion &amp; transfert SSH</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
@@ -724,31 +384,18 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>ssh utilisateur@ip_serveur
-<span class="prompt">$ </span>ssh -p 2222 utilisateur@ip_serveur    <span class="comment"># port personnalisé</span>
-<span class="prompt">$ </span>ssh -i ~/.ssh/ma_cle utilisateur@ip  <span class="comment"># avec clé privée</span></code></pre>
+<span class="prompt">$ </span>scp fichier.txt user@ip:/var/www/    <span class="comment"># local → serveur</span>
+<span class="prompt">$ </span>scp user@ip:/var/log/error.log .     <span class="comment"># serveur → local</span></code></pre>
       </div>
 
-      <h3><span class="cmd-name">scp</span> — Copier via SSH</h3>
+      <h3><span class="cmd-name">ss</span> — Ports ouverts</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>scp fichier.txt user@ip:/var/www/    <span class="comment"># local → serveur</span>
-<span class="prompt">$ </span>scp user@ip:/var/log/nginx/error.log .  <span class="comment"># serveur → local</span>
-<span class="prompt">$ </span>scp -r dossier/ user@ip:/backup/     <span class="comment"># dossier entier</span></code></pre>
-      </div>
-
-      <h3><span class="cmd-name">netstat</span> / <span class="cmd-name">ss</span> — Ports ouverts</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span class="code-label">bash</span>
-          <button class="copy" type="button">Copier</button>
-        </div>
-        <pre><code><span class="prompt">$ </span>ss -tulpn                 <span class="comment"># ports en écoute (moderne)</span>
-<span class="prompt">$ </span>netstat -tulpn            <span class="comment"># équivalent plus ancien</span></code></pre>
+        <pre><code><span class="prompt">$ </span>ss -tulpn     <span class="comment"># ports en écoute</span></code></pre>
       </div>
     </div>
 
@@ -756,40 +403,38 @@
     <div class="card">
       <div class="section-label">Section 08</div>
       <h2>Archives &amp; Compression</h2>
-      <p class="intro-text">Créer et extraire des archives — indispensable pour les sauvegardes et les transferts.</p>
+      <p>Créer et extraire des archives — indispensable pour les sauvegardes et les transferts.</p>
 
-      <h3><span class="cmd-name">tar</span> — Archive TAR (Linux/macOS)</h3>
+      <h3><span class="cmd-name">tar</span> — Archive TAR</h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>tar -czf archive.tar.gz dossier/    <span class="comment"># créer (c=create, z=gzip, f=fichier)</span>
-<span class="prompt">$ </span>tar -xzf archive.tar.gz             <span class="comment"># extraire</span>
-<span class="prompt">$ </span>tar -tzf archive.tar.gz             <span class="comment"># lister le contenu sans extraire</span>
-<span class="prompt">$ </span>tar -czf backup-$(date +%Y%m%d).tar.gz /var/www/</code></pre>
+        <pre><code><span class="prompt">$ </span>tar -czf archive.tar.gz dossier/   <span class="comment"># créer</span>
+<span class="prompt">$ </span>tar -xzf archive.tar.gz            <span class="comment"># extraire</span>
+<span class="prompt">$ </span>tar -tzf archive.tar.gz            <span class="comment"># lister le contenu</span></code></pre>
       </div>
 
-      <h3><span class="cmd-name">zip</span> / <span class="cmd-name">unzip</span> — Archive ZIP</h3>
+      <h3><span class="cmd-name">zip</span> / <span class="cmd-name">unzip</span></h3>
       <div class="code-wrap">
         <div class="code-header">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>zip archive.zip fichier1.txt fichier2.txt
-<span class="prompt">$ </span>zip -r archive.zip dossier/          <span class="comment"># dossier entier</span>
+        <pre><code><span class="prompt">$ </span>zip -r archive.zip dossier/
 <span class="prompt">$ </span>unzip archive.zip
-<span class="prompt">$ </span>unzip archive.zip -d /destination/   <span class="comment"># dans un dossier précis</span></code></pre>
+<span class="prompt">$ </span>unzip archive.zip -d /destination/</code></pre>
       </div>
     </div>
 
-    <!-- 9. COMMANDES UTILES -->
+    <!-- 9. ASTUCES -->
     <div class="card">
       <div class="section-label">Section 09</div>
-      <h2>Commandes Utiles &amp; Astuces</h2>
-      <p class="intro-text">Des raccourcis et commandes qui font gagner du temps au quotidien.</p>
+      <h2>Astuces &amp; Raccourcis</h2>
+      <p>Des commandes qui font gagner du temps au quotidien.</p>
 
       <h3>Redirections &amp; Pipes</h3>
       <div class="code-wrap">
@@ -798,10 +443,9 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>ls -la > liste.txt                  <span class="comment"># rediriger vers un fichier (écrase)</span>
-<span class="prompt">$ </span>echo "ligne" >> fichier.txt          <span class="comment"># ajouter à la fin</span>
-<span class="prompt">$ </span>cat access.log | grep "404"          <span class="comment"># pipe : chaîner des commandes</span>
-<span class="prompt">$ </span>ps aux | grep php | grep -v grep</code></pre>
+        <pre><code><span class="prompt">$ </span>ls -la > liste.txt               <span class="comment"># rediriger (écrase)</span>
+<span class="prompt">$ </span>echo "ligne" >> fichier.txt       <span class="comment"># ajouter à la fin</span>
+<span class="prompt">$ </span>cat access.log | grep "404"       <span class="comment"># chaîner des commandes</span></code></pre>
       </div>
 
       <h3>Historique &amp; Navigation rapide</h3>
@@ -811,11 +455,10 @@
           <span class="code-label">bash</span>
           <button class="copy" type="button">Copier</button>
         </div>
-        <pre><code><span class="prompt">$ </span>history                              <span class="comment"># liste des commandes précédentes</span>
-<span class="prompt">$ </span>!!                                   <span class="comment"># répéter la dernière commande</span>
-<span class="prompt">$ </span>!nginx                               <span class="comment"># répéter la dernière commande nginx</span>
-<span class="prompt">$ </span>clear                                <span class="comment"># effacer l'écran (ou Ctrl+L)</span>
-<span class="prompt">$ </span>man ls                               <span class="comment"># manuel de la commande ls</span></code></pre>
+        <pre><code><span class="prompt">$ </span>history          <span class="comment"># liste des commandes précédentes</span>
+<span class="prompt">$ </span>!!               <span class="comment"># répéter la dernière commande</span>
+<span class="prompt">$ </span>clear            <span class="comment"># effacer l'écran (ou Ctrl+L)</span>
+<span class="prompt">$ </span>man ls           <span class="comment"># manuel de la commande ls</span></code></pre>
       </div>
 
       <h3>Nano — Éditeur de texte simple</h3>
@@ -826,18 +469,14 @@
           <button class="copy" type="button">Copier</button>
         </div>
         <pre><code><span class="prompt">$ </span>nano fichier.txt
-<span class="comment"># CTRL+O  = sauvegarder
-# CTRL+X  = quitter
-# CTRL+W  = chercher
-# CTRL+K  = couper une ligne
-# CTRL+U  = coller</span></code></pre>
+<span class="comment"># CTRL+O = sauvegarder | CTRL+X = quitter | CTRL+W = chercher</span></code></pre>
       </div>
     </div>
 
-    <!-- CHEATSHEET -->
+    <!-- CHEAT SHEET -->
     <div class="card">
       <div class="section-label">Récapitulatif</div>
-      <h2>Cheat Sheet — Commandes Essentielles</h2>
+      <h2>Cheat Sheet — 20 Commandes Essentielles</h2>
       <div class="cheat-grid">
         <div class="cheat-item"><code>pwd</code><p>Répertoire actuel</p></div>
         <div class="cheat-item"><code>ls -la</code><p>Lister avec détails</p></div>
@@ -865,30 +504,9 @@
   </main>
 
   <footer class="site-footer">
-    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+    Photos : <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> — Libres de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
   </footer>
 
-  <script>
-    document.querySelectorAll('button.copy').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const pre = btn.closest('.code-wrap').querySelector('code');
-        const text = pre.innerText
-          .replace(/^\$ /gm, '')
-          .replace(/^# .*/gm, '')
-          .split('\n').filter(function(l){ return l.trim() !== ''; }).join('\n');
-        navigator.clipboard.writeText(text).then(function() {
-          const orig = btn.textContent;
-          btn.textContent = 'Copié ✓';
-          btn.style.color = '#28cd41';
-          setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
-        }).catch(function() {
-          const orig = btn.textContent;
-          btn.textContent = 'Erreur';
-          btn.style.color = '#ff453a';
-          setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 1500);
-        });
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
