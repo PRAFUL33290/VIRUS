@@ -460,6 +460,33 @@ p code, li code {
 }
 .cheat-item p { font-size: 12.5px; color: var(--text-2); margin: 0; }
 
+/* ── PHOTO INSIDE CARD ── */
+.card-photo {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 20px 0;
+  display: block;
+}
+.card-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+.card-photo-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+@media (max-width: 600px) {
+  .card-photo      { height: 160px; }
+  .card-photo-grid { grid-template-columns: 1fr; }
+}
+
 /* ── FOOTER ── */
 .site-footer {
   background: var(--surface);
