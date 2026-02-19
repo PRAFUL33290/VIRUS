@@ -891,7 +891,7 @@ p code, li code {
   }
   .nav-links {
     flex-direction: row;
-    order: 4;
+    order: 5;
     width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
