@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nettoyage Mac — Libérer de l'espace — TermSecure</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(255,149,0,0.88);
+      --hero-pos: center 40%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="accueil.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="accueil.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Accueil</a></li>
+        <li class="has-mega">
+          <a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Terminal</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Guides Terminal</li>
+            <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+            <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+            <li><a href="affichage-dossiers.html"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>Affichage Dossiers</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="index.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WordPress</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sécurité WordPress</li>
+            <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+            <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Sauvegardes</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sauvegardes</li>
+            <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+            <li><a href="sauvegarde-parvati.html"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Serveur</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Infrastructure</li>
+            <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="batterie.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M17 9h1a1 1 0 0 1 0 2h-1"/><line x1="6" y1="10" x2="14" y2="10"/></svg>Batterie</a>
+        </li>
+        <li>
+          <a href="mac-cleanup.html" class="active"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 17 6"/><path d="M8 6V4h4v2"/><path d="M16 6l-1 11H5L4 6"/><line x1="8" y1="10" x2="8" y2="15"/><line x1="12" y1="10" x2="12" y2="15"/></svg>Nettoyage Mac</a>
+        </li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+      <button class="nav-ssh-laurie-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Laurie
+      </button>
+      <button class="nav-ssh-kajal-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Kajal
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Nettoyage Mac — Libérer de l'espace disque"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🧹 Nettoyage Mac</div>
+      <h1>Libérer de l'espace<br>sur ton Mac</h1>
+      <p>Commandes Terminal pour vider les caches, supprimer les fichiers inutiles, repérer les gros fichiers et éliminer les doublons.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <!-- ===== SECTION 01 : LIBÉRER DE L'ESPACE ===== -->
+    <div class="card">
+      <div class="section-label">Section 01</div>
+      <h2>Libérer de l'espace — Commandes essentielles</h2>
+      <p>Ces commandes suppriment les fichiers temporaires, caches et logs qui s'accumulent silencieusement. Elles peuvent souvent libérer plusieurs gigaoctets sans toucher à tes données.</p>
+
+      <h3><span class="cmd-name">Corbeille</span> — Vider la corbeille via Terminal</h3>
+      <p class="cmd-desc">Supprime définitivement tous les fichiers dans la corbeille, y compris les fichiers volumineux oubliés.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rm -rf ~/.Trash/*</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">Caches utilisateur</span> — Nettoyer les caches applicatifs</h3>
+      <p class="cmd-desc">Les applications macOS stockent des caches dans ton dossier utilisateur. Ils peuvent peser plusieurs Go.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rm -rf ~/Library/Caches/*</code></pre>
+      </div>
+      <div class="note warn">
+        <strong>Note :</strong> macOS recréera ces caches au prochain lancement des applications. Quelques apps peuvent être plus lentes la première fois après nettoyage.
+      </div>
+
+      <h3><span class="cmd-name">Logs système</span> — Supprimer les fichiers journaux</h3>
+      <p class="cmd-desc">Les logs système s'accumulent avec le temps. Cette commande nettoie les journaux utilisateur et système.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rm -rf ~/Library/Logs/*
+sudo rm -rf /private/var/log/asl/*.asl   # Logs ASL système (nécessite sudo)</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">Homebrew</span> — Nettoyer les anciennes versions</h3>
+      <p class="cmd-desc">Homebrew conserve les anciennes versions de chaque outil installé. <code>cleanup</code> les supprime.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>brew cleanup --prune=all   # Supprime toutes les versions obsolètes
+brew autoremove            # Supprime les dépendances inutilisées</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">Xcode</span> — Supprimer les données dérivées et simulateurs</h3>
+      <p class="cmd-desc">Xcode génère des gigaoctets de données en compilant tes projets. Ces dossiers sont souvent les plus volumineux.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>rm -rf ~/Library/Developer/Xcode/DerivedData/*           # Données de build
+rm -rf ~/Library/Developer/Xcode/iOS\ DeviceSupport/*   # Anciennes versions iOS
+xcrun simctl delete unavailable                          # Simulateurs inutilisés</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">npm &amp; pip</span> — Nettoyer les caches de gestionnaires de paquets</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>npm cache clean --force   # Cache npm
+pip cache purge           # Cache pip (Python 3)
+yarn cache clean          # Cache Yarn</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">Docker</span> — Supprimer les images et conteneurs inutilisés</h3>
+      <p class="cmd-desc">Docker peut occuper des dizaines de Go. Cette commande purge tout ce qui n'est pas en cours d'utilisation.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>docker system prune -a --volumes   # Images, conteneurs, volumes inutilisés</code></pre>
+      </div>
+      <div class="note warn">
+        <strong>Attention :</strong> Cette commande supprime toutes les images Docker non utilisées par un conteneur actif. Assure-toi de ne pas avoir besoin d'elles avant de l'exécuter.
+      </div>
+
+      <h3><span class="cmd-name">Voir l'espace libéré</span> — Afficher l'espace disque disponible</h3>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>df -h /   # Affiche l'espace disque du volume principal</code></pre>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 02 : GROS FICHIERS ===== -->
+    <div class="card">
+      <div class="section-label">Section 02</div>
+      <h2>Trouver les gros fichiers qui prennent de la place</h2>
+      <p>Ces commandes analysent ton disque pour identifier les dossiers et fichiers les plus volumineux. Parfait pour repérer les fichiers oubliés qui occupent inutilement de l'espace.</p>
+
+      <h3><span class="cmd-name">find</span> — Chercher les fichiers de grande taille</h3>
+      <p class="cmd-desc">Trouve tous les fichiers dépassant un seuil de taille dans ton dossier personnel.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Fichiers de plus de 1 Go dans le dossier home
+find ~ -size +1G -type f 2>/dev/null
+
+# Fichiers de plus de 500 Mo
+find ~ -size +500M -type f 2>/dev/null
+
+# Fichiers de plus de 100 Mo avec leur taille affichée
+find ~ -size +100M -type f -exec du -sh {} \; 2>/dev/null | sort -rh</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">du</span> — Analyser la taille des dossiers</h3>
+      <p class="cmd-desc">Affiche la taille de chaque sous-dossier, trié du plus lourd au plus léger.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Top 20 des dossiers les plus lourds dans home
+du -sh ~/* 2>/dev/null | sort -rh | head -20
+
+# Top 20 dans le dossier Library
+du -sh ~/Library/* 2>/dev/null | sort -rh | head -20
+
+# Top 20 des dossiers dans le répertoire courant
+du -hs */ 2>/dev/null | sort -rh | head -20</code></pre>
+      </div>
+      <div class="note">
+        <strong>Lire les résultats :</strong> La taille s'affiche à gauche (ex: <code>4,5G</code>, <code>800M</code>). Le résultat le plus lourd apparaît en premier grâce à <code>sort -rh</code>.
+      </div>
+
+      <h3><span class="cmd-name">du</span> — Cibler les dossiers suspects</h3>
+      <p class="cmd-desc">Commandes ciblées sur les endroits classiques où s'accumulent les gros fichiers.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Dossier Téléchargements
+du -sh ~/Downloads/* 2>/dev/null | sort -rh | head -20
+
+# Dossier Documents
+du -sh ~/Documents/* 2>/dev/null | sort -rh | head -20
+
+# Applications (hors App Store)
+du -sh /Applications/* 2>/dev/null | sort -rh | head -20
+
+# VMs, archives et gros fichiers dans les caches
+du -sh ~/Library/Caches/* 2>/dev/null | sort -rh | head -10</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">ncdu</span> — Explorateur interactif de disque (recommandé)</h3>
+      <p class="cmd-desc"><code>ncdu</code> est un outil interactif en Terminal qui te permet de naviguer dans tes dossiers et de voir leur taille en temps réel. C'est l'outil le plus pratique pour ce type d'analyse.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Installation via Homebrew
+brew install ncdu
+
+# Analyser le dossier home
+ncdu ~
+
+# Analyser un dossier spécifique
+ncdu ~/Library</code></pre>
+      </div>
+      <div class="note success">
+        <strong>Navigation dans ncdu :</strong> Utilise les flèches directionnelles pour naviguer, <code>Entrée</code> pour entrer dans un dossier, <code>d</code> pour supprimer un fichier/dossier, <code>q</code> pour quitter.
+      </div>
+
+      <h3>Tableau récapitulatif — Gros dossiers à surveiller</h3>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Dossier</th>
+            <th>Contenu typique</th>
+            <th>Peut-on le supprimer ?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>~/Library/Caches</code></td>
+            <td>Caches applicatifs</td>
+            <td style="color:var(--success)">Oui (recréé automatiquement)</td>
+          </tr>
+          <tr>
+            <td><code>~/Library/Logs</code></td>
+            <td>Journaux d'applications</td>
+            <td style="color:var(--success)">Oui</td>
+          </tr>
+          <tr>
+            <td><code>~/Library/Developer/Xcode/DerivedData</code></td>
+            <td>Données de build Xcode</td>
+            <td style="color:var(--success)">Oui (recréé à la compilation)</td>
+          </tr>
+          <tr>
+            <td><code>~/Library/Developer/Xcode/iOS DeviceSupport</code></td>
+            <td>Symboles pour débogage iOS</td>
+            <td style="color:var(--warning)">Oui (si iOS obsolète)</td>
+          </tr>
+          <tr>
+            <td><code>~/Downloads</code></td>
+            <td>Téléchargements oubliés</td>
+            <td style="color:var(--warning)">À vérifier manuellement</td>
+          </tr>
+          <tr>
+            <td><code>~/.docker</code></td>
+            <td>Images et volumes Docker</td>
+            <td style="color:var(--warning)">Via <code>docker system prune</code></td>
+          </tr>
+          <tr>
+            <td><code>~/Library/Application Support</code></td>
+            <td>Données d'applications</td>
+            <td style="color:var(--danger)">Prudence (données utilisateur)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== SECTION 03 : FICHIERS EN DOUBLE ===== -->
+    <div class="card">
+      <div class="section-label">Section 03</div>
+      <h2>Trouver et supprimer les fichiers en double</h2>
+      <p>Les doublons (photos, documents, archives téléchargées plusieurs fois) peuvent représenter plusieurs gigaoctets inutiles. Voici comment les détecter via Terminal.</p>
+
+      <h3><span class="cmd-name">fdupes</span> — Trouver les doublons par contenu</h3>
+      <p class="cmd-desc"><code>fdupes</code> compare les fichiers par leur contenu (hash MD5/SHA1) et liste les doublons exacts. C'est l'outil de référence.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Installation
+brew install fdupes
+
+# Lister les doublons dans un dossier (récursif)
+fdupes -r ~/Downloads
+
+# Lister avec leur taille
+fdupes -rS ~/Documents
+
+# Supprimer les doublons en mode interactif
+fdupes -rd ~/Downloads   # Demande confirmation pour chaque groupe
+
+# Supprimer automatiquement en gardant le premier fichier (attention !)
+fdupes -rdN ~/Downloads</code></pre>
+      </div>
+      <div class="note warn">
+        <strong>Attention :</strong> L'option <code>-N</code> supprime les doublons sans confirmation. Utilise d'abord <code>fdupes -r</code> sans suppression pour vérifier les résultats.
+      </div>
+
+      <h3><span class="cmd-name">jdupes</span> — Alternative rapide à fdupes</h3>
+      <p class="cmd-desc"><code>jdupes</code> est une version plus rapide et optimisée de <code>fdupes</code>, particulièrement efficace sur les gros volumes.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Installation
+brew install jdupes
+
+# Scanner le dossier Photos
+jdupes -r ~/Pictures
+
+# Scanner avec résumé de l'espace récupérable
+jdupes -rS ~/Downloads</code></pre>
+      </div>
+
+      <h3><span class="cmd-name">find + md5</span> — Détecter les doublons sans outil tiers</h3>
+      <p class="cmd-desc">Si tu ne veux pas installer d'outil, cette commande utilise <code>find</code> et <code>md5</code> (natif macOS) pour détecter les fichiers identiques par leur empreinte.</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Lister tous les fichiers avec leur hash MD5, trier et afficher les doublons
+find ~/Downloads -type f -exec md5 -r {} \; 2>/dev/null \
+  | sort | awk 'seen[$1]++ {print "DOUBLON:", $2}'</code></pre>
+      </div>
+      <div class="note">
+        <strong>Comment ça marche :</strong> <code>md5 -r</code> affiche d'abord le hash puis le chemin du fichier. <code>sort</code> regroupe les fichiers identiques (même hash), et <code>awk</code> affiche uniquement les doublons (les lignes dont le hash apparaît plus d'une fois).
+      </div>
+
+      <h3><span class="cmd-name">find</span> — Doublons par nom et taille</h3>
+      <p class="cmd-desc">Méthode rapide pour détecter les fichiers portant le même nom dans un dossier (pas nécessairement identiques).</p>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code># Fichiers du type "nom (1).ext", "nom copie.ext" dans Téléchargements
+find ~/Downloads -name "* copie*" -o -name "*\ (1)*" -o -name "*\ (2)*" 2>/dev/null
+
+# Fichiers se terminant par " 2", " 3" etc. (doublons typiques du Finder)
+find ~ -name "* 2.*" -o -name "* 3.*" 2>/dev/null | grep -v ".Trash"</code></pre>
+      </div>
+
+      <h3>Comparaison des outils</h3>
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Outil</th>
+            <th>Méthode de détection</th>
+            <th>Vitesse</th>
+            <th>Installation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>fdupes</code></td>
+            <td>Contenu exact (hash)</td>
+            <td>Moyenne</td>
+            <td><code>brew install fdupes</code></td>
+          </tr>
+          <tr>
+            <td><code>jdupes</code></td>
+            <td>Contenu exact (hash)</td>
+            <td>Rapide</td>
+            <td><code>brew install jdupes</code></td>
+          </tr>
+          <tr>
+            <td><code>find + md5</code></td>
+            <td>Hash MD5</td>
+            <td>Lente sur grands volumes</td>
+            <td>Natif macOS</td>
+          </tr>
+          <tr>
+            <td><code>find + nom</code></td>
+            <td>Nom du fichier uniquement</td>
+            <td>Très rapide</td>
+            <td>Natif macOS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== CHEAT SHEET ===== -->
+    <div class="card">
+      <div class="section-label">Récapitulatif</div>
+      <h2>Cheat Sheet — Nettoyage Mac</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item"><code>rm -rf ~/.Trash/*</code><p>Vider la corbeille</p></div>
+        <div class="cheat-item"><code>rm -rf ~/Library/Caches/*</code><p>Nettoyer les caches utilisateur</p></div>
+        <div class="cheat-item"><code>rm -rf ~/Library/Logs/*</code><p>Supprimer les logs applicatifs</p></div>
+        <div class="cheat-item"><code>brew cleanup --prune=all</code><p>Nettoyer les anciennes versions Homebrew</p></div>
+        <div class="cheat-item"><code>brew autoremove</code><p>Supprimer les dépendances inutiles</p></div>
+        <div class="cheat-item"><code>rm -rf ~/Library/Developer/Xcode/DerivedData/*</code><p>Vider les données Xcode</p></div>
+        <div class="cheat-item"><code>xcrun simctl delete unavailable</code><p>Supprimer les simulateurs iOS obsolètes</p></div>
+        <div class="cheat-item"><code>docker system prune -a --volumes</code><p>Purger Docker complètement</p></div>
+        <div class="cheat-item"><code>df -h /</code><p>Voir l'espace disque disponible</p></div>
+        <div class="cheat-item"><code>du -sh ~/* | sort -rh | head -20</code><p>Top 20 des dossiers les plus lourds</p></div>
+        <div class="cheat-item"><code>find ~ -size +500M -type f 2>/dev/null</code><p>Fichiers de plus de 500 Mo</p></div>
+        <div class="cheat-item"><code>ncdu ~</code><p>Explorateur interactif de disque</p></div>
+        <div class="cheat-item"><code>fdupes -r ~/Downloads</code><p>Trouver les fichiers en double</p></div>
+        <div class="cheat-item"><code>jdupes -rS ~/Pictures</code><p>Doublons avec espace récupérable</p></div>
+        <div class="cheat-item"><code>fdupes -rdN ~/Downloads</code><p>Supprimer les doublons (auto)</p></div>
+      </div>
+
+      <div class="note success" style="margin-top:24px">
+        <strong>Conseil de sécurité :</strong> Commence toujours par lister les fichiers avant de les supprimer. Utilise <code>fdupes -r</code> avant <code>fdupes -rd</code>, et <code>du -sh</code> avant tout <code>rm -rf</code>.
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
