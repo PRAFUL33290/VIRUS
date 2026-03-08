@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub — Commandes essentielles pour sauvegarder et synchroniser</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --hero-badge-bg: rgba(36,41,47,0.88);
+      --hero-pos: center 46%;
+    }
+    .command-section {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .command-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--sh);
+    }
+    .command-panel h3 {
+      margin-bottom: 8px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--sh);
+    }
+    .quick-card code {
+      font-size: 13px;
+    }
+    .tips-list {
+      margin-top: 12px;
+      padding-left: 18px;
+    }
+    @media (max-width: 760px) {
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sidebar">
+    <div class="sidebar-inner">
+      <a href="accueil.html" class="nav-brand">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="16" height="14" rx="2"/>
+          <polyline points="6 8 9 11 6 14"/>
+          <line x1="11" y1="14" x2="15" y2="14"/>
+        </svg>
+        <span>TermSecure</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="accueil.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Accueil</a></li>
+        <li class="has-mega">
+          <a href="commandes-basiques.html" class="active"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Terminal</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Guides Terminal</li>
+            <li><a href="commandes-basiques.html"><svg viewBox="0 0 20 20"><polyline points="6 8 9 11 6 14"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes Basiques</a></li>
+            <li><a href="commandes-ssh.html"><svg viewBox="0 0 20 20"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M6 8l3 3-3 3"/><line x1="11" y1="14" x2="15" y2="14"/></svg>Commandes SSH</a></li>
+            <li><a href="affichage-dossiers.html"><svg viewBox="0 0 20 20"><path d="M2 6a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6z"/></svg>Affichage Dossiers</a></li>
+            <li><a href="git-push.html"><svg viewBox="0 0 20 20"><path d="M10 16V5"/><polyline points="6 9 10 5 14 9"/><path d="M4 16h12"/></svg>Git Push</a></li>
+            <li><a href="github.html" class="active"><svg viewBox="0 0 20 20"><path d="M7 15c-4 1.2-4-2-5-2"/><path d="M12 17v-3.5"/><path d="M8 17v-2.2a3 3 0 0 1 .9-2.2"/><path d="M12 17h1a4 4 0 0 0 4-4V8.7A3.7 3.7 0 0 0 16 6c.1-.6.3-1.8-.1-3-1 0-2 .7-2.5 1.1A8.6 8.6 0 0 0 10 3.5c-1.2 0-2.3.2-3.4.6C6.1 3.7 5 3 4 3c-.4 1.2-.2 2.4-.1 3A3.7 3.7 0 0 0 3 8.7V13a4 4 0 0 0 4 4h5"/></svg>GitHub</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="index.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WordPress</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sécurité WordPress</li>
+            <li><a href="index.html"><svg viewBox="0 0 20 20"><path d="M10 3l7 5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8l7-5z"/></svg>Audit Bash</a></li>
+            <li><a href="audit-malware.html"><svg viewBox="0 0 20 20"><path d="M10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2zm0 4v5h4"/><circle cx="10" cy="13" r="1"/></svg>Audit Malware</a></li>
+            <li><a href="wp-cli.html"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M5 10l3 5 2-7 2 7 3-5"/></svg>WP-CLI</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Sauvegardes</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Sauvegardes</li>
+            <li><a href="rsync-backup.html"><svg viewBox="0 0 20 20"><path d="M4 14l4-4 4 4"/><path d="M8 10V17"/><path d="M16 6l-4 4-4-4"/><path d="M12 10V3"/></svg>Rsync</a></li>
+            <li><a href="sauvegarde-parvati.html"><svg viewBox="0 0 20 20"><path d="M12 3v6h6"/><path d="M18 9l-6-6H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V9z"/></svg>Sauvegarde Parvati</a></li>
+          </ul>
+        </li>
+        <li class="has-mega">
+          <a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Serveur</a>
+          <ul class="mega-menu">
+            <li class="mega-menu-label">Infrastructure</li>
+            <li><a href="vps-config.html"><svg viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="5" rx="1"/><rect x="3" y="12" width="14" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="14.5" r="1"/></svg>Config VPS</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="batterie.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M17 9h1a1 1 0 0 1 0 2h-1"/><line x1="6" y1="10" x2="14" y2="10"/></svg>Batterie</a>
+        </li>
+        <li>
+          <a href="mac-cleanup.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 17 6"/><path d="M8 6V4h4v2"/><path d="M16 6l-1 11H5L4 6"/><line x1="8" y1="10" x2="8" y2="15"/><line x1="12" y1="10" x2="12" y2="15"/></svg>Nettoyage Mac</a>
+        </li>
+      </ul>
+      <button class="nav-ssh-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Hostinger
+      </button>
+      <button class="nav-ssh-laurie-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Laurie
+      </button>
+      <button class="nav-ssh-kajal-btn" type="button">
+        <span class="ssh-dot"></span>
+        SSH Kajal
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=1400&h=500&fit=crop&auto=format&q=80"
+         alt="Commandes GitHub et Git dans le terminal"
+         loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">GitHub &amp; Git</div>
+      <h1>Les commandes essentielles<br>pour sauvegarder ton code</h1>
+      <p>Un guide pratique pour initialiser un dépôt, sauvegarder son travail, synchroniser avec GitHub et récupérer une version propre en cas d’erreur.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <div class="card">
+      <div class="section-label">Essentiel</div>
+      <h2>Le workflow de sauvegarde à connaître</h2>
+      <p>Si tu veux juste enregistrer ton travail sur GitHub, retiens cette séquence. C’est la base pour sauvegarder proprement ton projet.</p>
+      <div class="code-wrap" style="margin-top:16px;">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>git status
+git add .
+git commit -m "Sauvegarde du projet"
+git pull origin main --no-rebase
+git push origin main</code></pre>
+      </div>
+      <div class="note" style="margin-top:16px;">
+        <strong>Logique :</strong> tu vérifies, tu ajoutes les fichiers, tu crées un commit local, tu récupères ce qui existe déjà sur GitHub, puis tu pousses ton historique mis à jour.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Démarrage</div>
+      <h2>Créer ou connecter un dépôt GitHub</h2>
+      <div class="command-section">
+        <div class="command-panel">
+          <h3>Cloner un dépôt existant</h3>
+          <p>À utiliser si le projet existe déjà sur GitHub et que tu veux le récupérer en local.</p>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git clone https://github.com/UTILISATEUR/DEPOT.git</code></pre>
+          </div>
+        </div>
+        <div class="command-panel">
+          <h3>Initialiser un dépôt dans un dossier existant</h3>
+          <p>À utiliser quand tu as déjà des fichiers localement mais pas encore de dépôt Git.</p>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git init
+git remote add origin https://github.com/UTILISATEUR/DEPOT.git</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Sauvegarde</div>
+      <h2>Commandes pour enregistrer ton travail</h2>
+      <div class="quick-grid">
+        <div class="quick-card">
+          <h3><code>git status</code></h3>
+          <p>Montre les fichiers modifiés, suivis ou non suivis. C’est la première commande à lancer avant toute sauvegarde.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git add .</code></h3>
+          <p>Ajoute tous les changements au prochain commit. Pour cibler un seul fichier : <code>git add nom-du-fichier</code>.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git commit -m "message"</code></h3>
+          <p>Crée un point de sauvegarde local avec une description claire du changement effectué.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git push origin main</code></h3>
+          <p>Envoie les commits locaux vers GitHub. C’est la vraie sauvegarde distante du projet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Synchronisation</div>
+      <h2>Récupérer les changements depuis GitHub</h2>
+      <div class="command-section">
+        <div class="command-panel">
+          <h3>Mettre à jour la branche locale</h3>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git pull origin main --no-rebase</code></pre>
+          </div>
+          <p style="margin-top:10px;">Cette commande télécharge les changements distants et les fusionne dans ta branche locale.</p>
+        </div>
+        <div class="command-panel">
+          <h3>Voir les dépôts distants configurés</h3>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git remote -v</code></pre>
+          </div>
+          <p style="margin-top:10px;">Utile pour vérifier que le dépôt GitHub lié est le bon.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Historique</div>
+      <h2>Consulter les commits et l’état du projet</h2>
+      <div class="quick-grid">
+        <div class="quick-card">
+          <h3><code>git log --oneline --graph --decorate -10</code></h3>
+          <p>Affiche les derniers commits de façon compacte avec la structure des branches.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git diff</code></h3>
+          <p>Montre ce qui a changé avant de créer un commit.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git branch</code></h3>
+          <p>Liste les branches locales et indique celle sur laquelle tu travailles actuellement.</p>
+        </div>
+        <div class="quick-card">
+          <h3><code>git switch nom-branche</code></h3>
+          <p>Permet de changer de branche sans utiliser l’ancienne syntaxe checkout.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Sécurité</div>
+      <h2>Commandes utiles quand tu veux revenir en arrière</h2>
+      <div class="command-section">
+        <div class="command-panel">
+          <h3>Sauvegarder provisoirement des changements non commités</h3>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git stash
+git stash pop</code></pre>
+          </div>
+          <p style="margin-top:10px;">Pratique si tu dois changer de branche rapidement sans perdre tes modifications en cours.</p>
+        </div>
+        <div class="command-panel">
+          <h3>Annuler les changements d’un fichier non commités</h3>
+          <div class="code-wrap" style="margin-top:12px;">
+            <div class="code-header">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="code-label">bash</span>
+              <button class="copy" type="button">Copier</button>
+            </div>
+            <pre><code>git restore nom-du-fichier</code></pre>
+          </div>
+          <p style="margin-top:10px;">Cette commande remet le fichier à son état du dernier commit sans toucher au reste du projet.</p>
+        </div>
+      </div>
+      <div class="note danger" style="margin-top:16px;">
+        <strong>À éviter sans certitude :</strong> les commandes destructives comme <code>git reset --hard</code> ou les <code>push --force</code>. Elles peuvent supprimer du travail utile très vite.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label">Routine</div>
+      <h2>Routine simple recommandée</h2>
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="code-label">bash</span>
+          <button class="copy" type="button">Copier</button>
+        </div>
+        <pre><code>git status
+git add .
+git commit -m "Mise à jour"
+git pull origin main --no-rebase
+git push origin main</code></pre>
+      </div>
+      <ul class="tips-list">
+        <li>Fais un message de commit court et précis.</li>
+        <li>Pense à faire un pull avant le push si plusieurs machines modifient le même dépôt.</li>
+        <li>Vérifie toujours le résultat avec <code>git status</code> après une opération importante.</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    Images : <a href="https://unsplash.com" target="_blank" rel="noopener" style="color:var(--accent)">Unsplash</a> — Licence libre de droits &nbsp;|&nbsp; TermSecure — Guide Sécurité Serveur
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
